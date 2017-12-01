@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nuj-XI-H34">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Activity View Controller-->
+        <scene sceneID="m4e-W1-J1Y">
+            <objects>
+                <viewController id="dkA-gP-yg4" customClass="ActivityViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ais-bb-ARI"/>
+                        <viewControllerLayoutGuide type="bottom" id="ixQ-Ae-qDq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tfp-pX-Av4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="tmM-Ps-kwT">
+                                <rect key="frame" x="40" y="72" width="295" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="NBG-zh-P5w"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="进行中"/>
+                                    <segment title="未开始"/>
+                                    <segment title="已结束"/>
+                                </segments>
+                                <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tmM-Ps-kwT" secondAttribute="trailing" constant="40" id="3Rg-K1-tiX"/>
+                            <constraint firstItem="tmM-Ps-kwT" firstAttribute="top" secondItem="ais-bb-ARI" secondAttribute="bottom" constant="8" id="UCQ-bB-NnU"/>
+                            <constraint firstItem="tmM-Ps-kwT" firstAttribute="leading" secondItem="Tfp-pX-Av4" secondAttribute="leading" constant="40" id="Vdq-dB-Ele"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fg9-ds-PT9"/>
+                    <connections>
+                        <outlet property="segmentV" destination="tmM-Ps-kwT" id="QjU-oz-USG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gXY-nQ-8Df" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="956" y="-86.806596701649184"/>
+        </scene>
+        <!--Root Navigation Controller-->
+        <scene sceneID="kf4-Cu-Xcj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nuj-XI-H34" customClass="RootNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bv9-Ml-06Z">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dkA-gP-yg4" kind="relationship" relationship="rootViewController" id="aLh-5Z-efc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tqa-Hl-MAC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="16.800000000000001" y="-86.806596701649184"/>
+        </scene>
+    </scenes>
+</document>

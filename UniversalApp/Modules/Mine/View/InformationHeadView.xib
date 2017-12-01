@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="OzB-Kr-7OF">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" tag="201" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rf2-kQ-ZHg">
+                    <rect key="frame" x="147.5" y="35" width="80" height="80"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="Q77-sf-E0P"/>
+                        <constraint firstAttribute="width" constant="80" id="fKh-AE-4d3"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="hRn-0f-dQ7"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="80" id="rXb-Rr-IZp"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="40"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <button opaque="NO" tag="202" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6UE-JA-JAn">
+                    <rect key="frame" x="199.5" y="87" width="28" height="28"/>
+                    <state key="normal" image="上传头像"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="6UE-JA-JAn" firstAttribute="trailing" secondItem="rf2-kQ-ZHg" secondAttribute="trailing" id="5eQ-WD-wm2"/>
+                <constraint firstItem="rf2-kQ-ZHg" firstAttribute="centerX" secondItem="OzB-Kr-7OF" secondAttribute="centerX" id="60i-dJ-Dzp"/>
+                <constraint firstItem="rf2-kQ-ZHg" firstAttribute="centerY" secondItem="OzB-Kr-7OF" secondAttribute="centerY" id="6kR-4W-jlW"/>
+                <constraint firstItem="6UE-JA-JAn" firstAttribute="bottom" secondItem="rf2-kQ-ZHg" secondAttribute="bottom" id="YxU-xk-gi1"/>
+                <constraint firstItem="6UE-JA-JAn" firstAttribute="bottom" secondItem="rf2-kQ-ZHg" secondAttribute="bottom" id="kQj-tF-tuC"/>
+                <constraint firstItem="6UE-JA-JAn" firstAttribute="trailing" secondItem="rf2-kQ-ZHg" secondAttribute="trailing" id="ybI-3R-lfP"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="62" y="124"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="上传头像" width="28" height="28"/>
+    </resources>
+</document>
