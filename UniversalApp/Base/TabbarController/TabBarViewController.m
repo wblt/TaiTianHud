@@ -7,7 +7,8 @@
 
 #import "TabBarViewController.h"
 #import "RootNavigationController.h"
-@interface TabBarViewController () <UIAlertViewDelegate>
+#import "LoginViewController.h"
+@interface TabBarViewController () <UIAlertViewDelegate,UITabBarDelegate,UITabBarControllerDelegate>
 
 @end
 
@@ -25,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
+    self.delegate = self;
     // 创建子控制器
     [self _createViewControllers];
 	
@@ -55,6 +57,7 @@
         UIImage *selectedImage = [UIImage imageNamed:selectImages[i]];
         
         UITabBarItem *MytabBarItem = [[UITabBarItem alloc] initWithTitle:itemTitles[i] image:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        
         MytabBarItem.tag = i;
 
 
@@ -94,5 +97,23 @@
     return self.selectedViewController;
 }
 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController NS_AVAILABLE_IOS(3_0){
+    
+    if (viewController.tabBarItem.tag == 2 || viewController.tabBarItem.tag == 3){
+        
+        if (![[UserConfig shareInstace] getLoginStatus]) {
+            
+            UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboad instantiateInitialViewController];
+            [self presentViewController:loginVC animated:YES completion:nil];
+            return NO;
+        }else {
+            return YES;
+        }
+    }else {
+        return YES;
+    }
+    
+}
 
 @end

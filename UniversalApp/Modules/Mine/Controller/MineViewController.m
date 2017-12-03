@@ -14,6 +14,9 @@
 #import <UMSocialCore/UMSocialCore.h>
 #import "SettingViewController.h"
 #import "AboutViewController.h"
+#import "MyTaskViewController.h"
+#import "MyPacketViewController.h"
+#import "EditPhoneViewController.h"
 @interface MineViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSMutableArray *arr;
@@ -128,14 +131,6 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    if ([arr[indexPath.section][indexPath.row] isEqualToString:@"绑定微信账号"]) {
-        UISwitch *switchView = [[UISwitch alloc] init];
-        [switchView setOn:[model.isbindwx boolValue]];
-        [switchView addTarget:self action:@selector(bindWXAction:) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = switchView;
-    }else {
-        cell.accessoryView = nil;
-    }
     cell.imageView.image = [UIImage imageNamed:imgArr[indexPath.section][indexPath.row]];
     cell.textLabel.text = arr[indexPath.section][indexPath.row];
     return cell;
@@ -163,7 +158,7 @@
         UIImageView *img = (UIImageView *)[v viewWithTag:201];
         [img sd_setImageWithURL:[NSURL URLWithString:model.headpic] placeholderImage:[UIImage imageNamed:@"friend_default"]];
         UILabel *name = (UILabel *)[v viewWithTag:202];
-        name.text = [NSString stringWithFormat:@"%@ • %@", model.nickname, [model.sex integerValue]==1?@"男":@"女"];
+        name.text = [NSString stringWithFormat:@"%@ • %@", model.realname, [model.sex integerValue]==1?@"男":@"女"];
         UIButton *bangd = (UIButton *)[v viewWithTag:203];
         if (![model.isvst boolValue]) {
             bangd.hidden = YES;
@@ -171,11 +166,11 @@
             bangd.hidden = NO;
         }
         [bangd addTapBlock:^(UIButton *btn) {
-            UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            ForgetPwdController *forgetVC = [storyboad instantiateViewControllerWithIdentifier:@"ForgetPwdController"];
-            forgetVC.title = @"绑定手机号码";
-            [forgetVC setHidesBottomBarWhenPushed:YES];
-            [self.navigationController pushViewController:forgetVC animated:YES];
+            UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+            EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+            editPhoneVC.title = @"绑定手机号";
+            [editPhoneVC setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:editPhoneVC animated:YES];
         }];
         return v;
     }else {
@@ -187,12 +182,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    if ([model.isvst boolValue]&&![arr[indexPath.section][indexPath.row] isEqualToString:@"绑定微信账号"]) {
-        UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        ForgetPwdController *forgetVC = [storyboad instantiateViewControllerWithIdentifier:@"ForgetPwdController"];
-        forgetVC.title = @"绑定手机号码";
-        [forgetVC setHidesBottomBarWhenPushed:YES];
-        [self.navigationController pushViewController:forgetVC animated:YES];
+    if ([model.isvst boolValue]&&![arr[indexPath.section][indexPath.row] isEqualToString:@"关于上位"]) {
+        UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+        EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+        editPhoneVC.title = @"绑定手机号";
+        [editPhoneVC setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:editPhoneVC animated:YES];
     }else {
         if ([arr[indexPath.section][indexPath.row] isEqualToString:@"设置"]) {
             SettingViewController *set = [[SettingViewController alloc] init];
@@ -203,12 +198,6 @@
             InformationEditViewController *inforVC = [storyboad instantiateViewControllerWithIdentifier:@"InformationEditViewController"];
             [inforVC setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:inforVC animated:YES];
-        }else if ([arr[indexPath.section][indexPath.row] isEqualToString:@"修改手机号码"]) {
-            UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            ForgetPwdController *forgetVC = [storyboad instantiateViewControllerWithIdentifier:@"ForgetPwdController"];
-            forgetVC.title = @"修改手机号码";
-            [forgetVC setHidesBottomBarWhenPushed:YES];
-            [self.navigationController pushViewController:forgetVC animated:YES];
         }else if ([arr[indexPath.section][indexPath.row] isEqualToString:@"我的活动"]) {
             //暂无活动，
             //跳转页面展示活动列表
@@ -222,55 +211,16 @@
             AboutViewController *aboutVC = [storyboad instantiateViewControllerWithIdentifier:@"AboutViewController"];
             [aboutVC setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:aboutVC animated:YES];
+        }else if ([arr[indexPath.section][indexPath.row] isEqualToString:@"我的任务"]) {
+            MyTaskViewController *task = [[MyTaskViewController alloc] init];
+            [task setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:task animated:YES];
+        }else if ([arr[indexPath.section][indexPath.row] isEqualToString:@"我的钱包"]) {
+            MyPacketViewController *packet = [[MyPacketViewController alloc] init];
+            [packet setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:packet animated:YES];
         }
     }
-}
-
-
-
--(void)bindWXAction:(UISwitch *)sender
-{
-    BOOL isButtonOn = [sender isOn];
-    UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    if ([model.wx_openid length] == 0) {
-        [MBProgressHUD showActivityMessageInView:@"授权中..."];
-        [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
-            [MBProgressHUD hideHUD];
-            if (error) {
-                
-            } else {
-                
-                UMSocialUserInfoResponse *resp = result;
-                model.wx_openid = resp.openid;
-                [[UserConfig shareInstace] setAllInformation:model];
-                [NetRequestClass afn_requestURL:@"appBindWx" httpMethod:@"POST" params:@{@"isbindwx":isButtonOn?@(-1):@(1),@"ub_id":model.ub_id?model.ub_id:@"",@"ua_id":model.ua_id?model.ua_id:@"",@"wx_openid":resp.openid}.mutableCopy successBlock:^(id returnValue) {
-                    if ([returnValue[@"status"] integerValue] == 1) {
-                        [SVProgressHUD showSuccessWithStatus:returnValue[@"info"]];
-                    }else {
-                        [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
-                        [sender setOn:!isButtonOn];
-                    }
-                } failureBlock:^(NSError *error) {
-                    [SVProgressHUD showErrorWithStatus:@"请求失败"];
-                    [sender setOn:!isButtonOn];
-                }];
-            }
-        }];
-    }else {
-        [NetRequestClass afn_requestURL:@"appBindWx" httpMethod:@"POST" params:@{@"isbindwx":isButtonOn?@(-1):@(1),@"ub_id":model.ub_id?model.ub_id:@"",@"ua_id":model.ua_id?model.ua_id:@"",@"wx_openid":model.wx_openid?model.wx_openid:@""}.mutableCopy successBlock:^(id returnValue) {
-            if ([returnValue[@"status"] integerValue] == 1) {
-                [SVProgressHUD showSuccessWithStatus:returnValue[@"info"]];
-                
-            }else {
-                [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
-                [sender setOn:!isButtonOn];
-            }
-        } failureBlock:^(NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"请求失败"];
-            [sender setOn:!isButtonOn];
-        }];
-    }
-    
 }
 
 - (void)didReceiveMemoryWarning {

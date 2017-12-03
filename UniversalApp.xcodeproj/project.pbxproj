@@ -179,6 +179,19 @@
 		8D936D491FAB0C1300B303F9 /* HomeCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D481FAB0C1300B303F9 /* HomeCompanyViewController.m */; };
 		8D936D4B1FAB0F2600B303F9 /* CompanyDetailHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D936D4A1FAB0F2600B303F9 /* CompanyDetailHeadView.xib */; };
 		8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */; };
+		EE4166B21FD4349F0077E29C /* MoreActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */; };
+		EEFA8CB21FD284D100340A1B /* TaskClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */; };
+		EEFA8CB51FD2856400340A1B /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB41FD2856400340A1B /* TaskModel.m */; };
+		EEFA8CB81FD2998200340A1B /* MyPacketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB71FD2998200340A1B /* MyPacketViewController.m */; };
+		EEFA8CBA1FD29CBF00340A1B /* MyPacketHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFA8CB91FD29CBF00340A1B /* MyPacketHeadView.xib */; };
+		EEFA8CBD1FD2A89900340A1B /* ChongzhiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CBC1FD2A89900340A1B /* ChongzhiModel.m */; };
+		EEFA8CC01FD2C4CB00340A1B /* ChongzhiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CBF1FD2C4CB00340A1B /* ChongzhiViewController.m */; };
+		EEFA8CC41FD2CBA600340A1B /* ChongzhiCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CC21FD2CBA600340A1B /* ChongzhiCollectionCell.m */; };
+		EEFA8CC51FD2CBA600340A1B /* ChongzhiCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFA8CC31FD2CBA600340A1B /* ChongzhiCollectionCell.xib */; };
+		EEFA8CC81FD2D38600340A1B /* ChongzhiPayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CC71FD2D38600340A1B /* ChongzhiPayModel.m */; };
+		EEFA8CCB1FD3A69800340A1B /* MessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CCA1FD3A69800340A1B /* MessageModel.m */; };
+		EEFA8CD01FD3A80500340A1B /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CCE1FD3A80500340A1B /* MessageCell.m */; };
+		EEFA8CD11FD3A80500340A1B /* MessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFA8CCF1FD3A80500340A1B /* MessageCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -479,6 +492,29 @@
 		8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreCompanyViewController.m; sourceTree = "<group>"; };
 		9E884624664B432D4FE5044F /* libPods-UniversalApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UniversalApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51AB222BA7ACF202B5B1330 /* Pods-UniversalApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UniversalApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UniversalApp/Pods-UniversalApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EE4166B01FD4349F0077E29C /* MoreActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreActivityViewController.h; sourceTree = "<group>"; };
+		EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreActivityViewController.m; sourceTree = "<group>"; };
+		EEFA8CB01FD284D100340A1B /* TaskClassifyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskClassifyModel.h; sourceTree = "<group>"; };
+		EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskClassifyModel.m; sourceTree = "<group>"; };
+		EEFA8CB31FD2856400340A1B /* TaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskModel.h; sourceTree = "<group>"; };
+		EEFA8CB41FD2856400340A1B /* TaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskModel.m; sourceTree = "<group>"; };
+		EEFA8CB61FD2998200340A1B /* MyPacketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPacketViewController.h; sourceTree = "<group>"; };
+		EEFA8CB71FD2998200340A1B /* MyPacketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPacketViewController.m; sourceTree = "<group>"; };
+		EEFA8CB91FD29CBF00340A1B /* MyPacketHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyPacketHeadView.xib; sourceTree = "<group>"; };
+		EEFA8CBB1FD2A89900340A1B /* ChongzhiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChongzhiModel.h; sourceTree = "<group>"; };
+		EEFA8CBC1FD2A89900340A1B /* ChongzhiModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChongzhiModel.m; sourceTree = "<group>"; };
+		EEFA8CBE1FD2C4CB00340A1B /* ChongzhiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChongzhiViewController.h; sourceTree = "<group>"; };
+		EEFA8CBF1FD2C4CB00340A1B /* ChongzhiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChongzhiViewController.m; sourceTree = "<group>"; };
+		EEFA8CC11FD2CBA600340A1B /* ChongzhiCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChongzhiCollectionCell.h; sourceTree = "<group>"; };
+		EEFA8CC21FD2CBA600340A1B /* ChongzhiCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChongzhiCollectionCell.m; sourceTree = "<group>"; };
+		EEFA8CC31FD2CBA600340A1B /* ChongzhiCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChongzhiCollectionCell.xib; sourceTree = "<group>"; };
+		EEFA8CC61FD2D38600340A1B /* ChongzhiPayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChongzhiPayModel.h; sourceTree = "<group>"; };
+		EEFA8CC71FD2D38600340A1B /* ChongzhiPayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChongzhiPayModel.m; sourceTree = "<group>"; };
+		EEFA8CC91FD3A69800340A1B /* MessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageModel.h; sourceTree = "<group>"; };
+		EEFA8CCA1FD3A69800340A1B /* MessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageModel.m; sourceTree = "<group>"; };
+		EEFA8CCD1FD3A80500340A1B /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		EEFA8CCE1FD3A80500340A1B /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
+		EEFA8CCF1FD3A80500340A1B /* MessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1070,6 +1106,8 @@
 				8D936D481FAB0C1300B303F9 /* HomeCompanyViewController.m */,
 				8DCF12F71FB2A31000D173A7 /* MoreCompanyViewController.h */,
 				8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */,
+				EE4166B01FD4349F0077E29C /* MoreActivityViewController.h */,
+				EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1119,6 +1157,7 @@
 		8D274AF51FA7109400227056 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				EEFA8CCC1FD3A7EC00340A1B /* View */,
 				8D274AF61FA7109400227056 /* Controller */,
 			);
 			path = Message;
@@ -1159,6 +1198,10 @@
 				8D4DCBAB1FCFC07700D5251B /* EditPhoneViewController.m */,
 				8D4DCBB01FD00AB700D5251B /* MyTaskViewController.h */,
 				8D4DCBB11FD00AB700D5251B /* MyTaskViewController.m */,
+				EEFA8CB61FD2998200340A1B /* MyPacketViewController.h */,
+				EEFA8CB71FD2998200340A1B /* MyPacketViewController.m */,
+				EEFA8CBE1FD2C4CB00340A1B /* ChongzhiViewController.h */,
+				EEFA8CBF1FD2C4CB00340A1B /* ChongzhiViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1177,6 +1220,10 @@
 				8D4DCBB31FD00B0100D5251B /* MyTaskCell.h */,
 				8D4DCBB41FD00B0100D5251B /* MyTaskCell.m */,
 				8D4DCBB51FD00B0100D5251B /* MyTaskCell.xib */,
+				EEFA8CB91FD29CBF00340A1B /* MyPacketHeadView.xib */,
+				EEFA8CC11FD2CBA600340A1B /* ChongzhiCollectionCell.h */,
+				EEFA8CC21FD2CBA600340A1B /* ChongzhiCollectionCell.m */,
+				EEFA8CC31FD2CBA600340A1B /* ChongzhiCollectionCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1370,8 +1417,28 @@
 				8D759C721FAC52300031D86F /* HomeBannerModel.m */,
 				8D4DCBAD1FCFF10D00D5251B /* HomeStarModel.h */,
 				8D4DCBAE1FCFF10D00D5251B /* HomeStarModel.m */,
+				EEFA8CB01FD284D100340A1B /* TaskClassifyModel.h */,
+				EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */,
+				EEFA8CB31FD2856400340A1B /* TaskModel.h */,
+				EEFA8CB41FD2856400340A1B /* TaskModel.m */,
+				EEFA8CBB1FD2A89900340A1B /* ChongzhiModel.h */,
+				EEFA8CBC1FD2A89900340A1B /* ChongzhiModel.m */,
+				EEFA8CC61FD2D38600340A1B /* ChongzhiPayModel.h */,
+				EEFA8CC71FD2D38600340A1B /* ChongzhiPayModel.m */,
+				EEFA8CC91FD3A69800340A1B /* MessageModel.h */,
+				EEFA8CCA1FD3A69800340A1B /* MessageModel.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EEFA8CCC1FD3A7EC00340A1B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EEFA8CCD1FD3A80500340A1B /* MessageCell.h */,
+				EEFA8CCE1FD3A80500340A1B /* MessageCell.m */,
+				EEFA8CCF1FD3A80500340A1B /* MessageCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1445,8 +1512,8 @@
 				TargetAttributes = {
 					296F9EB71ECC64CE0063A255 = {
 						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = HR6HGC9SU2;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 54QQ99TKR8;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -1494,6 +1561,8 @@
 				8D936D4B1FAB0F2600B303F9 /* CompanyDetailHeadView.xib in Resources */,
 				296DEA801F5D536500C6FD00 /* pageControlCurrentDot@3x.png in Resources */,
 				293D46421ECDBB63007C64A9 /* icon_tabbar_homepage.png in Resources */,
+				EEFA8CC51FD2CBA600340A1B /* ChongzhiCollectionCell.xib in Resources */,
+				EEFA8CD11FD3A80500340A1B /* MessageCell.xib in Resources */,
 				2996100C1ED7E81900BCED2A /* DazFire.png in Resources */,
 				8D274AD91FA70E0400227056 /* Login.storyboard in Resources */,
 				290A97E61F4AB24A006BF882 /* stepPk_win_colour8@2x.png in Resources */,
@@ -1554,6 +1623,7 @@
 				293D46491ECDBB63007C64A9 /* icon_tabbar_merchant_selected@2x.png in Resources */,
 				8D33BEF81FA9C123003F377B /* UMSocialSDKPromptResources.bundle in Resources */,
 				8D274B5C1FA713A600227056 /* NSDateTimeAgo.bundle in Resources */,
+				EEFA8CBA1FD29CBF00340A1B /* MyPacketHeadView.xib in Resources */,
 				2996100D1ED7E81900BCED2A /* rain.png in Resources */,
 				293D46481ECDBB63007C64A9 /* icon_tabbar_merchant_selected.png in Resources */,
 				2917D20A1EE007C300E76185 /* MBHUD_Error@3x.png in Resources */,
@@ -1612,7 +1682,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		FCE002867A10AABD9CA626C2 /* [CP] Embed Pods Frameworks */ = {
@@ -1645,7 +1715,9 @@
 				29AD6C631ED3E4D600B0879C /* AppDelegate.m in Sources */,
 				8D274B661FA713A600227056 /* UIImage+Cut.m in Sources */,
 				2917D1FF1EDFC89A00E76185 /* YYFPSLabel.m in Sources */,
+				EEFA8CBD1FD2A89900340A1B /* ChongzhiModel.m in Sources */,
 				8D274B641FA713A600227056 /* UILabel+customLabel.m in Sources */,
+				EEFA8CC81FD2D38600340A1B /* ChongzhiPayModel.m in Sources */,
 				29AD6C621ED3E4D600B0879C /* AppDelegate+AppService.m in Sources */,
 				8D274B611FA713A600227056 /* UIColor+CustomColor.m in Sources */,
 				8D4DCBAC1FCFC07700D5251B /* EditPhoneViewController.m in Sources */,
@@ -1672,7 +1744,9 @@
 				8D274B0A1FA7109400227056 /* LoginLogic.m in Sources */,
 				8D274B0D1FA7109400227056 /* MineViewController.m in Sources */,
 				296DEA731F5D50D100C6FD00 /* SDCollectionViewCell.m in Sources */,
+				EEFA8CB51FD2856400340A1B /* TaskModel.m in Sources */,
 				296DEA741F5D50D100C6FD00 /* SDCycleScrollView.m in Sources */,
+				EEFA8CB21FD284D100340A1B /* TaskClassifyModel.m in Sources */,
 				8D274B041FA7109400227056 /* ActivityViewController.m in Sources */,
 				8D274B591FA713A600227056 /* NSDate+Extend.m in Sources */,
 				8D274B5E1FA713A600227056 /* NSString+MD5.m in Sources */,
@@ -1698,6 +1772,7 @@
 				8D913F981FCEAA360094E8D9 /* AboutViewController.m in Sources */,
 				8D274B631FA713A600227056 /* UIFont+customFont.m in Sources */,
 				293ECC2D1EE56D1D008061A1 /* IMManager.m in Sources */,
+				EEFA8CCB1FD3A69800340A1B /* MessageModel.m in Sources */,
 				8D274B161FA7130800227056 /* UserModel.m in Sources */,
 				29AD6C4D1ED3D51200B0879C /* OpenUDID.m in Sources */,
 				296DEA721F5D50D100C6FD00 /* TAPageControl.m in Sources */,
@@ -1707,16 +1782,20 @@
 				296DEA781F5D530E00C6FD00 /* ScrollBannerVC.m in Sources */,
 				29D3C00A1F4D11A200FD3914 /* TagsButton.m in Sources */,
 				8D274B5B1FA713A600227056 /* NSDate+TimeAgo.m in Sources */,
+				EEFA8CC41FD2CBA600340A1B /* ChongzhiCollectionCell.m in Sources */,
 				8D936D411FAAFBEB00B303F9 /* HomeActivityModel.m in Sources */,
 				8D274ADE1FA70ED500227056 /* NetRequestClass.m in Sources */,
 				29FEE7681ECEC27900C81B60 /* MBProgressHUD+XY.m in Sources */,
+				EEFA8CC01FD2C4CB00340A1B /* ChongzhiViewController.m in Sources */,
 				298A76771F5421CF00F639B7 /* UINavigationBar+Awesome.m in Sources */,
 				8D936D371FAAC5BE00B303F9 /* GYChangeTextView.m in Sources */,
 				2917D2171EE02F9C00E76185 /* ShareManager.m in Sources */,
 				8D274B5A1FA713A600227056 /* NSDate+Helper.m in Sources */,
 				8D936D491FAB0C1300B303F9 /* HomeCompanyViewController.m in Sources */,
+				EEFA8CD01FD3A80500340A1B /* MessageCell.m in Sources */,
 				8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */,
 				8D274B761FA7147D00227056 /* TabBarItem.m in Sources */,
+				EEFA8CB81FD2998200340A1B /* MyPacketViewController.m in Sources */,
 				290A980D1F4ABD00006BF882 /* SandBoxHelper.m in Sources */,
 				8D274B621FA713A600227056 /* UIColor+Extend.m in Sources */,
 				293D45FA1ECDA4D8007C64A9 /* RootWebViewController.m in Sources */,
@@ -1728,6 +1807,7 @@
 				8D274B051FA7109400227056 /* HomeViewController.m in Sources */,
 				8D274B681FA713A600227056 /* UIImage+Water.m in Sources */,
 				8D913F931FCEA0B50094E8D9 /* LTAlertView.m in Sources */,
+				EE4166B21FD4349F0077E29C /* MoreActivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1873,7 +1953,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HR6HGC9SU2;
+				DEVELOPMENT_TEAM = 54QQ99TKR8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1891,10 +1971,10 @@
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/UMSocialSDKPlugin",
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/SocialLibraries/Sina",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cn.tthud.taitian;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tthud.taitian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "2f506e04-8f61-4dad-92d1-442ccf467a5b";
+				PROVISIONING_PROFILE_SPECIFIER = sw_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/UniversalApp/Define";
 			};
@@ -1905,9 +1985,9 @@
 			baseConfigurationReference = 14ED69325E9FD4BDB1CA95F8 /* Pods-UniversalApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HR6HGC9SU2;
+				DEVELOPMENT_TEAM = 54QQ99TKR8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1925,10 +2005,10 @@
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/UMSocialSDKPlugin",
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/SocialLibraries/Sina",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cn.tthud.taitian;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tthud.taitian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a17b452e-6e96-4eca-b96e-1d5f9318264e";
+				PROVISIONING_PROFILE_SPECIFIER = sw_dis;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/UniversalApp/Define";
 			};

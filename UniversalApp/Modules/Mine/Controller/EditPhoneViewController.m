@@ -19,7 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"修改手机号";
     code = @"";
     [_phoneText addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
 }
@@ -95,21 +94,44 @@
         [SVProgressHUD showErrorWithStatus:@"验证码错误"];
         return;
     }
-    [SVProgressHUD showWithStatus:@"修改中..."];
+    BOOL isbangd = [self.title isEqualToString:@"绑定手机号"]?YES:NO;
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    [NetRequestClass afn_requestURL:@"appTelSbt" httpMethod:@"POST" params:@{@"mobile":self.phoneText.text, @"password":self.passwordText.text,@"ub_id":model.ub_id}.mutableCopy  successBlock:^(id returnValue) {
-        [SVProgressHUD dismiss];
-        if ([returnValue[@"status"] integerValue] == 1) {
-            [SVProgressHUD showErrorWithStatus:@"修改成功"];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        else {
-            [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
-        }
-    } failureBlock:^(NSError *error){
-        [SVProgressHUD dismiss];
-        [SVProgressHUD showErrorWithStatus:@"修改失败"];
-    }];
+    if (isbangd) {
+        [SVProgressHUD showWithStatus:@"绑定中..."];
+        
+        [NetRequestClass afn_requestURL:@"appVstReUserSbt" httpMethod:@"POST" params:@{@"mobile":self.phoneText.text, @"password":self.passwordText.text,@"ub_id":model.ub_id,@"openid":model.wx_openid,@"headpic":model.headpic,@"sex":model.sex,@"nickname":model.nickname}.mutableCopy  successBlock:^(id returnValue) {
+            [SVProgressHUD dismiss];
+            if ([returnValue[@"status"] integerValue] == 1) {
+                [SVProgressHUD showErrorWithStatus:@"绑定成功"];
+                model.ub_id = returnValue[@"data"][@"ub_id"];
+                model.nickname = returnValue[@"data"][@"nickname"];
+                [[UserConfig shareInstace] setAllInformation:model];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            else {
+                [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
+            }
+        } failureBlock:^(NSError *error){
+            [SVProgressHUD dismiss];
+            [SVProgressHUD showErrorWithStatus:@"绑定失败"];
+        }];
+    }else {
+        [SVProgressHUD showWithStatus:@"修改中..."];
+        
+        [NetRequestClass afn_requestURL:@"appTelSbt" httpMethod:@"POST" params:@{@"mobile":self.phoneText.text, @"password":self.passwordText.text,@"ub_id":model.ub_id}.mutableCopy  successBlock:^(id returnValue) {
+            [SVProgressHUD dismiss];
+            if ([returnValue[@"status"] integerValue] == 1) {
+                [SVProgressHUD showErrorWithStatus:@"修改成功"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            else {
+                [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
+            }
+        } failureBlock:^(NSError *error){
+            [SVProgressHUD dismiss];
+            [SVProgressHUD showErrorWithStatus:@"修改失败"];
+        }];
+    }
     
 }
 

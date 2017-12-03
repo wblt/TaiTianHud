@@ -120,7 +120,10 @@
                 [[UMSocialManager defaultManager] cancelAuthWithPlatform:UMSocialPlatformType_WechatSession completion:^(id result, NSError *error) {
                     if (!error) {
                         [[UserConfig shareInstace] logout];
-                        KPostNotification(KNotificationLoginStateChange, @NO)
+                        
+                        AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                        delegate.mainTabBar = [[TabBarViewController alloc] init];
+                        delegate.window.rootViewController = delegate.mainTabBar;
                     }
                 }];
             };
@@ -156,6 +159,7 @@
     }else if (indexPath.section == 0 && indexPath.row == 0) {
         UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
         EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+        editPhoneVC.title = @"修改手机号";
         [editPhoneVC setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:editPhoneVC animated:YES];
     }

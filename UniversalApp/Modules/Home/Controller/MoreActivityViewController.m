@@ -1,65 +1,40 @@
 //
-//  ActivityViewController.m
-//  TaitianHud
+//  MoreActivityViewController.m
+//  UniversalApp
 //
-//  Created by wb on 2017/10/19.
-//  Copyright © 2017年 wb. All rights reserved.
+//  Created by 冷婷 on 2017/12/3.
+//  Copyright © 2017年 徐阳. All rights reserved.
 //
 
-#import "ActivityViewController.h"
+#import "MoreActivityViewController.h"
 #import <SDWebImage/UIButton+WebCache.h>
 #import "HomeCompanyTableCell.h"
 #import "HomeActivityModel.h"
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
-@interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate>
+@interface MoreActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate>
 {
-    NSString *type;
     NSInteger page;
 }
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentV;
 @property (nonatomic,copy) NSMutableArray * dataArray;
 @end
 
-@implementation ActivityViewController
+@implementation MoreActivityViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.titleView = self.segmentV;
+    self.title = @"经典ip";
     _dataArray = @[].mutableCopy;
-    [_segmentV addTarget:self action:@selector(didClicksegmentedControlAction:) forControlEvents:UIControlEventValueChanged];
     
     [self initUI];
     page = 1;
-    type = @"start";
-    [self requestDataType:@"start" keyword:@""];
-   
+    [self requestData];
+    
 }
 
-- (void)didClicksegmentedControlAction:(UISegmentedControl *)Seg{
-    NSInteger Index = Seg.selectedSegmentIndex;
-    switch (Index) {
-        case 0:
-            type = @"start";
-            break;
-        case 1:
-            type = @"notstart";
-            break;
-        case 2:
-            type = @"end";
-            break;
-        default:
-            break;
-    }
-    [_dataArray removeAllObjects];
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
-    page = 1;
-    [self requestDataType:type keyword:@""];
-}
-
-- (void)requestDataType:(NSString *)typeStr keyword:(NSString *)word
+- (void)requestData
 {
-    [NetRequestClass afn_requestURL:@"appActList" httpMethod:@"GET" params:@{@"p":@(page), @"type":typeStr,@"keywords ":word}.mutableCopy successBlock:^(id returnValue) {
+    [NetRequestClass afn_requestURL:@"appActMore" httpMethod:@"GET" params:@{@"p":@(page)}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
                 [_dataArray removeAllObjects];
@@ -88,7 +63,7 @@
             [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
         }
     } failureBlock:^(NSError *error) {
-
+        
     }];
 }
 
@@ -100,7 +75,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeCompanyTableCell" bundle:nil] forCellReuseIdentifier:@"HomeCompanyTableCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-49-64);
+    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-64);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     [self showNoDataImage];
@@ -149,19 +124,14 @@
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
-{
-    
-}
-
 -(void)headerRereshing{
     page = 1;
     [self.tableView.mj_footer setState:MJRefreshStateIdle];
-    [self requestDataType:type keyword:@""];
+    [self requestData];
 }
 
 -(void)footerRereshing{
-    [self requestDataType:type keyword:@""];
+    [self requestData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -170,13 +140,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
+

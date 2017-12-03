@@ -7,7 +7,7 @@
 //
 
 #import "RootViewController.h"
-#import "LoginViewController1.h"
+#import "LoginViewController.h"
 #import <UShareUI/UShareUI.h>
 
 
@@ -60,12 +60,13 @@
 #pragma mark ————— 跳转登录界面 —————
 - (void)goLogin
 {
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[LoginViewController1 new]];
-    [self presentViewController:loginNavi animated:YES completion:nil];
+    UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+    LoginViewController *loginVC = [storyboad instantiateInitialViewController];
+    [self presentViewController:loginVC animated:YES completion:nil];
 }
 - (void)goLoginWithPush
 {
-    [self.navigationController pushViewController:[LoginViewController1 new] animated:YES];
+    [self.navigationController pushViewController:[LoginViewController new] animated:YES];
 }
 
 - (void)showShouldLoginPoint{

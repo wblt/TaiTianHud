@@ -20,6 +20,7 @@
 #import "HomeCompanyTableCell.h"
 #import "NSString+Extend.h"
 #import "HomeStarModel.h"
+#import "MoreActivityViewController.h"
 @interface HomeViewController () <SDCycleScrollViewDelegate, GYChangeTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic,copy) NSArray * dataArray;
 @property (nonatomic,copy) NSMutableArray * bannerArr;
@@ -223,15 +224,16 @@
     }];
     UIButton *moreAct = [view viewWithTag:501];
     [moreAct addTapBlock:^(UIButton *btn) {
-        MoreCompanyViewController *vc = [[MoreCompanyViewController alloc] init];
-        vc.type = 2;
+        MoreActivityViewController *vc = [[MoreActivityViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }];
     return view;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    HomeActivityModel *model = _activityArr[indexPath.row];
+    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url]];
+    [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
 #pragma mark -  scrollview回调

@@ -34,7 +34,7 @@
     [self monitorNetworkStatus];
     
     //广告页
-    [AppManager appStart];
+    //[AppManager appStart];
     
     return YES;
 }

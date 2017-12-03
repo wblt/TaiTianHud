@@ -74,7 +74,10 @@
             
             //登陆成功，跳转至首页
             AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            delegate.window.rootViewController = [[TabBarViewController alloc] init];
+            NSInteger index = delegate.mainTabBar.selectedIndex;
+            delegate.mainTabBar = [TabBarViewController new];
+            delegate.mainTabBar.selectedIndex = index;
+            delegate.window.rootViewController = delegate.mainTabBar;
             
             //显示动画
             delegate.window.rootViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
@@ -137,5 +140,10 @@
     };
     [self presentViewController:registerController animated:YES completion:nil];
 }
+
+- (IBAction)backDismiss:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

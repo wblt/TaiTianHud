@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface MyTaskCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *detailTitle;
+@property (weak, nonatomic) IBOutlet UIButton *receiveBtn;
+@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
 @end

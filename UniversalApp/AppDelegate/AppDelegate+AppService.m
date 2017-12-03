@@ -50,9 +50,9 @@
 
 #pragma mark ————— 初始化用户系统 —————
 -(void)initUserManager{
-    DLog(@"设备IMEI ：%@",[OpenUDID value]);
-    if([[UserConfig shareInstace] getLoginStatus]){
-        
+//    DLog(@"设备IMEI ：%@",[OpenUDID value]);
+//    if([[UserConfig shareInstace] getLoginStatus]){
+    
         //如果有本地数据，先展示TabBar 随后异步自动登录
         self.mainTabBar = [[TabBarViewController alloc] init];
         self.window.rootViewController = self.mainTabBar;
@@ -68,11 +68,11 @@
 //            }
 //        }];
         
-    }else{
-        //没有登录过，展示登录页面
-        KPostNotification(KNotificationLoginStateChange, @NO)
-//        [MBProgressHUD showErrorMessage:@"需要登录"];
-    }
+//    }else{
+//        //没有登录过，展示登录页面
+//        KPostNotification(KNotificationLoginStateChange, @NO)
+////        [MBProgressHUD showErrorMessage:@"需要登录"];
+//    }
 }
 
 #pragma mark ————— 登录状态处理 —————
@@ -99,7 +99,6 @@
         
     }else {//登陆失败加载登陆页面控制器
         
-        self.mainTabBar = nil;
         UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboad instantiateInitialViewController];
         
