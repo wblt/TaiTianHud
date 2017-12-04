@@ -16,10 +16,11 @@
 
 @implementation RootWebViewController
 
--(instancetype)initWithUrl:(NSString *)url{
+-(instancetype)initWithUrl:(NSString *)url orHtml:(NSString *)html{
     self = [super init];
     if (self) {
         self.url = url;
+        self.html = html;
         _progressViewColor = [UIColor colorWithRed:119.0/255 green:228.0/255 blue:115.0/255 alpha:1];
     }
     return self;
@@ -64,10 +65,13 @@
     _wkwebView.navigationDelegate = self;
     [_wkwebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];//注册observer 拿到加载进度
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
-    [_wkwebView loadRequest:request];
+    if (self.url != nil && [self.url length]>0) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
+        [_wkwebView loadRequest:request];
+    }else if (self.html != nil && [self.html length]>0) {
     
-    
+        [_wkwebView loadHTMLString:self.html baseURL:nil];
+    }
 }
 
 #pragma mark --这个就是设置的上面的那个加载的进度

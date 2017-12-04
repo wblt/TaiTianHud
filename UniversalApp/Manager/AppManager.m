@@ -18,7 +18,7 @@
 +(void)appStart{
     //加载广告
     AdPageView *adView = [[AdPageView alloc] initWithFrame:kScreen_Bounds withTapBlock:^{
-        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:@"http://www.hao123.com"]];
+        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:@"http://www.hao123.com" orHtml:nil]];
         [kRootViewController presentViewController:loginNavi animated:YES completion:nil];
     }];
     adView = adView;

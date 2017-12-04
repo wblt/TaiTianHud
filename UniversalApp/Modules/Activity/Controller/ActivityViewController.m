@@ -12,7 +12,7 @@
 #import "HomeActivityModel.h"
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
-@interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate>
+@interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, UISearchBarDelegate>
 {
     NSString *type;
     NSInteger page;
@@ -28,12 +28,48 @@
     self.navigationItem.titleView = self.segmentV;
     _dataArray = @[].mutableCopy;
     [_segmentV addTarget:self action:@selector(didClicksegmentedControlAction:) forControlEvents:UIControlEventValueChanged];
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toSearch)];
     [self initUI];
     page = 1;
     type = @"start";
     [self requestDataType:@"start" keyword:@""];
    
+}
+
+- (void)toSearch
+{
+    UIView *v = [[UIView alloc] initWithFrame:self.view.window.bounds];
+    v.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    UIView *statue = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 64)];
+    statue.backgroundColor = [UIColor grayColor];
+    [v addSubview:statue];
+    //导航条的搜索条
+    UISearchBar *searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0.0f,20.0f,KScreenWidth,44.0f)];
+    searchBar.delegate = self;
+    searchBar.showsCancelButton = YES;
+    [searchBar setPlaceholder:@"搜索"];
+    searchBar.backgroundImage = [[UIImage alloc] init];
+    searchBar.tintColor = [UIColor blackColor];
+    [v addSubview:searchBar];
+    [self.view.window addSubview:v];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+        [v removeFromSuperview];
+    }];
+    [v addGestureRecognizer:tap];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar.superview removeFromSuperview];
+    
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    page = 1;
+    [self requestDataType:type keyword:searchBar.text];
+    [searchBar.superview removeFromSuperview];
 }
 
 - (void)didClicksegmentedControlAction:(UISegmentedControl *)Seg{
@@ -145,7 +181,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeActivityModel *model = _dataArray[indexPath.row];
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url]];
+    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
 

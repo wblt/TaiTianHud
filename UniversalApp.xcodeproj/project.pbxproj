@@ -171,7 +171,6 @@
 		8D913F981FCEAA360094E8D9 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D913F971FCEAA360094E8D9 /* AboutViewController.m */; };
 		8D913F9B1FCEB74B0094E8D9 /* EditPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D913F9A1FCEB74B0094E8D9 /* EditPasswordViewController.m */; };
 		8D936D371FAAC5BE00B303F9 /* GYChangeTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D361FAAC5BE00B303F9 /* GYChangeTextView.m */; };
-		8D936D3A1FAACAAE00B303F9 /* HomeHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D936D391FAACAAE00B303F9 /* HomeHeadView.xib */; };
 		8D936D3E1FAAF97200B303F9 /* HomeCompanyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D3D1FAAF97200B303F9 /* HomeCompanyModel.m */; };
 		8D936D411FAAFBEB00B303F9 /* HomeActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D401FAAFBEB00B303F9 /* HomeActivityModel.m */; };
 		8D936D451FAB047200B303F9 /* HomeCompanyTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D431FAB047200B303F9 /* HomeCompanyTableCell.m */; };
@@ -477,7 +476,6 @@
 		8D913F9A1FCEB74B0094E8D9 /* EditPasswordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditPasswordViewController.m; sourceTree = "<group>"; };
 		8D936D351FAAC5BE00B303F9 /* GYChangeTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYChangeTextView.h; sourceTree = "<group>"; };
 		8D936D361FAAC5BE00B303F9 /* GYChangeTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GYChangeTextView.m; sourceTree = "<group>"; };
-		8D936D391FAACAAE00B303F9 /* HomeHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeHeadView.xib; sourceTree = "<group>"; };
 		8D936D3C1FAAF97200B303F9 /* HomeCompanyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeCompanyModel.h; sourceTree = "<group>"; };
 		8D936D3D1FAAF97200B303F9 /* HomeCompanyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeCompanyModel.m; sourceTree = "<group>"; };
 		8D936D3F1FAAFBEB00B303F9 /* HomeActivityModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeActivityModel.h; sourceTree = "<group>"; };
@@ -1397,7 +1395,6 @@
 		8D936D381FAACA9E00B303F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				8D936D391FAACAAE00B303F9 /* HomeHeadView.xib */,
 				8D936D421FAB047200B303F9 /* HomeCompanyTableCell.h */,
 				8D936D431FAB047200B303F9 /* HomeCompanyTableCell.m */,
 				8D936D441FAB047200B303F9 /* HomeCompanyTableCell.xib */,
@@ -1607,7 +1604,6 @@
 				293D46531ECDBB63007C64A9 /* icon_tabbar_nearby_selected.png in Resources */,
 				8D936D461FAB047200B303F9 /* HomeCompanyTableCell.xib in Resources */,
 				8D4DCBB71FD00B0100D5251B /* MyTaskCell.xib in Resources */,
-				8D936D3A1FAACAAE00B303F9 /* HomeHeadView.xib in Resources */,
 				8D274AD81FA70E0400227056 /* Home.storyboard in Resources */,
 				8D274B0F1FA7109400227056 /* InformationEditCell.xib in Resources */,
 				293D46561ECDBB63007C64A9 /* icon_tabbar_onsite_selected@2x.png in Resources */,
@@ -1952,7 +1948,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 54QQ99TKR8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1973,7 +1969,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tthud.taitian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2f506e04-8f61-4dad-92d1-442ccf467a5b";
+				PROVISIONING_PROFILE = "9160cd08-0289-4b1d-bd1a-eafb26d733ec";
 				PROVISIONING_PROFILE_SPECIFIER = sw_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/UniversalApp/Define";
@@ -1986,7 +1982,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 54QQ99TKR8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

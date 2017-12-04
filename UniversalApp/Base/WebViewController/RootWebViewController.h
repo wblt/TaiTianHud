@@ -27,6 +27,8 @@
  */
 @property (nonatomic)NSString* url;
 
+@property (nonatomic)NSString* html;
+
 /**
  *  embed webView
  */
@@ -44,7 +46,7 @@
  *
  *  @return instance
  */
--(instancetype)initWithUrl:(NSString *)url;
+-(instancetype)initWithUrl:(NSString *)url orHtml:(NSString *)html;
 
 
 -(void)reloadWebView;

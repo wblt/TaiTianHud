@@ -128,7 +128,7 @@
 
 #pragma mark -  网页测试
 -(void)openWebView{
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:@"http://www.hao123.com"]];
+    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:@"http://www.hao123.com" orHtml:nil]];
     [self presentViewController:loginNavi animated:YES completion:nil];
     
     //push
@@ -301,7 +301,7 @@
 
 #pragma mark -  JSCallNative
 -(void)JSCallNative{
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[JSWebViewController alloc] initWithUrl:@"http://192.168.11.11:8080/testWebAPP/JSCallNative.html?__hbt=1504145287954"]];
+    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[JSWebViewController alloc] initWithUrl:@"http://192.168.11.11:8080/testWebAPP/JSCallNative.html?__hbt=1504145287954" orHtml:nil]];
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
