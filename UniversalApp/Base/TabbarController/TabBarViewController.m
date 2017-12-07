@@ -8,6 +8,7 @@
 #import "TabBarViewController.h"
 #import "RootNavigationController.h"
 #import "LoginViewController.h"
+#import "EditPhoneViewController.h"
 @interface TabBarViewController () <UIAlertViewDelegate,UITabBarDelegate,UITabBarControllerDelegate>
 
 @end
@@ -99,7 +100,7 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController NS_AVAILABLE_IOS(3_0){
     
-    if (viewController.tabBarItem.tag == 2 || viewController.tabBarItem.tag == 3){
+    if (viewController.tabBarItem.tag == 3){
         
         if (![[UserConfig shareInstace] getLoginStatus]) {
             
@@ -108,6 +109,21 @@
             [self presentViewController:loginVC animated:YES completion:nil];
             return NO;
         }else {
+            return YES;
+        }
+    }else if (viewController.tabBarItem.tag == 2) {
+        UserModel *model = [[UserConfig shareInstace] getAllInformation];
+        if (![[UserConfig shareInstace] getLoginStatus]) {
+            
+            UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboad instantiateInitialViewController];
+            [self presentViewController:loginVC animated:YES completion:nil];
+            return NO;
+        }else {
+//            if ([model.ub_id length]==0){
+//                [SVProgressHUD showErrorWithStatus:@"qing xian"];
+//                return NO;
+//            }
             return YES;
         }
     }else {

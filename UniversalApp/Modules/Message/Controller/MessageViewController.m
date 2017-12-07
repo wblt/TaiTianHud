@@ -76,7 +76,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"MessageCell" bundle:nil] forCellReuseIdentifier:@"MessageCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, -38, KScreenWidth, KScreenHeight-49-64+38);
+    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-49-64);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     [self showNoDataImage];
@@ -90,10 +90,8 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = _dataArray[indexPath.row];
-    CGSize titleSize = [model.title sizeForFont:[UIFont systemFontOfSize:14] size:CGSizeMake(KScreenWidth-40, MAXFLOAT) mode:NSLineBreakByCharWrapping];
-    CGFloat imgH = [model.icon length] == 0?0:100;
-    CGFloat titleH = [model.msg_id integerValue]==1?18:0;
-    return 40+5+titleH+10+imgH+5+titleSize.height+10;
+    CGSize titleSize = [model.title sizeForFont:[UIFont systemFontOfSize:14] size:CGSizeMake(KScreenWidth-30, MAXFLOAT) mode:NSLineBreakByCharWrapping];
+    return titleSize.height+80+5;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -110,13 +108,10 @@
     MessageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MessageCell" forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     MessageModel *model = _dataArray[indexPath.row];
-    cell.img.height = [model.icon length] == 0?0:100;
     [cell.img sd_setImageWithURL:[NSURL URLWithString:model.icon]  placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cell.time.text = [NSString timeWithTimeIntervalString:model.readtime];
     cell.text.text = model.title;
-    cell.title.height = [model.msg_id integerValue]==1?18:0;
-    cell.title.text = [model.msg_id integerValue]==1?@"系统消息":@"";
-    cell.line.hidden = [model.msg_id integerValue]==1?NO:YES;
+    cell.title.text = @"系统消息";
     return cell;
 }
 

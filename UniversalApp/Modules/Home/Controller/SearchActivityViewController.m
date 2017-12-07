@@ -1,40 +1,44 @@
 //
-//  MoreActivityViewController.m
+//  SearchActivityViewController.m
 //  UniversalApp
 //
-//  Created by 冷婷 on 2017/12/3.
+//  Created by 何建波 on 2017/12/6.
 //  Copyright © 2017年 徐阳. All rights reserved.
 //
 
-#import "MoreActivityViewController.h"
+#import "SearchActivityViewController.h"
+#import "SDCycleScrollView.h"
+#import "UINavigationBar+Awesome.h"
+#import "HomeCompanyModel.h"
 #import <SDWebImage/UIButton+WebCache.h>
-#import "HomeCompanyTableCell.h"
 #import "HomeActivityModel.h"
-#import "RootWebViewController.h"
+#import "HomeCompanyTableCell.h"
 #import "NSString+Extend.h"
-@interface MoreActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate>
+#import "RootWebViewController.h"
+@interface SearchActivityViewController () <SDCycleScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate, UITextFieldDelegate>
 {
+    UIWebView *webView;
     NSInteger page;
+    UITextField *textField;
 }
 @property (nonatomic,copy) NSMutableArray * dataArray;
 @end
 
-@implementation MoreActivityViewController
+@implementation SearchActivityViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"经典ip";
+    self.title = @"活动搜索";
     _dataArray = @[].mutableCopy;
     
     [self initUI];
     page = 1;
-    [self requestData];
-    
+    [self requestData:@""];
 }
 
-- (void)requestData
+- (void)requestData:(NSString *)key
 {
-    [NetRequestClass afn_requestURL:@"appActMore" httpMethod:@"GET" params:@{@"p":@(page)}.mutableCopy successBlock:^(id returnValue) {
+    [NetRequestClass afn_requestURL:@"appSearchAct" httpMethod:@"GET" params:@{@"p": @(page),@"keywords":key}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
                 [_dataArray removeAllObjects];
@@ -59,9 +63,6 @@
             }
             [self.tableView reloadData];
         }
-        else {
-            [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
-        }
     } failureBlock:^(NSError *error) {
         
     }];
@@ -78,7 +79,7 @@
     self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-64);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-    [self showNoDataImage];
+    
     [self.tableView reloadData];
 }
 
@@ -89,16 +90,6 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 240.0f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.01;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 0.01;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -124,15 +115,47 @@
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 50;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    if (textField == nil) {
+        textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, KScreenWidth-80, 30)];
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.font = [UIFont systemFontOfSize:14];
+        textField.delegate = self;
+        
+    }
+    [view addSubview:textField];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(textField.right, 10, 60, 30)];
+    [btn setTitle:@"搜索" forState:0];
+    [btn setTitleColor:[UIColor blackColor] forState:0];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [btn addTapBlock:^(UIButton *btn) {
+        [textField resignFirstResponder];
+        page = 1;
+        [self requestData:textField.text];
+    }];
+    [view addSubview:btn];
+    return view;
+}
+
 -(void)headerRereshing{
     page = 1;
     [self.tableView.mj_footer setState:MJRefreshStateIdle];
-    [self requestData];
+    [self requestData:textField.text];
 }
 
 -(void)footerRereshing{
-    [self requestData];
+    [self requestData:textField.text];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -150,4 +173,3 @@
  */
 
 @end
-

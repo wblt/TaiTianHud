@@ -21,6 +21,7 @@
 #import "NSString+Extend.h"
 #import "HomeStarModel.h"
 #import "MoreActivityViewController.h"
+#import "SearchActivityViewController.h"
 @interface HomeViewController () <SDCycleScrollViewDelegate, GYChangeTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic,copy) NSArray * dataArray;
 @property (nonatomic,copy) NSMutableArray * bannerArr;
@@ -38,11 +39,17 @@
     _companyArr = @[].mutableCopy;
     _activityArr = @[].mutableCopy;
     _starArr = @[].mutableCopy;
-    //self.dataArray = @[tags,webView,emitterView,IAPPay,tabarBadge,share,alert,action,status,NavColor,JSCore,scrollBanner];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toSearchActivity)];
     
     [self initUI];
     [self requestData];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+}
+
+- (void)toSearchActivity {
+    SearchActivityViewController *search = [[SearchActivityViewController alloc] init];
+    [self.navigationController pushViewController:search animated:YES];
 }
 
 - (void)requestData
@@ -81,7 +88,7 @@
     //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HomeCompanyTableCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, -38, KScreenWidth, KScreenHeight-49);
+    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-49-64);
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeCompanyTableCell" bundle:nil] forCellReuseIdentifier:@"HomeCompanyTableCell"];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
@@ -110,7 +117,7 @@
     cell.scrollImg.imageURLStringsGroup = model.img;
     [cell.address setTitle:model.area_title forState:0];
     [cell.personNum setTitle:[NSString stringWithFormat:@"%@人报名",model.total] forState:0];
-    [cell.time setTitle:[NSString timeWithTimeIntervalString:model.modtime] forState:0];
+    [cell.time setTitle:[NSString timeWithTimeIntervalString:model.start] forState:0];
     cell.titleLabel.text = [NSString stringWithFormat:@"  %@", model.title];
     return cell;
 }

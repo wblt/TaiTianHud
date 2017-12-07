@@ -30,7 +30,7 @@
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 60;
-    self.tableView.frame = CGRectMake(0, 160-38, KScreenWidth, self.view.height-160);
+    self.tableView.frame = CGRectMake(0, 160, KScreenWidth, self.view.height-160);
     [self.view addSubview:self.tableView];
     [self.tableView registerNib:[UINib nibWithNibName:@"MyTaskCell" bundle:nil] forCellReuseIdentifier:@"MyTaskCell"];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -45,7 +45,7 @@
         UserModel *model = [[UserConfig shareInstace] getAllInformation];
         UILabel *money = (UILabel *)[self.view viewWithTag:201];
         ChongzhiViewController *cz = [[ChongzhiViewController alloc] init];
-        cz.nameText = model.realname;
+        cz.nameText = model.nickname;
         cz.jifenText = money.text;
         [self.navigationController pushViewController:cz animated:YES];
     }];

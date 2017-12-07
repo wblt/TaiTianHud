@@ -82,7 +82,6 @@
 		296DEA7F1F5D536500C6FD00 /* pageControlDot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 296DEA7A1F5D536500C6FD00 /* pageControlDot@3x.png */; };
 		296DEA801F5D536500C6FD00 /* pageControlCurrentDot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 296DEA7B1F5D536500C6FD00 /* pageControlCurrentDot@3x.png */; };
 		296DEA811F5D536500C6FD00 /* pageControlCurrentDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 296DEA7C1F5D536500C6FD00 /* pageControlCurrentDot@2x.png */; };
-		296DEA821F5D536500C6FD00 /* placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 296DEA7D1F5D536500C6FD00 /* placeholder@2x.png */; };
 		296ED8B41EF3B6A300E33961 /* libPods-UniversalApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 296ED8B31EF3B6A300E33961 /* libPods-UniversalApp.a */; };
 		296F9A541F0516A700909CDB /* UICollectionView+IndexPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 296F9A531F0516A700909CDB /* UICollectionView+IndexPath.m */; };
 		296F9ED61ECC64CE0063A255 /* MiAiAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 296F9ED51ECC64CE0063A255 /* MiAiAppTests.m */; };
@@ -105,6 +104,7 @@
 		29FEE77B1ECED1E200C81B60 /* MBHUD_Warn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29FEE7731ECED1E200C81B60 /* MBHUD_Warn@2x.png */; };
 		29FEE77C1ECED1E200C81B60 /* MBHUD_Warn@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29FEE7741ECED1E200C81B60 /* MBHUD_Warn@3x.png */; };
 		5BC8C50C0BEF57AA0780D5DC /* libPods-UniversalApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E884624664B432D4FE5044F /* libPods-UniversalApp.a */; };
+		8D20D9311FD93B5400855E5D /* MoreStarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D20D9301FD93B5400855E5D /* MoreStarViewController.m */; };
 		8D274AD71FA70E0400227056 /* Activity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D274AD21FA70E0400227056 /* Activity.storyboard */; };
 		8D274AD81FA70E0400227056 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D274AD31FA70E0400227056 /* Home.storyboard */; };
 		8D274AD91FA70E0400227056 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D274AD41FA70E0400227056 /* Login.storyboard */; };
@@ -162,6 +162,7 @@
 		8D4DCBB21FD00AB700D5251B /* MyTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DCBB11FD00AB700D5251B /* MyTaskViewController.m */; };
 		8D4DCBB61FD00B0100D5251B /* MyTaskCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D4DCBB41FD00B0100D5251B /* MyTaskCell.m */; };
 		8D4DCBB71FD00B0100D5251B /* MyTaskCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D4DCBB51FD00B0100D5251B /* MyTaskCell.xib */; };
+		8D5FDC7E1FD7B0C9001F5AB7 /* SearchActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D5FDC7D1FD7B0C9001F5AB7 /* SearchActivityViewController.m */; };
 		8D6278651FCBE73700091E33 /* ReRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D6278641FCBE73700091E33 /* ReRegisterViewController.m */; };
 		8D759C731FAC52300031D86F /* HomeBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D759C721FAC52300031D86F /* HomeBannerModel.m */; };
 		8D913F8D1FCE66B00094E8D9 /* InformationHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D913F8C1FCE66B00094E8D9 /* InformationHeadView.xib */; };
@@ -321,7 +322,6 @@
 		296DEA7A1F5D536500C6FD00 /* pageControlDot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pageControlDot@3x.png"; sourceTree = "<group>"; };
 		296DEA7B1F5D536500C6FD00 /* pageControlCurrentDot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pageControlCurrentDot@3x.png"; sourceTree = "<group>"; };
 		296DEA7C1F5D536500C6FD00 /* pageControlCurrentDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pageControlCurrentDot@2x.png"; sourceTree = "<group>"; };
-		296DEA7D1F5D536500C6FD00 /* placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placeholder@2x.png"; sourceTree = "<group>"; };
 		296ED8B31EF3B6A300E33961 /* libPods-UniversalApp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-UniversalApp.a"; path = "../../Library/Developer/Xcode/DerivedData/UniversalApp-ekowodordvfxkkdyohamowsftbba/Build/Products/Debug-iphonesimulator/libPods-UniversalApp.a"; sourceTree = "<group>"; };
 		296F9A521F0516A700909CDB /* UICollectionView+IndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+IndexPath.h"; sourceTree = "<group>"; };
 		296F9A531F0516A700909CDB /* UICollectionView+IndexPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+IndexPath.m"; sourceTree = "<group>"; };
@@ -360,6 +360,8 @@
 		29FEE7671ECEC27900C81B60 /* MBProgressHUD+XY.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+XY.m"; sourceTree = "<group>"; };
 		29FEE7731ECED1E200C81B60 /* MBHUD_Warn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Warn@2x.png"; sourceTree = "<group>"; };
 		29FEE7741ECED1E200C81B60 /* MBHUD_Warn@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MBHUD_Warn@3x.png"; sourceTree = "<group>"; };
+		8D20D92F1FD93B5400855E5D /* MoreStarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreStarViewController.h; sourceTree = "<group>"; };
+		8D20D9301FD93B5400855E5D /* MoreStarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreStarViewController.m; sourceTree = "<group>"; };
 		8D274AD21FA70E0400227056 /* Activity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Activity.storyboard; sourceTree = "<group>"; };
 		8D274AD31FA70E0400227056 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		8D274AD41FA70E0400227056 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -460,6 +462,8 @@
 		8D4DCBB31FD00B0100D5251B /* MyTaskCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTaskCell.h; sourceTree = "<group>"; };
 		8D4DCBB41FD00B0100D5251B /* MyTaskCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTaskCell.m; sourceTree = "<group>"; };
 		8D4DCBB51FD00B0100D5251B /* MyTaskCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyTaskCell.xib; sourceTree = "<group>"; };
+		8D5FDC7C1FD7B0C9001F5AB7 /* SearchActivityViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchActivityViewController.h; sourceTree = "<group>"; };
+		8D5FDC7D1FD7B0C9001F5AB7 /* SearchActivityViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchActivityViewController.m; sourceTree = "<group>"; };
 		8D6278631FCBE73700091E33 /* ReRegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReRegisterViewController.h; sourceTree = "<group>"; };
 		8D6278641FCBE73700091E33 /* ReRegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReRegisterViewController.m; sourceTree = "<group>"; };
 		8D759C711FAC52300031D86F /* HomeBannerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeBannerModel.h; sourceTree = "<group>"; };
@@ -593,7 +597,6 @@
 				296DEA7A1F5D536500C6FD00 /* pageControlDot@3x.png */,
 				296DEA7B1F5D536500C6FD00 /* pageControlCurrentDot@3x.png */,
 				296DEA7C1F5D536500C6FD00 /* pageControlCurrentDot@2x.png */,
-				296DEA7D1F5D536500C6FD00 /* placeholder@2x.png */,
 				290A97D21F4AB24A006BF882 /* stepPk_win_colour1@2x.png */,
 				290A97D31F4AB24A006BF882 /* stepPk_win_colour2@2x.png */,
 				290A97D41F4AB24A006BF882 /* stepPk_win_colour3@2x.png */,
@@ -1106,6 +1109,10 @@
 				8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */,
 				EE4166B01FD4349F0077E29C /* MoreActivityViewController.h */,
 				EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */,
+				8D5FDC7C1FD7B0C9001F5AB7 /* SearchActivityViewController.h */,
+				8D5FDC7D1FD7B0C9001F5AB7 /* SearchActivityViewController.m */,
+				8D20D92F1FD93B5400855E5D /* MoreStarViewController.h */,
+				8D20D9301FD93B5400855E5D /* MoreStarViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1612,7 +1619,6 @@
 				293D464F1ECDBB63007C64A9 /* icon_tabbar_misc@2x.png in Resources */,
 				293D464B1ECDBB63007C64A9 /* icon_tabbar_mine@2x.png in Resources */,
 				293D46401ECDBB63007C64A9 /* icon_tabbar_discovery.png in Resources */,
-				296DEA821F5D536500C6FD00 /* placeholder@2x.png in Resources */,
 				8D274ADB1FA70E0400227056 /* Mine.storyboard in Resources */,
 				293D46431ECDBB63007C64A9 /* icon_tabbar_homepage@2x.png in Resources */,
 				293D46441ECDBB63007C64A9 /* icon_tabbar_homepage_selected.png in Resources */,
@@ -1728,6 +1734,7 @@
 				290A97DE1F4AB24A006BF882 /* ToolDemoViewController.m in Sources */,
 				8D274B671FA713A600227056 /* UIImage+FixOrientation.m in Sources */,
 				290A98091F4ABCF6006BF882 /* XZPickView.m in Sources */,
+				8D5FDC7E1FD7B0C9001F5AB7 /* SearchActivityViewController.m in Sources */,
 				290A981E1F4ABEB9006BF882 /* BaseTableViewCell.m in Sources */,
 				8D274B061FA7109400227056 /* ForgetPwdController.m in Sources */,
 				290DE9261ED19B7F00A45FF6 /* AppManager.m in Sources */,
@@ -1782,6 +1789,7 @@
 				8D936D411FAAFBEB00B303F9 /* HomeActivityModel.m in Sources */,
 				8D274ADE1FA70ED500227056 /* NetRequestClass.m in Sources */,
 				29FEE7681ECEC27900C81B60 /* MBProgressHUD+XY.m in Sources */,
+				8D20D9311FD93B5400855E5D /* MoreStarViewController.m in Sources */,
 				EEFA8CC01FD2C4CB00340A1B /* ChongzhiViewController.m in Sources */,
 				298A76771F5421CF00F639B7 /* UINavigationBar+Awesome.m in Sources */,
 				8D936D371FAAC5BE00B303F9 /* GYChangeTextView.m in Sources */,

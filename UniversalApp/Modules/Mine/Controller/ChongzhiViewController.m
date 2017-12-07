@@ -23,6 +23,7 @@
     self.title = @"充值";
     _arr = @[].mutableCopy;
     //注册cell
+    self.collectionView.bounces = NO;
     [self.collectionView registerNib:[UINib nibWithNibName:@"ChongzhiCollectionCell" bundle:nil] forCellWithReuseIdentifier:@"ChongzhiCollectionCell"];
     //设置数据源代理
     self.collectionView.dataSource = self;
@@ -89,6 +90,17 @@
                 ChongzhiPayModel *model = [ChongzhiPayModel mj_objectWithKeyValues:dic];
                 [_arr addObject:model];
             }
+            self.collectionView.frame = CGRectMake(0, 0, KScreenWidth, (_arr.count/3+_arr.count%3==0?0:1)*80+118+40);
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, self.collectionView.bottom, 110, 30)];
+            label.text = @"其他金额";
+            label.textAlignment = NSTextAlignmentRight;
+            label.font = [UIFont systemFontOfSize:14];
+            [self.view addSubview:label];
+            UITextField *field = [[UITextField alloc] initWithFrame:CGRectMake(140, self.collectionView.bottom, KScreenWidth-200, 30)];
+            field.keyboardType = UIKeyboardTypeNumberPad;
+            field.backgroundColor = [UIColor whiteColor];
+            field.borderStyle = UITextBorderStyleRoundedRect;
+            [self.view addSubview:field];
             [self.collectionView reloadData];
             [self performSelector:@selector(actionHHHHH) withObject:nil afterDelay:0];
         }

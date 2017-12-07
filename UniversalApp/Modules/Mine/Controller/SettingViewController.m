@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"完善个人信息";
+    self.title = @"设置";
     self.tableView.mj_header.hidden = YES;
     self.tableView.mj_footer.hidden = YES;
     self.tableView.dataSource = self;
@@ -31,7 +31,8 @@
     self.tableView.rowHeight = 55;
     self.tableView.frame = self.view.bounds;
     [self.view addSubview:self.tableView];
-    arr = @[@[@"修改手机号",@"修改密码"],@[@"绑定微信",@"清除缓存"]];
+    UserModel *model = [[UserConfig shareInstace] getAllInformation];
+    arr = @[@[@"修改手机号",@"修改密码"],@[[model.isvst boolValue]?@"绑定手机号":@"绑定微信",@"清除缓存"]];
     
 }
 
@@ -160,8 +161,14 @@
         UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
         EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
         editPhoneVC.title = @"修改手机号";
-        [editPhoneVC setHidesBottomBarWhenPushed:YES];
         [self.navigationController pushViewController:editPhoneVC animated:YES];
+    }else {
+        if ([arr[indexPath.section][indexPath.row] isEqualToString:@"绑定手机号"]) {
+            UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+            EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+            editPhoneVC.title = @"绑定手机号";
+            [self.navigationController pushViewController:editPhoneVC animated:YES];
+        }
     }
 }
 

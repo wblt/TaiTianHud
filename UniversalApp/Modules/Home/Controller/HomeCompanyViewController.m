@@ -14,6 +14,7 @@
 #import "HomeActivityModel.h"
 #import "HomeCompanyTableCell.h"
 #import "NSString+Extend.h"
+#import "RootWebViewController.h"
 @interface HomeCompanyViewController () <SDCycleScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate>
 {
     UIWebView *webView;
@@ -60,10 +61,10 @@
     self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-64);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-    self.tableView.contentInset = UIEdgeInsetsMake(130, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(160, 0, 0, 0);
     UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"CompanyDetailHeadView" owner:self options:nil] lastObject];
     UIImageView *img = [view viewWithTag:202];
-    [img sd_setImageWithURL:[NSURL URLWithString:_model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default2"]];
+    [img sd_setImageWithURL:[NSURL URLWithString:_model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default"]];
     
     UILabel *label1 = [view viewWithTag:203];
     label1.text = _model.title;
@@ -80,7 +81,7 @@
                 value:[UIColor orangeColor]
                 range:NSMakeRange(5,[_model.act_num length])];
     label3.attributedText = str1;
-    view.frame = CGRectMake(0, -130, KScreenWidth, 165);
+    view.frame = CGRectMake(0, -160, KScreenWidth, 160);
     [self.tableView addSubview:view];
     [self.tableView reloadData];
 }
@@ -116,13 +117,15 @@
     cell.scrollImg.imageURLStringsGroup = model.img;
     [cell.address setTitle:model.area_title forState:0];
     [cell.personNum setTitle:[NSString stringWithFormat:@"%@人报名",model.total] forState:0];
-    [cell.time setTitle:[NSString timeWithTimeIntervalString:model.modtime] forState:0];
+    [cell.time setTitle:[NSString timeWithTimeIntervalString:model.start] forState:0];
     cell.titleLabel.text = [NSString stringWithFormat:@"  %@", model.title];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    HomeActivityModel *model = _dataArray[indexPath.row];
+    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
+    [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

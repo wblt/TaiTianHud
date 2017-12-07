@@ -25,9 +25,8 @@
     [super viewDidLoad];
     [_phoneNumFiled addTarget:self action:@selector(textFieldDidChanged:) forControlEvents:UIControlEventEditingChanged];
     //设置数据
-    UserModel *userModel = [[UserConfig shareInstace] getAllInformation];
-    self.phoneNumFiled.text = userModel.userPhoneNum;
-    self.passwordFiled.text = userModel.userPassword;
+    self.phoneNumFiled.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"phoneNumFiledSave"];
+    self.passwordFiled.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"passwordFiledSave"];;
 }
 
 
@@ -68,15 +67,17 @@
             userModel.userPhoneNum = self.phoneNumFiled.text;
             userModel.userPassword = self.passwordFiled.text;
             [[UserConfig shareInstace] setAllInformation:userModel];
-            
+            [[NSUserDefaults standardUserDefaults] setObject:self.phoneNumFiled.text forKey:@"phoneNumFiledSave"];
+            [[NSUserDefaults standardUserDefaults] setObject:self.passwordFiled.text forKey:@"passwordFiledSave"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             // 保存登录状态
             [[UserConfig shareInstace] setLoginStatus:YES];
             
             //登陆成功，跳转至首页
             AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            NSInteger index = delegate.mainTabBar.selectedIndex;
+            //NSInteger index = delegate.mainTabBar.selectedIndex;
             delegate.mainTabBar = [TabBarViewController new];
-            delegate.mainTabBar.selectedIndex = index;
+            delegate.mainTabBar.selectedIndex = 3;
             delegate.window.rootViewController = delegate.mainTabBar;
             
             //显示动画
@@ -98,16 +99,16 @@
 
 - (IBAction)wxLogin:(id)sender {
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    if ([model.wx_openid length]>0) {
-        NSDictionary *params = @{@"wx_openid":model.wx_openid, @"nickname":model.nickname, @"headpic":model.headpic, @"sex":model.sex};
-        [[UserManager sharedUserManager] loginToServer:params completion:^(BOOL success, NSString *des) {
-            if (success) {
-                DLog(@"登录成功");
-            }else{
-                DLog(@"登录失败：%@", des);
-            }
-        }];
-    }else {
+//    if ([model.wx_openid length]>0) {
+//        NSDictionary *params = @{@"wx_openid":model.wx_openid, @"nickname":model.nickname, @"headpic":model.headpic, @"sex":model.sex};
+//        [[UserManager sharedUserManager] loginToServer:params completion:^(BOOL success, NSString *des) {
+//            if (success) {
+//                DLog(@"登录成功");
+//            }else{
+//                DLog(@"登录失败：%@", des);
+//            }
+//        }];
+//    }else {
         [userManager login:kUserLoginTypeWeChat completion:^(BOOL success, NSString *des) {
             if (success) {
                 DLog(@"登录成功");
@@ -115,7 +116,7 @@
                 DLog(@"登录失败：%@", des);
             }
         }];
-    }
+//    }
 }
 - (IBAction)toRegisterVC:(id)sender {
     //获取Main.storyboard

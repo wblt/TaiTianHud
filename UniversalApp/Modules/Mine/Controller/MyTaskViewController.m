@@ -30,13 +30,13 @@
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.rowHeight = 60;
-    self.tableView.frame = CGRectMake(0, -38, KScreenWidth, self.view.height);
+    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, self.view.height);
     [self.view addSubview:self.tableView];
     [self.tableView registerNib:[UINib nibWithNibName:@"MyTaskCell" bundle:nil] forCellReuseIdentifier:@"MyTaskCell"];
     self.tableView.contentInset = UIEdgeInsetsMake(140, 0, 0, 0);
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
     UIView *v = [[[NSBundle mainBundle] loadNibNamed:@"PersonHeadView" owner:self options:nil] lastObject];
-    v.frame = CGRectMake(0, -140+38, KScreenWidth, 140);
+    v.frame = CGRectMake(0, -140, KScreenWidth, 140);
     UIImageView *img = (UIImageView *)[v viewWithTag:201];
     [img sd_setImageWithURL:[NSURL URLWithString:model.headpic] placeholderImage:[UIImage imageNamed:@"friend_default"]];
     UILabel *name = (UILabel *)[v viewWithTag:202];
@@ -62,6 +62,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MyTaskCell *cell = (MyTaskCell *)[tableView dequeueReusableCellWithIdentifier:@"MyTaskCell" forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellAccessoryNone;
     TaskClassifyModel *classifyModel = arr[indexPath.section];
     TaskModel *model = classifyModel.task[indexPath.row];
     cell.titleLabel.text = model.tk_title;
@@ -86,30 +87,34 @@
             TaskClassifyModel *cm = arr[(btn.tag-100)/10];
             TaskModel *m = cm.task[(btn.tag-100)%10];
             UserModel *user = [[UserConfig shareInstace] getAllInformation];
-            [NetRequestClass afn_requestURL:@"appTaskGeg" httpMethod:@"POST" params:@{@"tl_id":m.tl_id,@"award_type":m.award_type,@"award_woeth":m.tl_award,@"ub_id":user.ub_id,@"task_id":m.task_id}.mutableCopy successBlock:^(id returnValue) {
+            [NetRequestClass afn_requestURL:@"appTaskGeg" httpMethod:@"POST" params:@{@"tl_id":m.tl_id,@"award_type":m.award_type,@"award_worth":m.tl_award,@"ub_id":user.ub_id,@"task_id":m.task_id}.mutableCopy successBlock:^(id returnValue) {
                 if ([returnValue[@"status"] integerValue] == 1) {
                     [SVProgressHUD showSuccessWithStatus:returnValue[@"info"]];
+                    [arr removeAllObjects];
                     [self requestData];
                     UIView *view;
                     if (view == nil) {
                         view = [[UIView alloc] initWithFrame:self.view.bounds];
-                        view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
+                        view.backgroundColor = [UIColor clearColor];
                         [self.view addSubview:view];
                         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
                             [view removeFromSuperview];
                         }];
                         [view addGestureRecognizer:tap];
-                        UIView *awardView = [[UIView alloc] initWithFrame:CGRectMake((KScreenWidth-280)/2, (KScreenHeight-250)/2, 280, 250)];
+                        UIView *awardView = [[UIView alloc] initWithFrame:CGRectMake((KScreenWidth-280)/2, (KScreenHeight-250)/2-50, 280, 250)];
                         awardView.backgroundColor = [UIColor whiteColor];
-                        awardView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+                        awardView.layer.cornerRadius = 5;
+                        awardView.layer.masksToBounds = YES;
                         [view addSubview:awardView];
                         UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 240, 180)];
+                        imgV.contentMode = UIViewContentModeScaleAspectFit;
                         imgV.image = [UIImage imageNamed:@"huatong"];
                         [awardView addSubview:imgV];
-                        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 280, 50)];
+                        UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(20, 180, 280-40, 70)];
+                        text.numberOfLines = 0;
                         text.text = @"恭喜你，获得上位送出一个话筒！";
                         text.textAlignment = NSTextAlignmentCenter;
-                        text.font = [UIFont systemFontOfSize:18];
+                        text.font = [UIFont systemFontOfSize:16];
                         [awardView addSubview:text];
                     }
                     
@@ -127,17 +132,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 60;
+    return 50;
 }
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     TaskClassifyModel *model = arr[section];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
     view.backgroundColor = [UIColor whiteColor];
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 10)];
-    line.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    [view addSubview:line];
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(15, 20, 85, 30)];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(15, 10, 85, 30)];
     [btn setTitle:[NSString stringWithFormat:@" %@", model.title] forState:0];
     [btn setImage:[UIImage imageNamed:@"我的任务页面任务"] forState:0];
     btn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -148,7 +150,7 @@
                                                                                                                                      [UIFont systemFontOfSize:15]} context:nil].size;//trueSize为控件实际的大小
     btn.width = trueSize.width+25;
     [view addSubview:btn];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(btn.right, 20, 100, 30)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(btn.right, 10, 100, 30)];
     label.text = [NSString stringWithFormat:@"（共%d个）", model.task.count];
     label.adjustsFontSizeToFitWidth = YES;
     label.font = [UIFont systemFontOfSize:15];
@@ -196,7 +198,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   
 }
 
 - (void)didReceiveMemoryWarning {

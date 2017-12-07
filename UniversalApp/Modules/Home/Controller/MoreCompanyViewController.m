@@ -117,13 +117,13 @@
     }
     if (_type == 1) {
         HomeCompanyModel *model = _companyArr[indexPath.row];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default2"]];
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default"]];
         cell.imageView.layer.masksToBounds = YES;
         cell.textLabel.text = model.title;
         cell.detailTextLabel.text = model.trade;
     }else {
         HomeActivityModel *model = _companyArr[indexPath.row];
-        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default2"]];
+        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default"]];
         cell.imageView.layer.masksToBounds = YES;
         cell.textLabel.text = model.title;
         cell.detailTextLabel.text = model.com_title;

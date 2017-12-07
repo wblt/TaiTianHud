@@ -83,19 +83,19 @@
     if (loginSuccess) {//登陆成功加载主窗口控制器
         
         //为避免自动登录成功刷新tabbar
-        if (!self.mainTabBar || ![self.window.rootViewController isKindOfClass:[TabBarViewController class]]) {
-            self.mainTabBar = [TabBarViewController new];
-
-            CATransition *anima = [CATransition animation];
-            anima.type = @"cube";//设置动画的类型
-            anima.subtype = kCATransitionFromRight; //设置动画的方向
-            anima.duration = 0.3f;
-            
-            self.window.rootViewController = self.mainTabBar;
-            
-            [kAppWindow.layer addAnimation:anima forKey:@"revealAnimation"];
-            
-        }
+        //登陆成功，跳转至首页
+        AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        //NSInteger index = delegate.mainTabBar.selectedIndex;
+        delegate.mainTabBar = [TabBarViewController new];
+        delegate.mainTabBar.selectedIndex = 3;
+        delegate.window.rootViewController = delegate.mainTabBar;
+        
+        //显示动画
+        delegate.window.rootViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
+        [UIView animateWithDuration:0.4 animations:^{
+            delegate.window.rootViewController.view.transform = CGAffineTransformIdentity;
+        }completion:nil];
+        
         
     }else {//登陆失败加载登陆页面控制器
         

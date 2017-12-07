@@ -12,10 +12,11 @@
 #import "HomeActivityModel.h"
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
-@interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, UISearchBarDelegate>
+@interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 {
     NSString *type;
     NSInteger page;
+    UITextField *textField;
 }
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segmentV;
 @property (nonatomic,copy) NSMutableArray * dataArray;
@@ -28,7 +29,7 @@
     self.navigationItem.titleView = self.segmentV;
     _dataArray = @[].mutableCopy;
     [_segmentV addTarget:self action:@selector(didClicksegmentedControlAction:) forControlEvents:UIControlEventValueChanged];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toSearch)];
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toSearch)];
     [self initUI];
     page = 1;
     type = @"start";
@@ -95,7 +96,7 @@
 
 - (void)requestDataType:(NSString *)typeStr keyword:(NSString *)word
 {
-    [NetRequestClass afn_requestURL:@"appActList" httpMethod:@"GET" params:@{@"p":@(page), @"type":typeStr,@"keywords ":word}.mutableCopy successBlock:^(id returnValue) {
+    [NetRequestClass afn_requestURL:@"appActList" httpMethod:@"GET" params:@{@"p":@(page), @"type":typeStr,@"keywords":word}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
                 [_dataArray removeAllObjects];
@@ -154,7 +155,33 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0.01;
+    return 50;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    if (textField == nil) {
+        textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, KScreenWidth-80, 30)];
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.font = [UIFont systemFontOfSize:14];
+        textField.delegate = self;
+        
+    }
+    [view addSubview:textField];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(textField.right, 10, 60, 30)];
+    [btn setTitle:@"搜索" forState:0];
+    [btn setTitleColor:[UIColor blackColor] forState:0];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [btn addTapBlock:^(UIButton *btn) {
+        [textField resignFirstResponder];
+        page = 1;
+        [self requestDataType:type keyword:textField.text];
+    }];
+    [view addSubview:btn];
+    return view;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -174,7 +201,7 @@
     cell.scrollImg.imageURLStringsGroup = model.img;
     [cell.address setTitle:model.area_title forState:0];
     [cell.personNum setTitle:[NSString stringWithFormat:@"%@人报名",model.total] forState:0];
-    [cell.time setTitle:[NSString timeWithTimeIntervalString:model.modtime] forState:0];
+    [cell.time setTitle:[NSString timeWithTimeIntervalString:model.start] forState:0];
     cell.titleLabel.text = [NSString stringWithFormat:@"  %@", model.title];
     return cell;
 }

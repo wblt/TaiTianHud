@@ -85,6 +85,7 @@ static  UserConfig *instance = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"isLogin"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLogin"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    [self setAllInformation:nil];
 }
 
 #pragma mark - 验证相关方法

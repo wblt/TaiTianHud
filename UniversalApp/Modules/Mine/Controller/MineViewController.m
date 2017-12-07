@@ -158,7 +158,7 @@
         UIImageView *img = (UIImageView *)[v viewWithTag:201];
         [img sd_setImageWithURL:[NSURL URLWithString:model.headpic] placeholderImage:[UIImage imageNamed:@"friend_default"]];
         UILabel *name = (UILabel *)[v viewWithTag:202];
-        name.text = [NSString stringWithFormat:@"%@ • %@", model.realname, [model.sex integerValue]==1?@"男":@"女"];
+        name.text = [NSString stringWithFormat:@"%@ • %@", model.nickname, [model.sex integerValue]==1?@"男":@"女"];
         UIButton *bangd = (UIButton *)[v viewWithTag:203];
         if (![model.isvst boolValue]) {
             bangd.hidden = YES;
@@ -182,7 +182,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    if ([model.isvst boolValue]&&![arr[indexPath.section][indexPath.row] isEqualToString:@"关于上位"]) {
+    if ([model.isvst boolValue]&&![arr[indexPath.section][indexPath.row] isEqualToString:@"关于上位"]&&![arr[indexPath.section][indexPath.row] isEqualToString:@"设置"]) {
         UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
         EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
         editPhoneVC.title = @"绑定手机号";

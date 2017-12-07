@@ -87,7 +87,33 @@ SINGLETON_FOR_CLASS(UserManager);
 -(void)loginToServer:(NSDictionary *)params completion:(loginBlock)completion{
     [MBProgressHUD showActivityMessageInView:@"登录中..."];
     [NetRequestClass afn_requestURL:@"appWxLogin" httpMethod:@"POST" params:params.mutableCopy successBlock:^(id returnValue) {
-        [self LoginSuccess:returnValue completion:completion];
+        [MBProgressHUD hideHUD];
+        if ([returnValue[@"status"] integerValue] == 1) {
+            UserModel *userModel = [UserModel mj_objectWithKeyValues:returnValue[@"data"]];
+            [[UserConfig shareInstace] setAllInformation:userModel];
+            
+            // 保存登录状态
+            [[UserConfig shareInstace] setLoginStatus:YES];
+            
+            //登陆成功，跳转至首页
+            AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            //NSInteger index = delegate.mainTabBar.selectedIndex;
+            delegate.mainTabBar = [TabBarViewController new];
+            delegate.mainTabBar.selectedIndex = 3;
+            delegate.window.rootViewController = delegate.mainTabBar;
+            
+            //显示动画
+//            delegate.window.rootViewController.view.transform = CGAffineTransformMakeScale(0.3, 0.3);
+//            [UIView animateWithDuration:0.4 animations:^{
+//                delegate.window.rootViewController.view.transform = CGAffineTransformIdentity;
+//            }completion:nil];
+            
+        }else {
+            if (completion) {
+                completion(NO,@"登录返回数据异常");
+            }
+            KPostNotification(KNotificationLoginStateChange, @NO);
+        }
     } failureBlock:^(NSError *error) {
         [MBProgressHUD hideHUD];
         if (completion) {
@@ -110,35 +136,35 @@ SINGLETON_FOR_CLASS(UserManager);
 }
 
 #pragma mark ————— 登录成功处理 —————
--(void)LoginSuccess:(id )responseObject completion:(loginBlock)completion{
-    if (ValidDict(responseObject)) {
-        if (ValidDict(responseObject[@"data"])) {
-            [MBProgressHUD hideHUD];
-            UserModel *userModel = [UserModel mj_objectWithKeyValues:responseObject[@"data"]];
-            [[UserConfig shareInstace] setAllInformation:userModel];
-            
-            // 保存登录状态
-            [[UserConfig shareInstace] setLoginStatus:YES];
-            if (completion) {
-                completion(YES,nil);
-            }
-            KPostNotification(KNotificationLoginStateChange, @YES);
-            
-        }else{
-            if (completion) {
-                completion(NO,@"登录返回数据异常");
-            }
-            KPostNotification(KNotificationLoginStateChange, @NO);
-            
-        }
-    }else{
-        if (completion) {
-            completion(NO,@"登录返回数据异常");
-        }
-        KPostNotification(KNotificationLoginStateChange, @NO);
-    }
-    
-}
+//-(void)LoginSuccess:(id )responseObject completion:(loginBlock)completion{
+//    if (ValidDict(responseObject)) {
+//        if ([responseObject[@"status"] integerValue] == 1) {
+//            [MBProgressHUD hideHUD];
+//            UserModel *userModel = [UserModel mj_objectWithKeyValues:responseObject[@"data"]];
+//            [[UserConfig shareInstace] setAllInformation:userModel];
+//            
+//            // 保存登录状态
+//            [[UserConfig shareInstace] setLoginStatus:YES];
+//            if (completion) {
+//                completion(YES,nil);
+//            }
+//            KPostNotification(KNotificationLoginStateChange, @YES);
+//            
+//        }else{
+//            if (completion) {
+//                completion(NO,@"登录返回数据异常");
+//            }
+//            KPostNotification(KNotificationLoginStateChange, @NO);
+//            
+//        }
+//    }else{
+//        if (completion) {
+//            completion(NO,@"登录返回数据异常");
+//        }
+//        KPostNotification(KNotificationLoginStateChange, @NO);
+//    }
+//    
+//}
 #pragma mark ————— 储存用户信息 —————
 -(void)saveUserInfo{
     if (self.curUserInfo) {

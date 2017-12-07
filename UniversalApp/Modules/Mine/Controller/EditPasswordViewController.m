@@ -65,10 +65,27 @@
             InformationEditCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
             [textArr addObject:cell.textField.text];
         }
-        [NetRequestClass afn_requestURL:@"appTelSbt" httpMethod:@"GET" params:@{@"nickname":textArr[0],@"realname":textArr[1],@"idcard":textArr[2]}.mutableCopy successBlock:^(id returnValue) {
+        UserModel *model = [[UserConfig shareInstace] getAllInformation];
+        if ([textArr[0] length] == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入旧密码"];
+            return;
+        }
+        if ([textArr[1] length] == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请输入新密码"];
+            return;
+        }
+        if ([textArr[2] length] == 0) {
+            [SVProgressHUD showErrorWithStatus:@"请再次输入新密码验证"];
+            return;
+        }
+        if (![textArr[1] isEqualToString:textArr[2]]) {
+            [SVProgressHUD showErrorWithStatus:@"两次输入新密码不一致"];
+            return;
+        }
+        [NetRequestClass afn_requestURL:@"appEditPwdSbt" httpMethod:@"GET" params:@{@"usedpwd":textArr[0],@"password":textArr[1],@"ub_id":model.ub_id}.mutableCopy successBlock:^(id returnValue) {
             if ([returnValue[@"status"] integerValue] == 1) {
-                
-                
+                [SVProgressHUD showSuccessWithStatus:returnValue[@"info"]];
+                [self.navigationController popViewControllerAnimated:YES];
             }
             else {
                 [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];

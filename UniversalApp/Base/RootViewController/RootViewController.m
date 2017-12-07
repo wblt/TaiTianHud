@@ -113,8 +113,8 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
         //头部刷新
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-        header.automaticallyChangeAlpha = YES;
-        header.lastUpdatedTimeLabel.hidden = NO;
+//        header.automaticallyChangeAlpha = YES;
+//        header.lastUpdatedTimeLabel.hidden = NO;
         _tableView.mj_header = header;
         
         //底部刷新
@@ -133,8 +133,8 @@
         
         _tableView.backgroundColor=CViewBgColor;
         _tableView.scrollsToTop = YES;
-        _tableView.tableHeaderView = [[UIView alloc] init];
-        _tableView.tableFooterView = [[UIView alloc] init];
+//        _tableView.tableHeaderView = [[UIView alloc] init];
+//        _tableView.tableFooterView = [[UIView alloc] init];
     }
     return _tableView;
 }
@@ -256,11 +256,16 @@
     for (NSString * title in titles) {
         UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
         btn.frame = CGRectMake(0, 0, 30, 20);
-        [btn setTitle:title forState:UIControlStateNormal];
+        
         [btn setImage:[UIImage imageNamed:@"navbaricon_back"] forState:0];
+        [btn setTitle:@"" forState:UIControlStateNormal];
+        if ([title isEqualToString:@"关闭"]) {
+            [btn setImage:[UIImage imageNamed:@"关闭"] forState:0];
+            [btn setTitle:@" 关闭" forState:UIControlStateNormal];
+        }
         [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
         btn.titleLabel.font = SYSTEMFONT(16);
-        [btn setTitleColor:KWhiteColor forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.tag = [tags[i++] integerValue];
         [btn sizeToFit];
         UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
