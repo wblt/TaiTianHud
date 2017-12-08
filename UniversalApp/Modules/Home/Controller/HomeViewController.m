@@ -26,6 +26,7 @@
 @interface HomeViewController () <SDCycleScrollViewDelegate, GYChangeTextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
 {
     UITextField *textField;
+    UITableView *homeTable;
 }
 @property (nonatomic,copy) NSArray * dataArray;
 @property (nonatomic,copy) NSMutableArray * bannerArr;
@@ -81,7 +82,7 @@
             [_starArr addObject:model];
         }
         
-        [self.tableView reloadData];
+        [homeTable reloadData];
     } failureBlock:^(NSError *error) {
         
     }];
@@ -90,17 +91,15 @@
 
 #pragma mark -  初始化页面
 -(void)initUI{
-    self.tableView.mj_header.hidden = YES;
-    self.tableView.mj_footer.hidden = YES;
     //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"HomeCompanyTableCell"];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-49-64);
-    [self.tableView registerNib:[UINib nibWithNibName:@"HomeCompanyTableCell" bundle:nil] forCellReuseIdentifier:@"HomeCompanyTableCell"];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:self.tableView];
+    homeTable = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight-49-64) style:UITableViewStyleGrouped];
+    homeTable.delegate = self;
+    homeTable.dataSource = self;
+    [homeTable registerNib:[UINib nibWithNibName:@"HomeCompanyTableCell" bundle:nil] forCellReuseIdentifier:@"HomeCompanyTableCell"];
+    homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:homeTable];
     
-    [self.tableView reloadData];
+    [homeTable reloadData];
 }
 
 #pragma mark ————— tableview 代理 —————
@@ -131,7 +130,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 785;
+    return 790;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -141,7 +140,7 @@
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 785)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 790)];
     view.backgroundColor = [UIColor whiteColor];
     SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, KScreenWidth, 187) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
