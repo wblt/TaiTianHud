@@ -123,6 +123,7 @@
         [SVProgressHUD dismiss];
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
+                [self.tableView.mj_footer setState:MJRefreshStateIdle];
                 [arr removeAllObjects];
             }
             NSMutableArray *list = @[].mutableCopy;
@@ -163,7 +164,7 @@
 
 -(void)headerRereshing{
     page = 1;
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
+    
     [self requestData];
 }
 

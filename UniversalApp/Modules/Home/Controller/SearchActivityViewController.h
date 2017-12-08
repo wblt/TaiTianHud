@@ -9,5 +9,5 @@
 #import "RootViewController.h"
 
 @interface SearchActivityViewController : RootViewController
-
+@property (nonatomic,strong) NSString *searchStr;
 @end

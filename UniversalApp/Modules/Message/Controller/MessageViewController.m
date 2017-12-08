@@ -38,6 +38,7 @@
     [NetRequestClass afn_requestURL:@"appMsgList" httpMethod:@"GET" params:@{@"p":@(page), @"ub_id":model.ub_id}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
+                [self.tableView.mj_footer setState:MJRefreshStateIdle];
                 [_dataArray removeAllObjects];
             }
             NSMutableArray *arr = @[].mutableCopy;
@@ -109,7 +110,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     MessageModel *model = _dataArray[indexPath.row];
     [cell.img sd_setImageWithURL:[NSURL URLWithString:model.icon]  placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    cell.time.text = [NSString timeWithTimeIntervalString:model.readtime];
+    cell.time.text = model.suetime;
     cell.text.text = model.title;
     cell.title.text = @"系统消息";
     return cell;
@@ -117,14 +118,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = _dataArray[indexPath.row];
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
-    [self presentViewController:loginNavi animated:YES completion:nil];
+    if ([model.ishref integerValue] == 1) {
+        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:model.module]];
+        [self presentViewController:loginNavi animated:YES completion:nil];
+    }
 }
 
 
 -(void)headerRereshing{
     page = 1;
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
+    
     [self requestData];
 }
 

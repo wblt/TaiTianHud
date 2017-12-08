@@ -110,11 +110,11 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight) style:UITableViewStylePlain];
         //头部刷新
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
-//        header.automaticallyChangeAlpha = YES;
-//        header.lastUpdatedTimeLabel.hidden = NO;
+        header.automaticallyChangeAlpha = YES;
+        header.lastUpdatedTimeLabel.hidden = NO;
         _tableView.mj_header = header;
         
         //底部刷新
@@ -133,8 +133,8 @@
         
         _tableView.backgroundColor=CViewBgColor;
         _tableView.scrollsToTop = YES;
-//        _tableView.tableHeaderView = [[UIView alloc] init];
-//        _tableView.tableFooterView = [[UIView alloc] init];
+        _tableView.tableHeaderView = nil;
+        _tableView.tableFooterView = _tableView.mj_footer;
     }
     return _tableView;
 }
@@ -157,7 +157,8 @@
         _collectionView.mj_header = header;
         
         //底部刷新
-        _collectionView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        _collectionView.mj_footer = footer;
 
 #ifdef kiOS11Before
         
@@ -166,9 +167,10 @@
         _collectionView.contentInset = UIEdgeInsetsMake(64, 0, 49, 0);
         _collectionView.scrollIndicatorInsets = _collectionView.contentInset;
 #endif
-        
+    
         _collectionView.backgroundColor=CViewBgColor;
         _collectionView.scrollsToTop = YES;
+        
     }
     return _collectionView;
 }

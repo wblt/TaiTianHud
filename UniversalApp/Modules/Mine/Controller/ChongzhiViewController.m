@@ -41,7 +41,7 @@
     UIButton *czBtn = [[UIButton alloc] initWithFrame:CGRectMake(20, KScreenHeight-80-64, KScreenWidth-40, 48)];
     czBtn.backgroundColor = [UIColor orangeColor];
     [czBtn setTitle:@"充  值" forState:0];
-    czBtn.layer.cornerRadius = 5;
+    czBtn.layer.cornerRadius = 3;
     czBtn.layer.masksToBounds = YES;
     
     [self.view addSubview:czBtn];

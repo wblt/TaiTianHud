@@ -37,6 +37,7 @@
     [NetRequestClass afn_requestURL:@"appActMore" httpMethod:@"GET" params:@{@"p":@(page)}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
+                [self.tableView.mj_footer setState:MJRefreshStateIdle];
                 [_dataArray removeAllObjects];
             }
             NSMutableArray *arr = @[].mutableCopy;
@@ -88,7 +89,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 240.0f;
+    return 210.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -126,7 +127,7 @@
 
 -(void)headerRereshing{
     page = 1;
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
+    
     [self requestData];
 }
 

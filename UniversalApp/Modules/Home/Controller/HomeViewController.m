@@ -22,7 +22,11 @@
 #import "HomeStarModel.h"
 #import "MoreActivityViewController.h"
 #import "SearchActivityViewController.h"
-@interface HomeViewController () <SDCycleScrollViewDelegate, GYChangeTextViewDelegate, UITableViewDataSource, UITableViewDelegate>
+#import "MoreStarViewController.h"
+@interface HomeViewController () <SDCycleScrollViewDelegate, GYChangeTextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+{
+    UITextField *textField;
+}
 @property (nonatomic,copy) NSArray * dataArray;
 @property (nonatomic,copy) NSMutableArray * bannerArr;
 @property (nonatomic,copy) NSMutableArray * companyArr;
@@ -40,16 +44,19 @@
     _activityArr = @[].mutableCopy;
     _starArr = @[].mutableCopy;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(toSearchActivity)];
-    
     [self initUI];
     [self requestData];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 }
 
-- (void)toSearchActivity {
-    SearchActivityViewController *search = [[SearchActivityViewController alloc] init];
-    [self.navigationController pushViewController:search animated:YES];
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if ([textField.text length]>0) {
+        SearchActivityViewController *search = [[SearchActivityViewController alloc] init];
+        search.searchStr = textField.text;
+        [self.navigationController pushViewController:search animated:YES];
+    }
+    return YES;
 }
 
 - (void)requestData
@@ -102,7 +109,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 240.0f;
+    return 210.0f;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -124,7 +131,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 830;
+    return 785;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -134,9 +141,9 @@
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 830)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 785)];
     view.backgroundColor = [UIColor whiteColor];
-    SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, KScreenWidth, 180) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
+    SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, KScreenWidth, 187) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
     cycleScrollView3.pageDotImage = [UIImage imageNamed:@"pageControlDot"];
     NSMutableArray *arr = @[].mutableCopy;
@@ -150,18 +157,21 @@
     line1.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [view addSubview:line1];
     
-    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(20, line1.bottom-20, KScreenWidth-40, 50)];
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(20, line1.bottom-20, KScreenWidth-40, 45)];
     textField.borderStyle = UITextBorderStyleRoundedRect;
     textField.backgroundColor = [UIColor whiteColor];
     textField.placeholder = @"🔍搜索你想要知道的内容";
     textField.font = [UIFont systemFontOfSize:15];
+    textField.delegate = self;
+    textField.returnKeyType = UIReturnKeySearch;
     [view addSubview:textField];
+ 
     for (int i = 0; i < _companyArr.count; i++) {
         HomeCompanyModel *model = _companyArr[i];
-        CGFloat w = (KScreenWidth-70*4)/5;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(w+i*(70+w), textField.bottom+20, 70, 70)];
+        CGFloat w = (KScreenWidth-60*4)/5;
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(w+i*(60+w), textField.bottom+10, 60, 60)];
         btn.tag = 201+i;
-        btn.layer.cornerRadius = 10;
+        btn.layer.cornerRadius = 30;
         btn.layer.masksToBounds = YES;
         btn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
         btn.layer.borderWidth = 1;
@@ -173,15 +183,15 @@
             [self.navigationController pushViewController:vc animated:YES];
         }];
         [view addSubview:btn];
-        UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(w+i*(70+w), btn.bottom+8, 70, 25)];
+        UILabel *btnLabel = [[UILabel alloc] initWithFrame:CGRectMake(w+i*(60+w), btn.bottom+5, 60, 25)];
         btnLabel.text = model.abbtion;
         btnLabel.textColor = [UIColor blackColor];
         btnLabel.textAlignment = NSTextAlignmentCenter;
-        btnLabel.font = [UIFont systemFontOfSize:15];
+        btnLabel.font = [UIFont systemFontOfSize:12];
         [view addSubview:btnLabel];
     }
     
-    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, 350, KScreenWidth, 10)];
+    UIView *line3 = [[UIView alloc] initWithFrame:CGRectMake(0, 320, KScreenWidth, 10)];
     line3.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [view addSubview:line3];
     
@@ -199,14 +209,16 @@
     [moreStar setImage:[UIImage imageNamed:@"genduo"] forState:0];
     [moreStar addTapBlock:^(UIButton *btn) {
         //更多明星
+        MoreStarViewController *moreStarVC = [[MoreStarViewController alloc] init];
+        [self.navigationController pushViewController:moreStarVC animated:YES];
     }];
     [view addSubview:moreStar];
-   
+    CGFloat starHeight = moreStar.bottom;
     for (int i = 0; i < _starArr.count; i++) {
         HomeStarModel *model = _starArr[i];
         CGFloat w = 10;
         NSInteger y = i/2;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(w+i%2*((KScreenWidth-30)/2+w), starL.bottom+(180+10)*y, (KScreenWidth-30)/2, 180)];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(w+i%2*((KScreenWidth-30)/2+w), starL.bottom+(175+10)*y, (KScreenWidth-30)/2, 175)];
         btn.tag = 301+i;
         btn.layer.cornerRadius = 5;
         btn.layer.masksToBounds = YES;
@@ -218,7 +230,7 @@
         }];
         [view addSubview:btn];
         
-        UIImageView *starImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn.width, 120)];
+        UIImageView *starImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn.width, 115)];
         [starImg sd_setImageWithURL:[NSURL URLWithString:model.img] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         starImg.layer.cornerRadius = 5;
         starImg.layer.masksToBounds = YES;
@@ -229,17 +241,20 @@
         btnLabel.text = model.realname;
         btnLabel.textColor = [UIColor darkGrayColor];
         btnLabel.textAlignment = NSTextAlignmentLeft;
-        btnLabel.font = [UIFont systemFontOfSize:13];
+        btnLabel.font = [UIFont systemFontOfSize:12];
         [btn addSubview:btnLabel];
         UILabel *btnTitle = [[UILabel alloc] initWithFrame:CGRectMake(10, starImg.bottom+5, btn.width-20, btnLabel.top-starImg.bottom-5)];
         btnTitle.text = model.title;
         btnTitle.textColor = [UIColor blackColor];
         btnTitle.textAlignment = NSTextAlignmentLeft;
-        btnTitle.font = [UIFont systemFontOfSize:15];
+        btnTitle.font = [UIFont systemFontOfSize:14];
         btnTitle.numberOfLines = 0;
         [btn addSubview:btnTitle];
+        if (i == _starArr.count-1) {
+            starHeight = btn.bottom;
+        }
     }
-    UIView *line4 = [[UIView alloc] initWithFrame:CGRectMake(0, 780, KScreenWidth, 10)];
+    UIView *line4 = [[UIView alloc] initWithFrame:CGRectMake(0, starHeight+10, KScreenWidth, 10)];
     line4.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [view addSubview:line4];
     
@@ -276,7 +291,7 @@
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
     NSLog(@"点击了第%ld个",index);
     HomeBannerModel *model = _bannerArr[index];
-    if ([model.url length]>0||[model.module length]>0) {
+    if ([model.ishref integerValue] == 1) {
         RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:model.module]];
         [self presentViewController:loginNavi animated:YES completion:nil];
     }

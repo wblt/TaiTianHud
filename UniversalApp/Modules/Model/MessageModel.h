@@ -17,5 +17,8 @@
 @property (nonatomic, strong) NSString *icon;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *title;
-
+@property (nonatomic, strong) NSString *suetime;
+@property (nonatomic, strong) NSString *ishref;
+@property (nonatomic, strong) NSString *module;
+@property (nonatomic, strong) NSString *module_id;
 @end

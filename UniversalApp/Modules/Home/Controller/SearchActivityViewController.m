@@ -33,7 +33,7 @@
     
     [self initUI];
     page = 1;
-    [self requestData:@""];
+    [self requestData:self.searchStr];
 }
 
 - (void)requestData:(NSString *)key
@@ -41,6 +41,7 @@
     [NetRequestClass afn_requestURL:@"appSearchAct" httpMethod:@"GET" params:@{@"p": @(page),@"keywords":key}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
+                [self.tableView.mj_footer resetNoMoreData];
                 [_dataArray removeAllObjects];
             }
             NSMutableArray *arr = @[].mutableCopy;
@@ -89,7 +90,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 240.0f;
+    return 210.0f;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -130,8 +131,9 @@
         textField.backgroundColor = [UIColor whiteColor];
         textField.font = [UIFont systemFontOfSize:14];
         textField.delegate = self;
-        
+        textField.returnKeyType = UIReturnKeySearch;
     }
+    textField.text = self.searchStr;
     [view addSubview:textField];
     UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(textField.right, 10, 60, 30)];
     [btn setTitle:@"搜索" forState:0];
@@ -140,6 +142,7 @@
     [btn addTapBlock:^(UIButton *btn) {
         [textField resignFirstResponder];
         page = 1;
+        self.searchStr = textField.text;
         [self requestData:textField.text];
     }];
     [view addSubview:btn];
@@ -148,7 +151,6 @@
 
 -(void)headerRereshing{
     page = 1;
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
     [self requestData:textField.text];
 }
 
@@ -156,6 +158,14 @@
     [self requestData:textField.text];
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    page = 1;
+    self.searchStr = textField.text;
+    [self requestData:textField.text];
+    return YES;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

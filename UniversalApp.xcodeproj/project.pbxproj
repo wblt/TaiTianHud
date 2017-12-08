@@ -178,6 +178,8 @@
 		8D936D461FAB047200B303F9 /* HomeCompanyTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D936D441FAB047200B303F9 /* HomeCompanyTableCell.xib */; };
 		8D936D491FAB0C1300B303F9 /* HomeCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D481FAB0C1300B303F9 /* HomeCompanyViewController.m */; };
 		8D936D4B1FAB0F2600B303F9 /* CompanyDetailHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D936D4A1FAB0F2600B303F9 /* CompanyDetailHeadView.xib */; };
+		8DBCD5421FDA6EC500DE5B1B /* MoreStarCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBCD5401FDA6EC500DE5B1B /* MoreStarCollectionCell.m */; };
+		8DBCD5431FDA6EC500DE5B1B /* MoreStarCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */; };
 		8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */; };
 		EE4166B21FD4349F0077E29C /* MoreActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */; };
 		EEFA8CB21FD284D100340A1B /* TaskClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */; };
@@ -490,6 +492,9 @@
 		8D936D471FAB0C1300B303F9 /* HomeCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeCompanyViewController.h; sourceTree = "<group>"; };
 		8D936D481FAB0C1300B303F9 /* HomeCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeCompanyViewController.m; sourceTree = "<group>"; };
 		8D936D4A1FAB0F2600B303F9 /* CompanyDetailHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyDetailHeadView.xib; sourceTree = "<group>"; };
+		8DBCD53F1FDA6EC500DE5B1B /* MoreStarCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreStarCollectionCell.h; sourceTree = "<group>"; };
+		8DBCD5401FDA6EC500DE5B1B /* MoreStarCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreStarCollectionCell.m; sourceTree = "<group>"; };
+		8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreStarCollectionCell.xib; sourceTree = "<group>"; };
 		8DCF12F71FB2A31000D173A7 /* MoreCompanyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreCompanyViewController.h; sourceTree = "<group>"; };
 		8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreCompanyViewController.m; sourceTree = "<group>"; };
 		9E884624664B432D4FE5044F /* libPods-UniversalApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UniversalApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1406,6 +1411,9 @@
 				8D936D431FAB047200B303F9 /* HomeCompanyTableCell.m */,
 				8D936D441FAB047200B303F9 /* HomeCompanyTableCell.xib */,
 				8D936D4A1FAB0F2600B303F9 /* CompanyDetailHeadView.xib */,
+				8DBCD53F1FDA6EC500DE5B1B /* MoreStarCollectionCell.h */,
+				8DBCD5401FDA6EC500DE5B1B /* MoreStarCollectionCell.m */,
+				8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1620,6 +1628,7 @@
 				293D464B1ECDBB63007C64A9 /* icon_tabbar_mine@2x.png in Resources */,
 				293D46401ECDBB63007C64A9 /* icon_tabbar_discovery.png in Resources */,
 				8D274ADB1FA70E0400227056 /* Mine.storyboard in Resources */,
+				8DBCD5431FDA6EC500DE5B1B /* MoreStarCollectionCell.xib in Resources */,
 				293D46431ECDBB63007C64A9 /* icon_tabbar_homepage@2x.png in Resources */,
 				293D46441ECDBB63007C64A9 /* icon_tabbar_homepage_selected.png in Resources */,
 				293D46491ECDBB63007C64A9 /* icon_tabbar_merchant_selected@2x.png in Resources */,
@@ -1785,6 +1794,7 @@
 				296DEA781F5D530E00C6FD00 /* ScrollBannerVC.m in Sources */,
 				29D3C00A1F4D11A200FD3914 /* TagsButton.m in Sources */,
 				8D274B5B1FA713A600227056 /* NSDate+TimeAgo.m in Sources */,
+				8DBCD5421FDA6EC500DE5B1B /* MoreStarCollectionCell.m in Sources */,
 				EEFA8CC41FD2CBA600340A1B /* ChongzhiCollectionCell.m in Sources */,
 				8D936D411FAAFBEB00B303F9 /* HomeActivityModel.m in Sources */,
 				8D274ADE1FA70ED500227056 /* NetRequestClass.m in Sources */,

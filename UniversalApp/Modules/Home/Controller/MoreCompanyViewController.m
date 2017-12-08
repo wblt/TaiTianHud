@@ -44,6 +44,7 @@
         [NetRequestClass afn_requestURL:@"appComMore" httpMethod:@"GET" params:@{@"p":@(page)}.mutableCopy successBlock:^(id returnValue) {
             
             if (page == 1) {
+                [self.tableView.mj_footer setState:MJRefreshStateIdle];
                 [_companyArr removeAllObjects];
             }
             NSMutableArray *arr = @[].mutableCopy;
@@ -133,7 +134,7 @@
 
 -(void)headerRereshing{
     page = 1;
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
+    
     [self requestData];
 }
 

@@ -20,8 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //self.title = @"注册新用户";
-    self.navigationController.navigationBarHidden = YES;
+    self.title = @"注册新用户";
+    //self.navigationController.navigationBarHidden = YES;
     code = @"";
     //去掉导航栏黑线
     if ([self.navigationController.navigationBar respondsToSelector:@selector( setBackgroundImage:forBarMetrics:)]){

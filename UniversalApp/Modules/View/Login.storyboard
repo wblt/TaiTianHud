@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="s4u-dg-p2I">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="s4u-dg-p2I">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -509,6 +509,18 @@
                                     <constraint firstAttribute="height" constant="100" id="J99-w6-Wpt"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xsv-1q-wRE">
+                                <rect key="frame" x="20" y="34" width="30" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="LzW-mx-RSk"/>
+                                    <constraint firstAttribute="height" constant="30" id="umc-7x-jSe"/>
+                                </constraints>
+                                <state key="normal" image="返回"/>
+                                <connections>
+                                    <action selector="toBack:" destination="hNl-0S-a11" eventType="touchUpInside" id="xLV-bi-Sbc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -517,7 +529,9 @@
                             <constraint firstItem="R1M-Ti-neK" firstAttribute="top" secondItem="IBI-a9-2ut" secondAttribute="bottom" constant="144.5" id="4bg-Q0-Xkd"/>
                             <constraint firstItem="eB6-ME-wjm" firstAttribute="top" secondItem="oTF-4T-edn" secondAttribute="bottom" constant="64" id="9bF-NG-WDE"/>
                             <constraint firstItem="eB6-ME-wjm" firstAttribute="width" secondItem="eB6-ME-wjm" secondAttribute="height" multiplier="1:1" id="Rrw-qS-EmJ"/>
+                            <constraint firstItem="Xsv-1q-wRE" firstAttribute="top" secondItem="oTF-4T-edn" secondAttribute="bottom" constant="14" id="dbP-0p-2Kd"/>
                             <constraint firstAttribute="trailing" secondItem="IBI-a9-2ut" secondAttribute="trailing" id="nkA-0l-0v9"/>
+                            <constraint firstItem="Xsv-1q-wRE" firstAttribute="leading" secondItem="sCN-XJ-ABr" secondAttribute="leading" constant="20" id="taq-fl-ncx"/>
                             <constraint firstItem="IBI-a9-2ut" firstAttribute="width" secondItem="IBI-a9-2ut" secondAttribute="height" multiplier="343:321" id="xgc-vd-eET"/>
                         </constraints>
                     </view>

@@ -89,7 +89,6 @@
             break;
     }
     [_dataArray removeAllObjects];
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
     page = 1;
     [self requestDataType:type keyword:@""];
 }
@@ -99,6 +98,7 @@
     [NetRequestClass afn_requestURL:@"appActList" httpMethod:@"GET" params:@{@"p":@(page), @"type":typeStr,@"keywords":word}.mutableCopy successBlock:^(id returnValue) {
         if ([returnValue[@"status"] integerValue] == 1) {
             if (page == 1) {
+                [self.tableView.mj_footer resetNoMoreData];
                 [_dataArray removeAllObjects];
             }
             NSMutableArray *arr = @[].mutableCopy;
@@ -150,7 +150,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 240.0f;
+    return 210.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -219,7 +219,6 @@
 
 -(void)headerRereshing{
     page = 1;
-    [self.tableView.mj_footer setState:MJRefreshStateIdle];
     [self requestDataType:type keyword:@""];
 }
 

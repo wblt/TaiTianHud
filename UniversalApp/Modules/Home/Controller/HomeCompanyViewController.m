@@ -26,7 +26,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"公司详情";
     _dataArray = @[].mutableCopy;
     
     [self initUI];
@@ -61,27 +60,27 @@
     self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-64);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
-    self.tableView.contentInset = UIEdgeInsetsMake(160, 0, 0, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(140, 0, 0, 0);
     UIView *view = [[[NSBundle mainBundle] loadNibNamed:@"CompanyDetailHeadView" owner:self options:nil] lastObject];
     UIImageView *img = [view viewWithTag:202];
     [img sd_setImageWithURL:[NSURL URLWithString:_model.thumb] placeholderImage:[UIImage imageNamed:@"annou_default"]];
     
     UILabel *label1 = [view viewWithTag:203];
     label1.text = _model.title;
-    UILabel *label2 = [view viewWithTag:204];
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"关注人数：%@", _model.collect]];
-    [str addAttribute:NSForegroundColorAttributeName
-                value:[UIColor orangeColor]
-                range:NSMakeRange(5,[_model.collect length])];
-    label2.attributedText = str;
-    
-    UILabel *label3 = [view viewWithTag:205];
-    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动数量：%@", _model.act_num]];
-    [str1 addAttribute:NSForegroundColorAttributeName
-                value:[UIColor orangeColor]
-                range:NSMakeRange(5,[_model.act_num length])];
-    label3.attributedText = str1;
-    view.frame = CGRectMake(0, -160, KScreenWidth, 160);
+//    UILabel *label2 = [view viewWithTag:204];
+//    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"关注人数：%@", _model.collect]];
+//    [str addAttribute:NSForegroundColorAttributeName
+//                value:[UIColor orangeColor]
+//                range:NSMakeRange(5,[_model.collect length])];
+//    label2.attributedText = str;
+//
+//    UILabel *label3 = [view viewWithTag:205];
+//    NSMutableAttributedString *str1 = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"活动数量：%@", _model.act_num]];
+//    [str1 addAttribute:NSForegroundColorAttributeName
+//                value:[UIColor orangeColor]
+//                range:NSMakeRange(5,[_model.act_num length])];
+//    label3.attributedText = str1;
+    view.frame = CGRectMake(0, -140, KScreenWidth, 140);
     [self.tableView addSubview:view];
     [self.tableView reloadData];
 }
@@ -102,7 +101,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 240.0f;
+    return 210.0f;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
