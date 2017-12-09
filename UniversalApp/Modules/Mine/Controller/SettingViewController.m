@@ -11,6 +11,7 @@
 #import "LTAlertView.h"
 #import "EditPasswordViewController.h"
 #import "EditPhoneViewController.h"
+#import "SocketRocketUtility.h"
 @interface SettingViewController () <UITableViewDataSource, UITableViewDelegate>
 {
     NSArray *arr;
@@ -120,6 +121,10 @@
                 [view removeFromSuperview];
                 [[UMSocialManager defaultManager] cancelAuthWithPlatform:UMSocialPlatformType_WechatSession completion:^(id result, NSError *error) {
                     if (!error) {
+                        
+                        // 退出socket
+                        [self closeSocket];
+                        
                         [[UserConfig shareInstace] logout];
                         
                         AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -220,6 +225,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)closeSocket {
+    // 判断登录
+    if (![[UserConfig shareInstace] getLoginStatus]) {
+        return;
+    }
+    // 判断是否是用户
+    UserModel *userModel = [[UserConfig shareInstace] getAllInformation];
+    if (userModel.ub_id == nil || userModel.ub_id.length == 0) {
+        return;
+    }
+    [[SocketRocketUtility instance] SRWebSocketClose]; //在需要得地方 关闭socket
 }
 
 /*

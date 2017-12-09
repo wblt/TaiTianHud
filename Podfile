@@ -11,4 +11,5 @@ pod 'Masonry'
 pod 'MJRefresh'
 pod 'MJExtension', '~> 3.0.13'
 pod 'IQKeyboardManager'
+pod 'SocketRocket'
 end

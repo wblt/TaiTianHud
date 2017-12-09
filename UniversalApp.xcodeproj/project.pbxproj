@@ -182,6 +182,7 @@
 		8DBCD5431FDA6EC500DE5B1B /* MoreStarCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */; };
 		8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */; };
 		EE4166B21FD4349F0077E29C /* MoreActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */; };
+		EE67F2781FDC46E300D7A320 /* SocketRocketUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67F2771FDC46E300D7A320 /* SocketRocketUtility.m */; };
 		EEFA8CB21FD284D100340A1B /* TaskClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */; };
 		EEFA8CB51FD2856400340A1B /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB41FD2856400340A1B /* TaskModel.m */; };
 		EEFA8CB81FD2998200340A1B /* MyPacketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB71FD2998200340A1B /* MyPacketViewController.m */; };
@@ -501,6 +502,8 @@
 		A51AB222BA7ACF202B5B1330 /* Pods-UniversalApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UniversalApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UniversalApp/Pods-UniversalApp.debug.xcconfig"; sourceTree = "<group>"; };
 		EE4166B01FD4349F0077E29C /* MoreActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreActivityViewController.h; sourceTree = "<group>"; };
 		EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreActivityViewController.m; sourceTree = "<group>"; };
+		EE67F2761FDC46E300D7A320 /* SocketRocketUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocketUtility.h; sourceTree = "<group>"; };
+		EE67F2771FDC46E300D7A320 /* SocketRocketUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketRocketUtility.m; sourceTree = "<group>"; };
 		EEFA8CB01FD284D100340A1B /* TaskClassifyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskClassifyModel.h; sourceTree = "<group>"; };
 		EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskClassifyModel.m; sourceTree = "<group>"; };
 		EEFA8CB31FD2856400340A1B /* TaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskModel.h; sourceTree = "<group>"; };
@@ -747,6 +750,7 @@
 		293D45AC1ECD6926007C64A9 /* ThridParty */ = {
 			isa = PBXGroup;
 			children = (
+				EE67F2751FDC46E300D7A320 /* WebSocket */,
 				8D33BEDF1FA9C123003F377B /* UMSocial */,
 			);
 			path = ThridParty;
@@ -1443,6 +1447,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		EE67F2751FDC46E300D7A320 /* WebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				EE67F2761FDC46E300D7A320 /* SocketRocketUtility.h */,
+				EE67F2771FDC46E300D7A320 /* SocketRocketUtility.m */,
+			);
+			path = WebSocket;
+			sourceTree = "<group>";
+		};
 		EEFA8CCC1FD3A7EC00340A1B /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1806,6 +1819,7 @@
 				2917D2171EE02F9C00E76185 /* ShareManager.m in Sources */,
 				8D274B5A1FA713A600227056 /* NSDate+Helper.m in Sources */,
 				8D936D491FAB0C1300B303F9 /* HomeCompanyViewController.m in Sources */,
+				EE67F2781FDC46E300D7A320 /* SocketRocketUtility.m in Sources */,
 				EEFA8CD01FD3A80500340A1B /* MessageCell.m in Sources */,
 				8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */,
 				8D274B761FA7147D00227056 /* TabBarItem.m in Sources */,

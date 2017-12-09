@@ -9,6 +9,7 @@
 #import "RootNavigationController.h"
 #import "LoginViewController.h"
 #import "EditPhoneViewController.h"
+#import "SocketRocketUtility.h"
 @interface TabBarViewController () <UIAlertViewDelegate,UITabBarDelegate,UITabBarControllerDelegate>
 
 @end
@@ -30,7 +31,8 @@
     self.delegate = self;
     // 创建子控制器
     [self _createViewControllers];
-	
+    
+    [self initSocket];
 }
 
 //1.创建子控制器
@@ -132,4 +134,71 @@
     
 }
 
+- (void)initSocket {
+    // 判断登录
+    if (![[UserConfig shareInstace] getLoginStatus]) {
+        return;
+    }
+    // 判断是否是用户
+    UserModel *userModel = [[UserConfig shareInstace] getAllInformation];
+    if (userModel.ub_id == nil || userModel.ub_id.length == 0) {
+        return;
+    }
+    // 启动socket
+    [[SocketRocketUtility instance] SRWebSocketOpen];//打开soket
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SRWebSocketDidOpen) name:@"kWebSocketDidOpenNote" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SRWebSocketDidReceiveMsg:) name:@"kWebSocketdidReceiveMessageNote" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(SRWebSocketDidClose) name:@"kWebSocketDidCloseNote" object:nil];
+}
+
+- (void)SRWebSocketDidOpen {
+    NSLog(@"开启成功");
+    //在成功后需要做的操作。。。
+    // 绑定用户id
+    //[self bingding];
+}
+
+- (void)SRWebSocketDidClose {
+    NSLog(@"关闭成功");
+}
+
+- (void)SRWebSocketDidReceiveMsg:(NSNotification *)note {
+    //收到服务端发送过来的消息
+    NSString * message = note.object;
+    NSLog(@"%@",message);
+    if (message != nil) {
+        NSData *jsonData = [message dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *error = nil;
+        NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingAllowFragments
+                                                          error:&error];
+        NSLog(@"消息类型：%@", jsonObject[@"type"]);
+        if ([jsonObject[@"type"] isEqualToString:@"onConnect"]) {
+            [self bingding:jsonObject[@"client_id"]];
+        } else if([jsonObject[@"type"] isEqualToString:@"message"]) {
+            NSLog(@"收到一条消息：%@",jsonObject[@"list"]);
+        }
+    
+    }
+}
+
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)bingding:(NSString *)client_id {
+    NSString *uuid = [[NSUUID UUID] UUIDString];
+    UserModel *model = [[UserConfig shareInstace] getAllInformation];
+    [NetRequestClass afn_requestURL:@"appBindUid" httpMethod:@"POST" params:@{@"ub_id":model.ub_id?model.ub_id:@"",@"client_id":client_id,@"device_id":uuid}.mutableCopy successBlock:^(id returnValue) {
+        if ([returnValue[@"status"] integerValue] == 1) {
+            NSLog(@"绑定成功");
+//            [SVProgressHUD showSuccessWithStatus:returnValue[@"info"]];
+        }else {
+            NSLog(@"%@", returnValue[@"info"]);
+//            [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
+        }
+    } failureBlock:^(NSError *error) {
+//        [SVProgressHUD showErrorWithStatus:@"请求失败"];
+    }];
+}
 @end
