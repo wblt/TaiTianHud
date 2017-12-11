@@ -12,6 +12,7 @@
 #import "HomeActivityModel.h"
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
+#import "LoginViewController.h"
 @interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 {
     NSString *type;
@@ -206,9 +207,20 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     HomeActivityModel *model = _dataArray[indexPath.row];
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
+    
+    if (![[UserConfig shareInstace] getLoginStatus]) {
+        UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboad instantiateInitialViewController];
+        [self presentViewController:loginVC animated:YES completion:nil];
+        return;
+    }
+    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+    NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+    
     [self presentViewController:loginNavi animated:YES completion:nil];
 }
 

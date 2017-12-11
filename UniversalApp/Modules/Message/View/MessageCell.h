@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface MessageCell : UITableViewCell
+typedef void(^LongTapBlock)(NSInteger index);
+@interface MessageCell : UITableViewCell 
 @property (weak, nonatomic) IBOutlet UILabel *time;
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UIImageView *img;
 @property (weak, nonatomic) IBOutlet UILabel *text;
-@property (weak, nonatomic) IBOutlet UILabel *line;
-
+@property (weak, nonatomic) IBOutlet UILabel *redBadge;
+@property (weak, nonatomic) IBOutlet UIView *longTapView;
 @end

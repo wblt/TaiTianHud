@@ -12,7 +12,7 @@
 #import "MessageModel.h"
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
-@interface MessageViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MessageViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
 {
     NSInteger page;
 }
@@ -30,6 +30,13 @@
     page = 1;
     [self requestData];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    page = 1;
+    [self requestData];
 }
 
 - (void)requestData
@@ -91,8 +98,11 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = _dataArray[indexPath.row];
-    CGSize titleSize = [model.title sizeForFont:[UIFont systemFontOfSize:14] size:CGSizeMake(KScreenWidth-30, MAXFLOAT) mode:NSLineBreakByCharWrapping];
-    return titleSize.height+80+5;
+    CGSize titleSize = [model.title sizeForFont:[UIFont systemFontOfSize:14] size:CGSizeMake(KScreenWidth-22*2-60-8, MAXFLOAT) mode:NSLineBreakByCharWrapping];
+    if (titleSize.height+42+5>120) {
+        return titleSize.height+42+5;
+    }
+    return 120;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -113,17 +123,85 @@
     cell.time.text = model.suetime;
     cell.text.text = model.title;
     cell.title.text = @"系统消息";
+    if ([model.isread integerValue] == 1) {
+        cell.redBadge.hidden = YES;
+    }else {
+        cell.redBadge.hidden = NO;
+    }
+    cell.tag = indexPath.row + 1000;
+    UILongPressGestureRecognizer *longPressGR = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(lpGR:)];
+    
+    [cell addGestureRecognizer:longPressGR];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = _dataArray[indexPath.row];
     if ([model.ishref integerValue] == 1) {
-        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:model.module]];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        if ([model.url length] > 0) {
+            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
+            loginNavi.title = @"消息详情";
+            [self presentViewController:loginNavi animated:YES completion:nil];
+        }else {
+            if ([model.module isEqualToString:@"artonce"]) {
+                [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
+                    if ([returnValue[@"status"] integerValue] == 1) {
+                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:returnValue[@"data"][@"content"]]];
+                        loginNavi.title = @"消息详情";
+                        [self presentViewController:loginNavi animated:YES completion:nil];
+                    }
+                } failureBlock:^(NSError *error) {
+                    
+                }];
+            }
+        }
+        
     }
 }
 
+-(void)lpGR:(UILongPressGestureRecognizer *)lpGR
+
+{
+    
+    if (lpGR.state == UIGestureRecognizerStateEnded)//手势结束
+        
+    {
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"标记已读", @"删除", nil];
+        actionSheet.tag = lpGR.view.tag + 1000;
+        [actionSheet showInView:self.view];
+        
+    }
+    
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex != 2) {
+        MessageModel *model = _dataArray[actionSheet.tag-2000];
+        UserModel *user = [[UserConfig shareInstace] getAllInformation];
+        if (buttonIndex == 0 && [model.isread isEqualToString:@"1"]) {
+            [SVProgressHUD showErrorWithStatus:@"此消息已读"];
+            return;
+        }
+        [NetRequestClass afn_requestURL:@"appOperationMsg" httpMethod:@"POST" params:@{@"ub_id":user.ub_id,@"msg_id":model.msg_id,@"type":buttonIndex==0?@"isread":@"isdel"}.mutableCopy successBlock:^(id returnValue) {
+            if ([returnValue[@"status"] integerValue] == 1) {
+                if (buttonIndex == 0) {
+                    model.isread = @"1";
+                }else {
+                    [_dataArray removeObjectAtIndex:actionSheet.tag-2000];
+                }
+                [self.tableView reloadData];
+            }else {
+                [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
+            }
+            
+        } failureBlock:^(NSError *error) {
+        }];
+        
+    }
+    
+}
 
 -(void)headerRereshing{
     page = 1;
@@ -134,6 +212,52 @@
 -(void)footerRereshing{
     [self requestData];
 }
+
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return NO;
+//}
+//
+//- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITableViewRowAction *deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//        [self editActionsForRowAtIndexPath:indexPath actionIndex:0];
+//    }];
+//    deleteAction.backgroundColor = [UIColor redColor];
+//
+//    UITableViewRowAction *blackAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"标记已读" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//        [self editActionsForRowAtIndexPath:indexPath actionIndex:1];
+//    }];
+//    blackAction.backgroundColor = [UIColor colorWithRed: 116 / 255.0 green: 134 / 255.0 blue: 147 / 255.0 alpha:1.0];
+//
+//    return @[deleteAction, blackAction];
+//}
+//
+//#pragma mark - Action
+//
+//- (void)editActionsForRowAtIndexPath:(NSIndexPath *)indexPath actionIndex:(NSInteger)buttonIndex
+//{
+//    MessageModel *model = _dataArray[indexPath.row];
+//    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+//    if (buttonIndex == 1 && [model.isread isEqualToString:@"1"]) {
+//        [SVProgressHUD showErrorWithStatus:@"此消息已读"];
+//        return;
+//    }
+//    [NetRequestClass afn_requestURL:@"appOperationMsg" httpMethod:@"POST" params:@{@"ub_id":user.ub_id,@"msg_id":model.msg_id,@"type":buttonIndex==1?@"isread":@"isdel"}.mutableCopy successBlock:^(id returnValue) {
+//        if ([returnValue[@"status"] integerValue] == 1) {
+//            if (buttonIndex == 1) {
+//                model.isread = @"1";
+//            }else {
+//                [_dataArray removeObjectAtIndex:indexPath.row];
+//            }
+//            [self.tableView reloadData];
+//        }else {
+//            [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];
+//        }
+//
+//    } failureBlock:^(NSError *error) {
+//    }];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

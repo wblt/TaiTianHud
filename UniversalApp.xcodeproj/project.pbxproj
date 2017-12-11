@@ -181,6 +181,7 @@
 		8DBCD5421FDA6EC500DE5B1B /* MoreStarCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBCD5401FDA6EC500DE5B1B /* MoreStarCollectionCell.m */; };
 		8DBCD5431FDA6EC500DE5B1B /* MoreStarCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */; };
 		8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */; };
+		8DEF67FF1FDE2A3E00B016DA /* UITabBar+badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DEF67FE1FDE2A3E00B016DA /* UITabBar+badge.m */; };
 		EE4166B21FD4349F0077E29C /* MoreActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */; };
 		EE67F2781FDC46E300D7A320 /* SocketRocketUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67F2771FDC46E300D7A320 /* SocketRocketUtility.m */; };
 		EEFA8CB21FD284D100340A1B /* TaskClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */; };
@@ -498,6 +499,8 @@
 		8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreStarCollectionCell.xib; sourceTree = "<group>"; };
 		8DCF12F71FB2A31000D173A7 /* MoreCompanyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreCompanyViewController.h; sourceTree = "<group>"; };
 		8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreCompanyViewController.m; sourceTree = "<group>"; };
+		8DEF67FD1FDE2A3E00B016DA /* UITabBar+badge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITabBar+badge.h"; sourceTree = "<group>"; };
+		8DEF67FE1FDE2A3E00B016DA /* UITabBar+badge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITabBar+badge.m"; sourceTree = "<group>"; };
 		9E884624664B432D4FE5044F /* libPods-UniversalApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UniversalApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51AB222BA7ACF202B5B1330 /* Pods-UniversalApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UniversalApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UniversalApp/Pods-UniversalApp.debug.xcconfig"; sourceTree = "<group>"; };
 		EE4166B01FD4349F0077E29C /* MoreActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreActivityViewController.h; sourceTree = "<group>"; };
@@ -815,6 +818,8 @@
 				8D274B731FA7147D00227056 /* TabBarItem.m */,
 				8D274B741FA7147D00227056 /* TabBarViewController.h */,
 				8D274B751FA7147D00227056 /* TabBarViewController.m */,
+				8DEF67FD1FDE2A3E00B016DA /* UITabBar+badge.h */,
+				8DEF67FE1FDE2A3E00B016DA /* UITabBar+badge.m */,
 			);
 			path = TabbarController;
 			sourceTree = "<group>";
@@ -1706,7 +1711,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCE002867A10AABD9CA626C2 /* [CP] Embed Pods Frameworks */ = {
@@ -1794,6 +1799,7 @@
 				8D274B601FA713A600227056 /* NSString+Regex.m in Sources */,
 				290A981F1F4ABEB9006BF882 /* HSBaseCellModel.m in Sources */,
 				8D936D451FAB047200B303F9 /* HomeCompanyTableCell.m in Sources */,
+				8DEF67FF1FDE2A3E00B016DA /* UITabBar+badge.m in Sources */,
 				8D913F981FCEAA360094E8D9 /* AboutViewController.m in Sources */,
 				8D274B631FA713A600227056 /* UIFont+customFont.m in Sources */,
 				293ECC2D1EE56D1D008061A1 /* IMManager.m in Sources */,

@@ -10,7 +10,9 @@
 #import "LoginViewController.h"
 #import "EditPhoneViewController.h"
 #import "SocketRocketUtility.h"
-@interface TabBarViewController () <UIAlertViewDelegate,UITabBarDelegate,UITabBarControllerDelegate>
+#import "MessageViewController.h"
+#import "UITabBar+badge.h"
+@interface TabBarViewController () <UIAlertViewDelegate,UITabBarDelegate,UITabBarControllerDelegate, UIApplicationDelegate>
 
 @end
 
@@ -77,6 +79,13 @@
         navigation.navigationBar.translucent = NO;
         navigation.tabBarItem = MytabBarItem;
         [viewControllers addObject:navigation];
+        if (i == 2) {
+            UserModel *model = [[UserConfig shareInstace] getAllInformation];
+            if ([[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]] > 0) {
+                [navigation.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",[[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]]]];
+            }
+            
+        }
     }
     
     //设置tabbar背景
@@ -126,6 +135,10 @@
 //                [SVProgressHUD showErrorWithStatus:@"qing xian"];
 //                return NO;
 //            }
+            UserModel *model = [[UserConfig shareInstace] getAllInformation];
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [viewController.tabBarItem setBadgeValue:nil];
             return YES;
         }
     }else {
@@ -176,7 +189,14 @@
         if ([jsonObject[@"type"] isEqualToString:@"onConnect"]) {
             [self bingding:jsonObject[@"client_id"]];
         } else if([jsonObject[@"type"] isEqualToString:@"message"]) {
-            NSLog(@"收到一条消息：%@",jsonObject[@"list"]);
+            UserModel *model = [[UserConfig shareInstace] getAllInformation];
+            //[self.tabBar showBadgeOnItemIndex:2];
+            [[NSUserDefaults standardUserDefaults] setInteger:[[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]]+1 forKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            RootNavigationController *cc = self.viewControllers[2];
+            [cc.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",[[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]]]];
+            
         }
     
     }

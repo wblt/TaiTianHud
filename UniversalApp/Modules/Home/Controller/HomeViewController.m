@@ -291,8 +291,24 @@
     NSLog(@"点击了第%ld个",index);
     HomeBannerModel *model = _bannerArr[index];
     if ([model.ishref integerValue] == 1) {
-        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:model.module]];
-        [self presentViewController:loginNavi animated:YES completion:nil];
+        if ([model.url length] > 0) {
+            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
+            loginNavi.title = @"广告详情";
+            [self presentViewController:loginNavi animated:YES completion:nil];
+        }else {
+            if ([model.module isEqualToString:@"artonce"]) {
+                [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
+                    if ([returnValue[@"status"] integerValue] == 1) {
+                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:returnValue[@"data"][@"content"]]];
+                        loginNavi.title = @"广告详情";
+                        [self presentViewController:loginNavi animated:YES completion:nil];
+                    }
+                } failureBlock:^(NSError *error) {
+                    
+                }];
+            }
+        }
+        
     }
     
 }
