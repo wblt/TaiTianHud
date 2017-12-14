@@ -12,6 +12,7 @@
 #import "HomeActivityModel.h"
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
+#import <UMSocialCore/UMSocialCore.h>
 @interface MoreActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate>
 {
     NSInteger page;
@@ -121,8 +122,30 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeActivityModel *model = _dataArray[indexPath.row];
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
-    [self presentViewController:loginNavi animated:YES completion:nil];
+    UserModel *u = [[UserConfig shareInstace] getAllInformation];
+    if (u.wx_openid==nil||[u.wx_openid length] == 0) {
+        if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+            [self AlertWithTitle:@"温馨提示" message:@"需授权微信" andOthers:@[@"取消",@"同意"] animated:YES action:^(NSInteger index) {
+                if (index == 1) {
+                    [userManager loginWithActivityDetailCompletion:^(BOOL success, NSString *des) {
+                        if (success) {
+                            UserModel *user = [[UserConfig shareInstace] getAllInformation];
+                            NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+                            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+                            
+                            [self presentViewController:loginNavi animated:YES completion:nil];
+                        }
+                    }];
+                }
+            }];
+        }
+    }else {
+        UserModel *user = [[UserConfig shareInstace] getAllInformation];
+        NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+        
+        [self presentViewController:loginNavi animated:YES completion:nil];
+    }
 }
 
 -(void)headerRereshing{

@@ -13,9 +13,6 @@
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
 @interface MessageViewController () <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate>
-{
-    NSInteger page;
-}
 @property (nonatomic,copy) NSMutableArray * dataArray;
 @end
 
@@ -24,48 +21,65 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"消息";
-    _dataArray = @[].mutableCopy;
+    
     
     [self initUI];
-    page = 1;
-    [self requestData];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    page = 1;
+    UserModel *model = [[UserConfig shareInstace] getAllInformation];
+    _dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]]];
     [self requestData];
 }
 
 - (void)requestData
 {
-    UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    [NetRequestClass afn_requestURL:@"appMsgList" httpMethod:@"GET" params:@{@"p":@(page), @"ub_id":model.ub_id}.mutableCopy successBlock:^(id returnValue) {
+    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+    [NetRequestClass afn_requestURL:@"appMsgList" httpMethod:@"GET" params:@{@"ub_id":user.ub_id}.mutableCopy successBlock:^(id returnValue) {
+         [self.tableView.mj_header endRefreshing];
         if ([returnValue[@"status"] integerValue] == 1) {
-            if (page == 1) {
-                [self.tableView.mj_footer setState:MJRefreshStateIdle];
-                [_dataArray removeAllObjects];
-            }
+           
             NSMutableArray *arr = @[].mutableCopy;
-            for (NSDictionary *dic in returnValue[@"data"][@"list"]) {
+            for (NSDictionary *dic in returnValue[@"data"]) {
                 MessageModel *model = [MessageModel mj_objectWithKeyValues:dic];
                 [arr addObject:model];
             }
             if(_dataArray.count == 0){
                 _dataArray = arr;
-                [self.tableView.mj_header endRefreshing];
+               
             }else{
-                [_dataArray addObjectsFromArray:arr];
-                [self.tableView.mj_footer endRefreshing];
+                NSMutableArray *hhh = @[].mutableCopy;
+                for (MessageModel *m in arr) {
+                    for (MessageModel *h in _dataArray) {
+                        if ([m.msg_id isEqualToString:h.msg_id]) {
+                            [hhh addObject:m];
+                        }
+                    }
+                }
+                for (MessageModel *qq in hhh) {
+                    [arr removeObject:qq];
+                }
+                [arr addObjectsFromArray:_dataArray];
+                _dataArray = arr;
+            }
+            NSInteger noReadCount=0;
+            for (MessageModel *m in _dataArray) {
+                if ([m.isread integerValue]!=1) {
+                    noReadCount += 1;
+                }
+            }
+            if (noReadCount > 0) {
+                [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
             }
             
-            if(page >= [returnValue[@"data"][@"maxPage"] integerValue]){
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            }else {
-                page = page + 1;
-            }
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+            [[NSUserDefaults standardUserDefaults] setInteger:noReadCount forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             [self.tableView reloadData];
         }
         else {
@@ -80,7 +94,7 @@
 #pragma mark -  初始化页面
 -(void)initUI{
     self.tableView.mj_header.hidden = NO;
-    self.tableView.mj_footer.hidden = NO;
+    self.tableView.mj_footer.hidden = YES;
     [self.tableView registerNib:[UINib nibWithNibName:@"MessageCell" bundle:nil] forCellReuseIdentifier:@"MessageCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -137,7 +151,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MessageModel *model = _dataArray[indexPath.row];
+    UserModel *user = [[UserConfig shareInstace] getAllInformation];
     if ([model.ishref integerValue] == 1) {
+        [NetRequestClass afn_requestURL:@"appOperationMsg" httpMethod:@"POST" params:@{@"ub_id":user.ub_id,@"msg_id":model.msg_id,@"type":@"isread"}.mutableCopy successBlock:^(id returnValue) {
+            if ([returnValue[@"status"] integerValue] == 1) {
+                
+            }else {
+                
+            }
+            
+        } failureBlock:^(NSError *error) {
+        }];
         if ([model.url length] > 0) {
             RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
             loginNavi.title = @"消息详情";
@@ -204,12 +228,6 @@
 }
 
 -(void)headerRereshing{
-    page = 1;
-    
-    [self requestData];
-}
-
--(void)footerRereshing{
     [self requestData];
 }
 

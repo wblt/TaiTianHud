@@ -69,7 +69,6 @@
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
         [_wkwebView loadRequest:request];
     }else if (self.html != nil && [self.html length]>0) {
-    
         [_wkwebView loadHTMLString:self.html baseURL:nil];
     }
 }
@@ -117,6 +116,9 @@
 // 页面加载完成之后调用
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
     self.title = webView.title;
+    if ([self.title length]==0) {
+        self.title = @"单页详情";
+    }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     [self updateNavigationItems];
 }

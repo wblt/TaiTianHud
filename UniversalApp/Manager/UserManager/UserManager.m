@@ -8,7 +8,6 @@
 
 #import "UserManager.h"
 #import <UMSocialCore/UMSocialCore.h>
-
 @implementation UserManager
 
 SINGLETON_FOR_CLASS(UserManager);
@@ -27,7 +26,14 @@ SINGLETON_FOR_CLASS(UserManager);
 
 #pragma mark ————— 三方登录 —————
 -(void)login:(UserLoginType )loginType completion:(loginBlock)completion{
-    [self login:loginType params:nil completion:completion];
+    if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+        [self login:loginType params:nil completion:completion];
+    }else {
+        if (completion) {
+            completion(NO,nil);
+        }
+    }
+    
 }
 
 #pragma mark ————— 带参数登录 —————
@@ -54,25 +60,9 @@ SINGLETON_FOR_CLASS(UserManager);
             } else {
                 
                 UMSocialUserInfoResponse *resp = result;
-//                
-//                // 授权信息
-//                NSLog(@"QQ uid: %@", resp.uid);
-//                NSLog(@"QQ openid: %@", resp.openid);
-//                NSLog(@"QQ accessToken: %@", resp.accessToken);
-//                NSLog(@"QQ expiration: %@", resp.expiration);
-//                
-//                // 用户信息
-//                NSLog(@"QQ name: %@", resp.name);
-//                NSLog(@"QQ iconurl: %@", resp.iconurl);
-//                NSLog(@"QQ gender: %@", resp.unionGender);
-//                
-//                // 第三方平台SDK源数据
-//                NSLog(@"QQ originalResponse: %@", resp.originalResponse);
                 
                 //登录参数
                 NSDictionary *params = @{@"wx_openid":resp.openid, @"nickname":resp.name, @"headpic":resp.iconurl, @"sex":[resp.unionGender isEqualToString:@"男"]?@1:@2};
-                //, @"cityname":resp.originalResponse[@"city"], @"fr":@(loginType)
-                //self.loginType = loginType;
                 //登录到服务器
                 [self loginToServer:params completion:completion];
                 
@@ -211,4 +201,47 @@ SINGLETON_FOR_CLASS(UserManager);
     
     KPostNotification(KNotificationLoginStateChange, @NO);
 }
+
+- (void)loginWithActivityDetailCompletion:(loginBlock)completion
+{
+    
+        [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:nil completion:^(id result, NSError *error) {
+            if (!error) {
+                
+                UMSocialUserInfoResponse *resp = result;
+                
+                //登录参数
+                NSDictionary *params = @{@"wx_openid":resp.openid, @"nickname":resp.name, @"headpic":resp.iconurl, @"sex":[resp.unionGender isEqualToString:@"男"]?@1:@2};
+                [NetRequestClass afn_requestURL:@"appWxLogin" httpMethod:@"POST" params:params.mutableCopy successBlock:^(id returnValue) {
+                    [MBProgressHUD hideHUD];
+                    if ([returnValue[@"status"] integerValue] == 1) {
+                        UserModel *userModel = [UserModel mj_objectWithKeyValues:returnValue[@"data"]];
+                        [[UserConfig shareInstace] setAllInformation:userModel];
+                        
+                        // 保存登录状态
+                        [[UserConfig shareInstace] setLoginStatus:YES];
+
+                        if (completion) {
+                            completion(YES,nil);
+                        }
+                    }else {
+                        if (completion) {
+                            completion(NO,nil);
+                        }
+                    }
+                } failureBlock:^(NSError *error) {
+                    if (completion) {
+                        completion(NO,nil);
+                    }
+                    
+                }];
+            }else {
+                if (completion) {
+                    completion(NO,nil);
+                }
+            }
+        }];
+    
+}
+
 @end

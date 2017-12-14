@@ -32,8 +32,7 @@
     self.tableView.rowHeight = 55;
     self.tableView.frame = self.view.bounds;
     [self.view addSubview:self.tableView];
-    UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    arr = @[@[@"修改手机号",@"修改密码"],@[[model.isvst boolValue]?@"绑定手机号":@"绑定微信",@"清除缓存"]];
+    
     
 }
 
@@ -46,6 +45,8 @@
     [self.navigationController.navigationBar setShadowImage:nil];
     [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor blackColor], NSFontAttributeName : [UIFont systemFontOfSize:18]}];
+    UserModel *model = [[UserConfig shareInstace] getAllInformation];
+    arr = @[@[@"修改手机号",@"修改密码"],@[[model.isvst boolValue]?@"绑定手机号":@"绑定微信",@"清除缓存"]];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -144,6 +145,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UserModel *model = [[UserConfig shareInstace] getAllInformation];
     if (indexPath.section == 1 && indexPath.row == 1) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         LTAlertView *alert;
@@ -159,21 +161,28 @@
             [[SDImageCache sharedImageCache] clearMemory];//可不写
             [tableView reloadData];
         };
-    }else if (indexPath.section == 0 && indexPath.row == 1) {
-        EditPasswordViewController *editVC = [[EditPasswordViewController alloc] init];
-        [self.navigationController pushViewController:editVC animated:YES];
-    }else if (indexPath.section == 0 && indexPath.row == 0) {
-        UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
-        EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
-        editPhoneVC.title = @"修改手机号";
-        [self.navigationController pushViewController:editPhoneVC animated:YES];
-    }else {
-        if ([arr[indexPath.section][indexPath.row] isEqualToString:@"绑定手机号"]) {
+    }else if (![model.isvst boolValue]) {
+        if (indexPath.section == 0 && indexPath.row == 1) {
+            EditPasswordViewController *editVC = [[EditPasswordViewController alloc] init];
+            [self.navigationController pushViewController:editVC animated:YES];
+        }else if (indexPath.section == 0 && indexPath.row == 0) {
             UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
             EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
-            editPhoneVC.title = @"绑定手机号";
+            editPhoneVC.title = @"修改手机号";
             [self.navigationController pushViewController:editPhoneVC animated:YES];
+        }else {
+            if ([arr[indexPath.section][indexPath.row] isEqualToString:@"绑定手机号"]) {
+                UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+                EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+                editPhoneVC.title = @"绑定手机号";
+                [self.navigationController pushViewController:editPhoneVC animated:YES];
+            }
         }
+    }else {
+        UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+        EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+        editPhoneVC.title = @"绑定手机号";
+        [self.navigationController pushViewController:editPhoneVC animated:YES];
     }
 }
 

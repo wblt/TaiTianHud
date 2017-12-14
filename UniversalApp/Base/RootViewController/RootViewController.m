@@ -118,7 +118,9 @@
         _tableView.mj_header = header;
         
         //底部刷新
-        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
+        footer.automaticallyChangeAlpha = YES;
+        _tableView.mj_footer = footer;
 //        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
 //        _tableView.mj_footer.ignoredScrollViewContentInsetBottom = 30;
         

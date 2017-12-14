@@ -12,6 +12,7 @@
 #import "SocketRocketUtility.h"
 #import "MessageViewController.h"
 #import "UITabBar+badge.h"
+#import "MessageModel.h"
 @interface TabBarViewController () <UIAlertViewDelegate,UITabBarDelegate,UITabBarControllerDelegate, UIApplicationDelegate>
 
 @end
@@ -131,10 +132,14 @@
             [self presentViewController:loginVC animated:YES completion:nil];
             return NO;
         }else {
-//            if ([model.ub_id length]==0){
-//                [SVProgressHUD showErrorWithStatus:@"qing xian"];
-//                return NO;
-//            }
+            if ([model.isvst boolValue]){
+                UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+                EditPhoneViewController *editPhoneVC = [storyboad instantiateViewControllerWithIdentifier:@"EditPhoneViewController"];
+                editPhoneVC.title = @"绑定手机号";
+                RootNavigationController *nav = [[RootNavigationController alloc] initWithRootViewController:editPhoneVC];
+                [self presentViewController:nav animated:YES completion:nil];
+                return NO;
+            }
             UserModel *model = [[UserConfig shareInstace] getAllInformation];
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -189,13 +194,51 @@
         if ([jsonObject[@"type"] isEqualToString:@"onConnect"]) {
             [self bingding:jsonObject[@"client_id"]];
         } else if([jsonObject[@"type"] isEqualToString:@"message"]) {
+            
             UserModel *model = [[UserConfig shareInstace] getAllInformation];
+            NSMutableArray *msgArr = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]]];
+            NSInteger bagdeCount = [[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+            MessageModel *hh = [MessageModel mj_objectWithKeyValues:jsonObject[@"list"]];
+            BOOL isHave = NO;
+            for (MessageModel *m in msgArr) {
+                if ([m.msg_id isEqualToString:hh.msg_id]) {
+                    isHave = YES;
+                }
+            }
+            if (!isHave) {
+                [msgArr insertObject:hh atIndex:0];
+                if ([hh.isread integerValue] != 1) {
+                    bagdeCount += 1;
+                }
+            }
+            
             //[self.tabBar showBadgeOnItemIndex:2];
-            [[NSUserDefaults standardUserDefaults] setInteger:[[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]]+1 forKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+            [[NSUserDefaults standardUserDefaults] setInteger:bagdeCount forKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:msgArr] forKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
             RootNavigationController *cc = self.viewControllers[2];
-            [cc.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",[[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]]]];
+            [cc.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",bagdeCount]];
+            // 1.创建通知
+            UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+            // 2.设置通知的必选参数
+            // 设置通知显示的内容
+            localNotification.alertBody = @"你有一条消息";
+            // 设置通知的发送时间,单位秒
+            localNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:10];
+            //解锁滑动时的事件
+            localNotification.alertAction = @"你有一条消息";
+            localNotification.userInfo = jsonObject;
+            //收到通知时App icon的角标
+            localNotification.applicationIconBadgeNumber = [[NSUserDefaults standardUserDefaults] integerForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+            //推送是带的声音提醒，设置默认的字段为UILocalNotificationDefaultSoundName
+            localNotification.soundName = UILocalNotificationDefaultSoundName;
+            // 3.发送通知(🐽 : 根据项目需要使用)
+            // 方式一: 根据通知的发送时间(fireDate)发送通知
+            //[[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            
+            // 方式二: 立即发送通知
+            [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
             
         }
     

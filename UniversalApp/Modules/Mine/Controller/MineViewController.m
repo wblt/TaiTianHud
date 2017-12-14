@@ -40,7 +40,6 @@
     self.tableViewMain.backgroundColor = [UIColor groupTableViewBackgroundColor];
     arr = @[@[@"我的钱包",@"我的任务",@"完善个人信息"],@[@"设置",@"关于上位"]].mutableCopy;
     imgArr = @[@[@"钱包",@"任务",@"个人信息"],@[@"设置",@"关于上位"]].mutableCopy;
-    [self requestData];
 }
 
 - (void)viewWillAppear:(BOOL)animated

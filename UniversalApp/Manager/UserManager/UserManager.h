@@ -76,4 +76,6 @@ SINGLETON_FOR_HEADER(UserManager)
  */
 -(BOOL)loadUserInfo;
 
+- (void)loginWithActivityDetailCompletion:(loginBlock)completion;
+
 @end

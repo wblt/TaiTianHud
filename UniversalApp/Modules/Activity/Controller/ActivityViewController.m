@@ -13,6 +13,7 @@
 #import "RootWebViewController.h"
 #import "NSString+Extend.h"
 #import "LoginViewController.h"
+#import <UMSocialCore/UMSocialCore.h>
 @interface ActivityViewController () <UITableViewDataSource, UITableViewDelegate, SDCycleScrollViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 {
     NSString *type;
@@ -91,7 +92,7 @@
     }
     [_dataArray removeAllObjects];
     page = 1;
-    [self requestDataType:type keyword:@""];
+    [self requestDataType:type keyword:textField.text];
 }
 
 - (void)requestDataType:(NSString *)typeStr keyword:(NSString *)word
@@ -117,8 +118,12 @@
             
             if(page >= [returnValue[@"data"][@"maxPage"] integerValue]){
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                
             }else {
                 page = page + 1;
+            }
+            if (_dataArray.count == 0) {
+                [SVProgressHUD showErrorWithStatus:@"暂无数据"];
             }
             [self.tableView reloadData];
         }
@@ -211,17 +216,30 @@
     
     HomeActivityModel *model = _dataArray[indexPath.row];
     
-    if (![[UserConfig shareInstace] getLoginStatus]) {
-        UIStoryboard *storyboad = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *loginVC = [storyboad instantiateInitialViewController];
-        [self presentViewController:loginVC animated:YES completion:nil];
-        return;
+    UserModel *u = [[UserConfig shareInstace] getAllInformation];
+    if (u.wx_openid==nil||[u.wx_openid length] == 0) {
+        if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+        [self AlertWithTitle:@"温馨提示" message:@"需授权微信" andOthers:@[@"取消",@"同意"] animated:YES action:^(NSInteger index) {
+            if (index == 1) {
+                [userManager loginWithActivityDetailCompletion:^(BOOL success, NSString *des) {
+                    if (success) {
+                        UserModel *user = [[UserConfig shareInstace] getAllInformation];
+                        NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+                        
+                        [self presentViewController:loginNavi animated:YES completion:nil];
+                    }
+                }];
+            }
+        }];
+        }
+    }else {
+        UserModel *user = [[UserConfig shareInstace] getAllInformation];
+        NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+        
+        [self presentViewController:loginNavi animated:YES completion:nil];
     }
-    UserModel *user = [[UserConfig shareInstace] getAllInformation];
-    NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
-    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
-    
-    [self presentViewController:loginNavi animated:YES completion:nil];
 }
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
