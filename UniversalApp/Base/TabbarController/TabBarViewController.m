@@ -140,10 +140,7 @@
                 [self presentViewController:nav animated:YES completion:nil];
                 return NO;
             }
-            UserModel *model = [[UserConfig shareInstace] getAllInformation];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [viewController.tabBarItem setBadgeValue:nil];
+            
             return YES;
         }
     }else {

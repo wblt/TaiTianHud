@@ -21,4 +21,5 @@
 @property (nonatomic, strong) NSString *ishref;
 @property (nonatomic, strong) NSString *module;
 @property (nonatomic, strong) NSString *module_id;
+@property (nonatomic, strong) NSString *time_switch;
 @end

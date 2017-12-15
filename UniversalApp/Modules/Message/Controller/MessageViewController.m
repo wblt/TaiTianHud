@@ -35,6 +35,16 @@
     [self requestData];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)requestData
 {
     UserModel *user = [[UserConfig shareInstace] getAllInformation];
@@ -52,17 +62,25 @@
                
             }else{
                 NSMutableArray *hhh = @[].mutableCopy;
-                for (MessageModel *m in arr) {
-                    for (MessageModel *h in _dataArray) {
+                for (MessageModel *m in _dataArray) {
+                    for (MessageModel *h in arr) {
                         if ([m.msg_id isEqualToString:h.msg_id]) {
                             [hhh addObject:m];
                         }
                     }
                 }
                 for (MessageModel *qq in hhh) {
-                    [arr removeObject:qq];
+                    [_dataArray removeObject:qq];
                 }
-                [arr addObjectsFromArray:_dataArray];
+                for (MessageModel *m in _dataArray) {
+                    m.isread = @"1";
+                }
+                NSArray *sortedArray = [_dataArray sortedArrayUsingComparator:^NSComparisonResult(MessageModel *mA, MessageModel *mB) {
+                    
+                    return [mA.suetime compare:mB.suetime];
+                }];
+                
+                [arr addObjectsFromArray:sortedArray];
                 _dataArray = arr;
             }
             NSInteger noReadCount=0;
@@ -75,11 +93,6 @@
                 [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
             }
             
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
-            [[NSUserDefaults standardUserDefaults] setInteger:noReadCount forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
             [self.tableView reloadData];
         }
         else {
@@ -90,6 +103,13 @@
     }];
 }
 
+//- (NSArray *)sortedWithNSSortDescriptor:(NSArray *)originArray {
+//
+//    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"birthDate" ascending:YES];
+//    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//
+//    return [originArray sortedArrayUsingDescriptors:sortDescriptors];
+//}
 
 #pragma mark -  初始化页面
 -(void)initUI{
@@ -134,7 +154,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     MessageModel *model = _dataArray[indexPath.row];
     [cell.img sd_setImageWithURL:[NSURL URLWithString:model.icon]  placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    cell.time.text = model.suetime;
+    cell.time.text = model.time_switch;
     cell.text.text = model.title;
     cell.title.text = @"系统消息";
     if ([model.isread integerValue] == 1) {
@@ -155,7 +175,8 @@
     if ([model.ishref integerValue] == 1) {
         [NetRequestClass afn_requestURL:@"appOperationMsg" httpMethod:@"POST" params:@{@"ub_id":user.ub_id,@"msg_id":model.msg_id,@"type":@"isread"}.mutableCopy successBlock:^(id returnValue) {
             if ([returnValue[@"status"] integerValue] == 1) {
-                
+                model.isread = @"1";
+                [self.tableView reloadData];
             }else {
                 
             }
@@ -170,7 +191,7 @@
             if ([model.module isEqualToString:@"artonce"]) {
                 [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
                     if ([returnValue[@"status"] integerValue] == 1) {
-                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:returnValue[@"data"][@"content"]]];
+                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:[NSString stringWithFormat:@"<h1 style=\"font-size: 40px;text-align: center;margin-left: 10%%;width: 80%%;margin-top: 40px;\">%@</h1>%@",returnValue[@"data"][@"title"],returnValue[@"data"][@"content"]]]];
                         loginNavi.title = @"消息详情";
                         [self presentViewController:loginNavi animated:YES completion:nil];
                     }
@@ -187,7 +208,7 @@
 
 {
     
-    if (lpGR.state == UIGestureRecognizerStateEnded)//手势结束
+    if (lpGR.state == UIGestureRecognizerStateBegan)//手势开始
         
     {
         

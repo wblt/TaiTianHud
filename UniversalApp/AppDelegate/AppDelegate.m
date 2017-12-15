@@ -93,7 +93,7 @@
                 if ([model.module isEqualToString:@"artonce"]) {
                     [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
                         if ([returnValue[@"status"] integerValue] == 1) {
-                            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:returnValue[@"data"][@"content"]]];
+                            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:[NSString stringWithFormat:@"<h1 style=\"font-size: 40px;text-align: center;margin-left: 10%%;width: 80%%;margin-top: 40px;\">%@</h1>%@",returnValue[@"data"][@"title"],returnValue[@"data"][@"content"]]]];
                             loginNavi.title = @"消息详情";
                             [self.getCurrentVC presentViewController:loginNavi animated:YES completion:nil];
                         }
