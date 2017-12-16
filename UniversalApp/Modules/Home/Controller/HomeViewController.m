@@ -122,6 +122,7 @@
     cell.scrollImg.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
     cell.scrollImg.pageDotImage = [UIImage imageNamed:@"pageControlDot"];
     cell.scrollImg.imageURLStringsGroup = model.img;
+    cell.scrollImg.tag = 200+indexPath.row;
     [cell.address setTitle:model.area_title forState:0];
     [cell.personNum setTitle:[NSString stringWithFormat:@"%@人报名",model.total] forState:0];
     [cell.time setTitle:[NSString timeWithTimeIntervalString:model.start] forState:0];
@@ -131,7 +132,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 790;
+    return 790-115*2+(KScreenWidth-30)/2*2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -146,6 +147,7 @@
     SDCycleScrollView *cycleScrollView3 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, KScreenWidth, 187) delegate:self placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cycleScrollView3.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
     cycleScrollView3.pageDotImage = [UIImage imageNamed:@"pageControlDot"];
+    cycleScrollView3.tag = 1000;
     NSMutableArray *arr = @[].mutableCopy;
     for (HomeBannerModel *model in _bannerArr) {
         [arr addObject:model.img];
@@ -218,7 +220,7 @@
         HomeStarModel *model = _starArr[i];
         CGFloat w = 10;
         NSInteger y = i/2;
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(w+i%2*((KScreenWidth-30)/2+w), starL.bottom+(175+10)*y, (KScreenWidth-30)/2, 175)];
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(w+i%2*((KScreenWidth-30)/2+w), starL.bottom+(60+(KScreenWidth-30)/2+10)*y, (KScreenWidth-30)/2, (KScreenWidth-30)/2+60)];
         btn.tag = 301+i;
         btn.layer.cornerRadius = 5;
         btn.layer.masksToBounds = YES;
@@ -230,7 +232,7 @@
         }];
         [view addSubview:btn];
         
-        UIImageView *starImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn.width, 115)];
+        UIImageView *starImg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, btn.width, btn.width)];
         [starImg sd_setImageWithURL:[NSURL URLWithString:model.img] placeholderImage:[UIImage imageNamed:@"placeholder"]];
         starImg.layer.cornerRadius = 5;
         starImg.layer.masksToBounds = YES;
@@ -313,28 +315,32 @@
 #pragma mark -  scrollview回调
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
     NSLog(@"点击了第%ld个",index);
-    HomeBannerModel *model = _bannerArr[index];
-    if ([model.ishref integerValue] == 1) {
-        if ([model.url length] > 0) {
-            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
-            loginNavi.title = @"广告详情";
-            [self presentViewController:loginNavi animated:YES completion:nil];
-        }else {
-            if ([model.module isEqualToString:@"artonce"]) {
-                [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
-                    if ([returnValue[@"status"] integerValue] == 1) {
-                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:[NSString stringWithFormat:@"<h1 style=\"font-size: 40px;text-align: center;margin-left: 10%%;width: 80%%;margin-top: 40px;\">%@</h1>%@",returnValue[@"data"][@"title"],returnValue[@"data"][@"content"]]]];
-                        loginNavi.title = @"广告详情";
-                        [self presentViewController:loginNavi animated:YES completion:nil];
-                    }
-                } failureBlock:^(NSError *error) {
-                    
-                }];
+    if (cycleScrollView.tag == 1000) {
+        HomeBannerModel *model = _bannerArr[index];
+        if ([model.ishref integerValue] == 1) {
+            if ([model.url length] > 0) {
+                RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
+                loginNavi.title = @"广告详情";
+                [self presentViewController:loginNavi animated:YES completion:nil];
+            }else {
+                if ([model.module isEqualToString:@"artonce"]) {
+                    [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
+                        if ([returnValue[@"status"] integerValue] == 1) {
+                            RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:[NSString stringWithFormat:@"<h1 style=\"font-size: 40px;text-align: center;margin-left: 10%%;width: 80%%;margin-top: 40px;\">%@</h1>%@",returnValue[@"data"][@"title"],returnValue[@"data"][@"content"]]]];
+                            loginNavi.title = @"广告详情";
+                            [self presentViewController:loginNavi animated:YES completion:nil];
+                        }
+                    } failureBlock:^(NSError *error) {
+                        
+                    }];
+                }
             }
+            
         }
-        
+    }else {
+        NSIndexPath *path = [NSIndexPath indexPathForRow:cycleScrollView.tag-200 inSection:0];
+        [self tableView:self.tableView didSelectRowAtIndexPath:path];
     }
-    
 }
 
 - (void)gyChangeTextView:(GYChangeTextView *)textView didTapedAtIndex:(NSInteger)index {

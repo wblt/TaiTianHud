@@ -63,16 +63,16 @@
         UIImage *selectedImage = [UIImage imageNamed:selectImages[i]];
         
         UITabBarItem *MytabBarItem = [[UITabBarItem alloc] initWithTitle:itemTitles[i] image:[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        
+
         MytabBarItem.tag = i;
 
 
         [MytabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                           [UIColor grayColor], NSForegroundColorAttributeName,
+                                                           [UIColor blackColor], NSForegroundColorAttributeName,
                                                            [UIFont fontWithName:@"Helvetica" size:12],NSFontAttributeName,
                                                            nil] forState:UIControlStateNormal];
         [MytabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                           [UIColor blackColor], NSForegroundColorAttributeName,
+                                                           [UIColor colorWithHexString:@"f57a00"], NSForegroundColorAttributeName,
                                                            [UIFont fontWithName:@"Helvetica" size:12],NSFontAttributeName,
                                                            nil] forState:UIControlStateSelected];
         //4.加载故事板，获取故事板中箭头指向的控制器对象

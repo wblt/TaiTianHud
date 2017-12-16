@@ -36,7 +36,7 @@
     page = 1;
     type = @"start";
     [self requestDataType:@"start" keyword:@""];
-   
+    
 }
 
 - (void)toSearch
@@ -122,9 +122,7 @@
             }else {
                 page = page + 1;
             }
-            if (_dataArray.count == 0) {
-                [SVProgressHUD showErrorWithStatus:@"暂无数据"];
-            }
+            
             [self.tableView reloadData];
         }
         else {
@@ -152,6 +150,11 @@
 
 #pragma mark ————— tableview 代理 —————
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_dataArray.count == 0) {
+        [self showNoDataImage];
+    }else {
+        [self removeNoDataImage];
+    }
     return _dataArray.count;
 }
 
@@ -205,6 +208,8 @@
     cell.scrollImg.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
     cell.scrollImg.pageDotImage = [UIImage imageNamed:@"pageControlDot"];
     cell.scrollImg.imageURLStringsGroup = model.img;
+
+    cell.scrollImg.tag = 200+indexPath.row;
     [cell.address setTitle:model.area_title forState:0];
     [cell.personNum setTitle:[NSString stringWithFormat:@"%@人报名",model.total] forState:0];
     [cell.time setTitle:[NSString timeWithTimeIntervalString:model.start] forState:0];
@@ -244,16 +249,17 @@
 
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
 {
-    
+    NSIndexPath *path = [NSIndexPath indexPathForRow:cycleScrollView.tag-200 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:path];
 }
 
 -(void)headerRereshing{
     page = 1;
-    [self requestDataType:type keyword:@""];
+    [self requestDataType:type keyword:textField.text];
 }
 
 -(void)footerRereshing{
-    [self requestDataType:type keyword:@""];
+    [self requestDataType:type keyword:textField.text];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -91,7 +91,7 @@
         return;
     }
     
-    if (![code isEqualToString:self.smsCodeFiled.text]) {
+    if (![[NSString stringWithFormat:@"%@", code] isEqualToString:self.smsCodeFiled.text]) {
         [SVProgressHUD showErrorWithStatus:@"验证码错误"];
         return;
     }

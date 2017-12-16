@@ -13,7 +13,7 @@
 
 @interface RootViewController ()
 
-@property (nonatomic,strong) UIImageView* noDataView;
+
 
 @end
 
@@ -85,14 +85,25 @@
 
 -(void)showNoDataImage
 {
-    _noDataView=[[UIImageView alloc] init];
-    [_noDataView setImage:[UIImage imageNamed:@"generl_nodata"]];
-    [self.view.subviews enumerateObjectsUsingBlock:^(UITableView* obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[UITableView class]]) {
-            [_noDataView setFrame:CGRectMake(0, 0,obj.frame.size.width, obj.frame.size.height)];
-            [obj addSubview:_noDataView];
-        }
-    }];
+    if (_noDataView == nil) {
+        _noDataView=[[UILabel alloc] init];
+        _noDataView.text = @"暂无数据";
+        _noDataView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        _noDataView.textAlignment = NSTextAlignmentCenter;
+        [self.view.subviews enumerateObjectsUsingBlock:^(UITableView* obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isKindOfClass:[UITableView class]]) {
+                [_noDataView setFrame:CGRectMake(0, 0,obj.frame.size.width, obj.frame.size.height)];
+                [obj addSubview:_noDataView];
+            }
+        }];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithActionBlock:^(id  _Nonnull sender) {
+//
+//        }];
+//        [_noDataView addGestureRecognizer:tap];
+    }
+    
+    //[_noDataView setImage:[UIImage imageNamed:@"generl_nodata"]];
+    
 }
 
 -(void)removeNoDataImage{
@@ -119,7 +130,7 @@
         
         //底部刷新
         MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRereshing)];
-        footer.automaticallyChangeAlpha = YES;
+        //footer.automaticallyChangeAlpha = YES;
         _tableView.mj_footer = footer;
 //        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
 //        _tableView.mj_footer.ignoredScrollViewContentInsetBottom = 30;

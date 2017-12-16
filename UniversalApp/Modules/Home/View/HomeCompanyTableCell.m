@@ -16,7 +16,6 @@
     self.type.layer.borderWidth = 0.5;
     self.type.layer.cornerRadius = 2;
     self.type.layer.masksToBounds = YES;
-    self.scrollImg.userInteractionEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

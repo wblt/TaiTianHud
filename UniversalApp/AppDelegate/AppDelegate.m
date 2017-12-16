@@ -59,11 +59,11 @@
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(nonnull UILocalNotification *)notification
 {
-    NSDictionary *userInfo = notification.userInfo;
-    model = [MessageModel mj_objectWithKeyValues:userInfo[@"list"]];
-    UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"消息" message:model.title delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
-    
-    [alter show];
+//    NSDictionary *userInfo = notification.userInfo;
+//    model = [MessageModel mj_objectWithKeyValues:userInfo[@"list"]];
+//    UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"消息" message:model.title delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
+//    
+//    [alter show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

@@ -38,7 +38,7 @@
     layout.minimumLineSpacing = 10;
     layout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    layout.itemSize = CGSizeMake((KScreenWidth-30)/2, 175);
+    layout.itemSize = CGSizeMake((KScreenWidth-30)/2, 60+(KScreenWidth-30)/2);
     page = 1;
     [self requestData];
 }

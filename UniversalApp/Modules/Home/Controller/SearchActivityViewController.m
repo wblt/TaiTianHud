@@ -87,6 +87,11 @@
 
 #pragma mark ————— tableview 代理 —————
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_dataArray.count == 0) {
+        [self showNoDataImage];
+    }else {
+        [self removeNoDataImage];
+    }
     return _dataArray.count;
 }
 
@@ -188,6 +193,12 @@
     self.searchStr = textField.text;
     [self requestData:textField.text];
     return YES;
+}
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    NSIndexPath *path = [NSIndexPath indexPathForRow:cycleScrollView.tag-200 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:path];
 }
 
 - (void)didReceiveMemoryWarning {

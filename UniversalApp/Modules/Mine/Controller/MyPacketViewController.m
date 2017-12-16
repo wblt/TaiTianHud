@@ -57,6 +57,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (arr.count == 0) {
+        [self showNoDataImage];
+    }else {
+        [self removeNoDataImage];
+    }
     return arr.count;
 }
 

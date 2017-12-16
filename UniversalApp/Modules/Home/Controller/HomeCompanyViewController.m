@@ -32,6 +32,7 @@
     [self initUI];
     [self requestData];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
+
 }
 
 - (void)requestData
@@ -98,6 +99,11 @@
 
 #pragma mark ————— tableview 代理 —————
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_dataArray.count == 0) {
+        [self showNoDataImage];
+    }else {
+        [self removeNoDataImage];
+    }
     return _dataArray.count;
 }
 
@@ -115,6 +121,7 @@
     cell.scrollImg.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrentDot"];
     cell.scrollImg.pageDotImage = [UIImage imageNamed:@"pageControlDot"];
     cell.scrollImg.imageURLStringsGroup = model.img;
+    cell.scrollImg.tag = 200+indexPath.row;
     [cell.address setTitle:model.area_title forState:0];
     [cell.personNum setTitle:[NSString stringWithFormat:@"%@人报名",model.total] forState:0];
     [cell.time setTitle:[NSString timeWithTimeIntervalString:model.start] forState:0];
@@ -149,6 +156,12 @@
         
         [self presentViewController:loginNavi animated:YES completion:nil];
     }
+}
+
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    NSIndexPath *path = [NSIndexPath indexPathForRow:cycleScrollView.tag-200 inSection:0];
+    [self tableView:self.tableView didSelectRowAtIndexPath:path];
 }
 
 - (void)didReceiveMemoryWarning {

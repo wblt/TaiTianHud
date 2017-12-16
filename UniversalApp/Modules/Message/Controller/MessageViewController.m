@@ -32,6 +32,20 @@
     [super viewWillAppear:animated];
     UserModel *model = [[UserConfig shareInstace] getAllInformation];
     _dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]]];
+    NSInteger noReadCount=0;
+    for (MessageModel *m in _dataArray) {
+        if ([m.isread integerValue]!=1) {
+            noReadCount += 1;
+        }
+    }
+    if (noReadCount > 0) {
+        [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
+    }
+    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [self requestData];
 }
 
@@ -92,7 +106,10 @@
             if (noReadCount > 0) {
                 [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
             }
-            
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+            [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+            [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             [self.tableView reloadData];
         }
         else {
@@ -127,6 +144,11 @@
 
 #pragma mark ————— tableview 代理 —————
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_dataArray.count == 0) {
+        [self showNoDataImage];
+    }else {
+        [self removeNoDataImage];
+    }
     return _dataArray.count;
 }
 
@@ -156,7 +178,7 @@
     [cell.img sd_setImageWithURL:[NSURL URLWithString:model.icon]  placeholderImage:[UIImage imageNamed:@"placeholder"]];
     cell.time.text = model.time_switch;
     cell.text.text = model.title;
-    cell.title.text = @"系统消息";
+    cell.title.text = model.mc_id;
     if ([model.isread integerValue] == 1) {
         cell.redBadge.hidden = YES;
     }else {
@@ -176,6 +198,19 @@
         [NetRequestClass afn_requestURL:@"appOperationMsg" httpMethod:@"POST" params:@{@"ub_id":user.ub_id,@"msg_id":model.msg_id,@"type":@"isread"}.mutableCopy successBlock:^(id returnValue) {
             if ([returnValue[@"status"] integerValue] == 1) {
                 model.isread = @"1";
+                NSInteger noReadCount=0;
+                for (MessageModel *m in _dataArray) {
+                    if ([m.isread integerValue]!=1) {
+                        noReadCount += 1;
+                    }
+                }
+                if (noReadCount > 0) {
+                    [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
+                }
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+                [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 [self.tableView reloadData];
             }else {
                 
@@ -233,9 +268,23 @@
             if ([returnValue[@"status"] integerValue] == 1) {
                 if (buttonIndex == 0) {
                     model.isread = @"1";
+                    
                 }else {
                     [_dataArray removeObjectAtIndex:actionSheet.tag-2000];
                 }
+                NSInteger noReadCount=0;
+                for (MessageModel *m in _dataArray) {
+                    if ([m.isread integerValue]!=1) {
+                        noReadCount += 1;
+                    }
+                }
+                if (noReadCount > 0) {
+                    [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
+                }
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+                [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
                 [self.tableView reloadData];
             }else {
                 [SVProgressHUD showErrorWithStatus:returnValue[@"info"]];

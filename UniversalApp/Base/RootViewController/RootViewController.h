@@ -13,7 +13,7 @@
  VC 基类
  */
 @interface RootViewController : UIViewController
-
+@property (nonatomic,strong) UILabel* noDataView;
 /**
  *  修改状态栏颜色
  */
