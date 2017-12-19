@@ -82,6 +82,9 @@ static  UserConfig *instance = nil;
  *  退出登陆
  */
 - (void)logout {
+//    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"isLogin"];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isLogin"];
     [[NSUserDefaults standardUserDefaults] synchronize];

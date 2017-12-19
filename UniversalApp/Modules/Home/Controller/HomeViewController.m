@@ -46,7 +46,7 @@
     _activityArr = @[].mutableCopy;
     _starArr = @[].mutableCopy;
     
-    [self initUI];
+   
     [self requestData];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 }
@@ -64,6 +64,7 @@
 - (void)requestData
 {
     [NetRequestClass afn_requestURL:@"appIndexlist" httpMethod:@"GET" params:nil successBlock:^(id returnValue) {
+         [self initUI];
         for (NSDictionary *dic in returnValue[@"data"][@"admarket"]) {
             HomeBannerModel *model = [HomeBannerModel mj_objectWithKeyValues:dic];
             [_bannerArr addObject:model];

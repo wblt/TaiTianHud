@@ -25,6 +25,7 @@
         self.ishref=[coder decodeObjectForKey:@"ishref"];
         self.module=[coder decodeObjectForKey:@"module"];
         self.module_id=[coder decodeObjectForKey:@"module_id"];
+        self.time_switch = [coder decodeObjectForKey:@"time_switch"];
     }
     return self;
 }
@@ -43,5 +44,6 @@
     [coder encodeObject:self.ishref forKey:@"ishref"];
     [coder encodeObject:self.module forKey:@"module"];
     [coder encodeObject:self.module_id forKey:@"module_id"];
+    [coder encodeObject:self.time_switch forKey:@"time_switch"];
 }
 @end

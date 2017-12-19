@@ -131,6 +131,8 @@
                         AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
                         delegate.mainTabBar = [[TabBarViewController alloc] init];
                         delegate.window.rootViewController = delegate.mainTabBar;
+                        RootNavigationController *cc = delegate.mainTabBar.viewControllers[2];
+                        [cc.tabBarItem setBadgeValue:nil];
                     }
                 }];
             };

@@ -204,15 +204,19 @@
             }
             if (!isHave) {
                 [msgArr insertObject:hh atIndex:0];
+                
                 if ([hh.isread integerValue] != 1) {
                     bagdeCount += 1;
+                    
                 }
+                [[NSUserDefaults standardUserDefaults] setInteger:bagdeCount forKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:msgArr] forKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"NewMessageNotification" object:nil userInfo:nil]];
             }
             
             //[self.tabBar showBadgeOnItemIndex:2];
-            [[NSUserDefaults standardUserDefaults] setInteger:bagdeCount forKey:[NSString stringWithFormat:@"%@_badge",model.ub_id]];
-            [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:msgArr] forKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            
             
             RootNavigationController *cc = self.viewControllers[2];
             [cc.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",bagdeCount]];
@@ -237,6 +241,19 @@
             // 方式二: 立即发送通知
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
             
+        }else if([jsonObject[@"type"] isEqualToString:@"onClose"]) {
+            // 退出socket
+            [self closeSocket];
+            
+            [[UserConfig shareInstace] logout];
+            
+            AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+            //delegate.mainTabBar = [[TabBarViewController alloc] init];
+            self.selectedIndex = 0;
+            delegate.window.rootViewController = self;
+            RootNavigationController *cc = self.viewControllers[2];
+            [cc.tabBarItem setBadgeValue:nil];
+            [SVProgressHUD showErrorWithStatus:jsonObject[@"info"]];
         }
     
     }
@@ -244,6 +261,8 @@
 
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NewMessageNotification" object:nil];
 }
 
 - (void)bingding:(NSString *)client_id {
@@ -261,4 +280,18 @@
 //        [SVProgressHUD showErrorWithStatus:@"请求失败"];
     }];
 }
+
+- (void)closeSocket {
+    // 判断登录
+    if (![[UserConfig shareInstace] getLoginStatus]) {
+        return;
+    }
+    // 判断是否是用户
+    UserModel *userModel = [[UserConfig shareInstace] getAllInformation];
+    if (userModel.ub_id == nil || userModel.ub_id.length == 0) {
+        return;
+    }
+    [[SocketRocketUtility instance] SRWebSocketClose]; //在需要得地方 关闭socket
+}
+
 @end

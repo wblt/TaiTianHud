@@ -30,22 +30,12 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    UserModel *model = [[UserConfig shareInstace] getAllInformation];
-    _dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_Message",model.ub_id]]];
-    NSInteger noReadCount=0;
-    for (MessageModel *m in _dataArray) {
-        if ([m.isread integerValue]!=1) {
-            noReadCount += 1;
-        }
-    }
-    if (noReadCount > 0) {
-        [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
-    }
-    UserModel *user = [[UserConfig shareInstace] getAllInformation];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
-    [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self requestData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNewMessage) name:@"NewMessageNotification" object:nil];
+}
+
+- (void)receiveNewMessage
+{
     [self requestData];
 }
 
@@ -53,6 +43,7 @@
 {
     [super viewWillDisappear:animated];
     UserModel *user = [[UserConfig shareInstace] getAllInformation];
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
     [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
     [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
@@ -62,6 +53,20 @@
 - (void)requestData
 {
     UserModel *user = [[UserConfig shareInstace] getAllInformation];
+    _dataArray = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]]];
+    NSInteger noReadCount=0;
+    for (MessageModel *m in _dataArray) {
+        if ([m.isread integerValue]!=1) {
+            noReadCount += 1;
+        }
+    }
+    if (noReadCount > 0) {
+        [self.navigationController.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%ld",noReadCount]];
+    }
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:_dataArray] forKey:[NSString stringWithFormat:@"%@_Message",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] setInteger:[self.navigationController.tabBarItem.badgeValue integerValue] forKey:[NSString stringWithFormat:@"%@_badge",user.ub_id]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     [NetRequestClass afn_requestURL:@"appMsgList" httpMethod:@"GET" params:@{@"ub_id":user.ub_id}.mutableCopy successBlock:^(id returnValue) {
          [self.tableView.mj_header endRefreshing];
         if ([returnValue[@"status"] integerValue] == 1) {
@@ -224,7 +229,7 @@
             [self presentViewController:loginNavi animated:YES completion:nil];
         }else {
             if ([model.module isEqualToString:@"artonce"]) {
-                [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":model.module_id}.mutableCopy successBlock:^(id returnValue) {
+                [NetRequestClass afn_requestURL:@"appGetArtonce" httpMethod:@"GET" params:@{@"id":(model.module_id!=nil)?model.module_id:@""}.mutableCopy successBlock:^(id returnValue) {
                     if ([returnValue[@"status"] integerValue] == 1) {
                         RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:nil orHtml:[NSString stringWithFormat:@"<h1 style=\"font-size: 40px;text-align: center;margin-left: 10%%;width: 80%%;margin-top: 40px;\">%@</h1>%@",returnValue[@"data"][@"title"],returnValue[@"data"][@"content"]]]];
                         loginNavi.title = @"消息详情";
