@@ -28,7 +28,7 @@
     self.tableView.rowHeight = 55;
     self.tableView.frame = self.view.bounds;
     [self.view addSubview:self.tableView];
-    arr = @[@"旧密码",@"新密码",@"新密码"];
+    arr = @[@"原始密码",@"新的密码",@"确认密码"];
     [self.tableView registerNib:[UINib nibWithNibName:@"InformationEditCell" bundle:nil] forCellReuseIdentifier:@"InformationEditCell"];
 }
 
