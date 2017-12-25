@@ -7,8 +7,8 @@
 //
 
 #import "RootWebViewController.h"
-
-@interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate>
+#import <JavaScriptCore/JavaScriptCore.h>
+@interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate, WKScriptMessageHandler>
 
 @property (strong, nonatomic) UIProgressView *progressView;//这个是加载页面的进度条
 
@@ -71,6 +71,7 @@
     }else if (self.html != nil && [self.html length]>0) {
         [_wkwebView loadHTMLString:self.html baseURL:nil];
     }
+     [self.wkwebView.configuration.userContentController addScriptMessageHandler:self name:@"PresentGiftClick"];
 }
 
 #pragma mark --这个就是设置的上面的那个加载的进度
@@ -179,6 +180,14 @@
     self.wkwebView.navigationDelegate = nil;
     
 }
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+{
+    if ([message.name isEqualToString:@"PresentGiftClick"]) {
+        [SVProgressHUD showInfoWithStatus:@"点击了赠送，app下一步操作"];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

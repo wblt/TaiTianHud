@@ -92,7 +92,7 @@
             }
             self.collectionView.frame = CGRectMake(0, 0, KScreenWidth, (_arr.count/3+_arr.count%3==0?0:1)*80+118+40);
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, self.collectionView.bottom, 110, 30)];
-            label.text = @"其他金额";
+            label.text = @"其他数量";
             label.textAlignment = NSTextAlignmentRight;
             label.font = [UIFont systemFontOfSize:14];
             [self.view addSubview:label];

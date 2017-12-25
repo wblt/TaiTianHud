@@ -43,6 +43,8 @@
     cell.nickName.text = [NSString stringWithFormat:@"%@：", arr[indexPath.row]];
     cell.textField.placeholder = [NSString stringWithFormat:@"输入%@", arr[indexPath.row]];
     cell.textField.textAlignment = NSTextAlignmentLeft;
+    cell.textField.keyboardType = UIKeyboardTypeASCIICapable;
+    cell.textField.secureTextEntry = YES;
     return cell;
 }
 

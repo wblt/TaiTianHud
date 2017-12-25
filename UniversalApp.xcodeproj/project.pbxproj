@@ -178,6 +178,7 @@
 		8D936D461FAB047200B303F9 /* HomeCompanyTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D936D441FAB047200B303F9 /* HomeCompanyTableCell.xib */; };
 		8D936D491FAB0C1300B303F9 /* HomeCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D936D481FAB0C1300B303F9 /* HomeCompanyViewController.m */; };
 		8D936D4B1FAB0F2600B303F9 /* CompanyDetailHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8D936D4A1FAB0F2600B303F9 /* CompanyDetailHeadView.xib */; };
+		8D967BB41FF0BDA900EB3A9D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D967BB31FF0BDA900EB3A9D /* JavaScriptCore.framework */; };
 		8DBCD5421FDA6EC500DE5B1B /* MoreStarCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DBCD5401FDA6EC500DE5B1B /* MoreStarCollectionCell.m */; };
 		8DBCD5431FDA6EC500DE5B1B /* MoreStarCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */; };
 		8DCF12F91FB2A31000D173A7 /* MoreCompanyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DCF12F81FB2A31000D173A7 /* MoreCompanyViewController.m */; };
@@ -494,6 +495,7 @@
 		8D936D471FAB0C1300B303F9 /* HomeCompanyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeCompanyViewController.h; sourceTree = "<group>"; };
 		8D936D481FAB0C1300B303F9 /* HomeCompanyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeCompanyViewController.m; sourceTree = "<group>"; };
 		8D936D4A1FAB0F2600B303F9 /* CompanyDetailHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyDetailHeadView.xib; sourceTree = "<group>"; };
+		8D967BB31FF0BDA900EB3A9D /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		8DBCD53F1FDA6EC500DE5B1B /* MoreStarCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreStarCollectionCell.h; sourceTree = "<group>"; };
 		8DBCD5401FDA6EC500DE5B1B /* MoreStarCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreStarCollectionCell.m; sourceTree = "<group>"; };
 		8DBCD5411FDA6EC500DE5B1B /* MoreStarCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreStarCollectionCell.xib; sourceTree = "<group>"; };
@@ -535,6 +537,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D967BB41FF0BDA900EB3A9D /* JavaScriptCore.framework in Frameworks */,
 				8D33BEF91FA9C123003F377B /* libUMSocialLog.a in Frameworks */,
 				8D33BEF31FA9C123003F377B /* libSocialQQ.a in Frameworks */,
 				296ED8B41EF3B6A300E33961 /* libPods-UniversalApp.a in Frameworks */,
@@ -1065,6 +1068,7 @@
 		6C3D66AC810B3ABDE56945D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8D967BB31FF0BDA900EB3A9D /* JavaScriptCore.framework */,
 				290A98221F4AC153006BF882 /* StoreKit.framework */,
 				296ED8B31EF3B6A300E33961 /* libPods-UniversalApp.a */,
 				299610121ED84A8D00BCED2A /* CoreGraphics.framework */,

@@ -45,7 +45,7 @@
         UserModel *model = [[UserConfig shareInstace] getAllInformation];
         UILabel *money = (UILabel *)[self.view viewWithTag:201];
         ChongzhiViewController *cz = [[ChongzhiViewController alloc] init];
-        cz.nameText = model.nickname;
+        cz.nameText = model.realname;
         cz.jifenText = money.text;
         [self.navigationController pushViewController:cz animated:YES];
     }];

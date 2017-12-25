@@ -205,17 +205,22 @@
     [starL setImage:[UIImage imageNamed:@"首页活动"] forState:0];
     [view addSubview:starL];
     
-    UIButton *moreStar = [[UIButton alloc] initWithFrame:CGRectMake(KScreenWidth-15-40, line3.bottom, 40, 40)];
+    UIButton *moreStar = [[UIButton alloc] initWithFrame:CGRectMake(KScreenWidth-15-50, line3.bottom, 50, 40)];
     moreStar.titleLabel.font = [UIFont systemFontOfSize:13];
     [moreStar setTitleColor:[UIColor lightGrayColor] forState:0];
     [moreStar setTitle:@"更多" forState:0];
-    [moreStar setImage:[UIImage imageNamed:@"genduo"] forState:0];
+    //[moreStar setImage:[UIImage imageNamed:@"genduo"] forState:0];
     [moreStar addTapBlock:^(UIButton *btn) {
         //更多明星
         MoreStarViewController *moreStarVC = [[MoreStarViewController alloc] init];
         [self.navigationController pushViewController:moreStarVC animated:YES];
     }];
     [view addSubview:moreStar];
+    UIImageView *moreImg = [[UIImageView alloc] initWithFrame:CGRectMake(42, 0, 12, 40)];
+    moreImg.contentMode = UIViewContentModeScaleAspectFit;
+    moreImg.image = [UIImage imageNamed:@"genduo"];
+    [moreStar addSubview:moreImg];
+    
     CGFloat starHeight = moreStar.bottom;
     for (int i = 0; i < _starArr.count; i++) {
         HomeStarModel *model = _starArr[i];
@@ -230,6 +235,30 @@
         [btn addTapBlock:^(UIButton *btn) {
         
             //明星
+            UserModel *u = [[UserConfig shareInstace] getAllInformation];
+            if (u.wx_openid==nil||[u.wx_openid length] == 0) {
+                if ([[UMSocialManager defaultManager] isInstall:UMSocialPlatformType_WechatSession]) {
+                    [self AlertWithTitle:@"温馨提示" message:@"需授权微信" andOthers:@[@"取消",@"同意"] animated:YES action:^(NSInteger index) {
+                        if (index == 1) {
+                            [userManager loginWithActivityDetailCompletion:^(BOOL success, NSString *des) {
+                                if (success) {
+                                    UserModel *user = [[UserConfig shareInstace] getAllInformation];
+                                    NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app&html=player_detail&pl_id=%@", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id,model.pl_id];
+                                    RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+                                    
+                                    [self presentViewController:loginNavi animated:YES completion:nil];
+                                }
+                            }];
+                        }
+                    }];
+                }
+            }else {
+                UserModel *user = [[UserConfig shareInstace] getAllInformation];
+                NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app&html=player_detail&pl_id=%@", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id,model.pl_id];
+                RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+                
+                [self presentViewController:loginNavi animated:YES completion:nil];
+            }
         }];
         [view addSubview:btn];
         
@@ -271,16 +300,20 @@
     line5.backgroundColor = [UIColor groupTableViewBackgroundColor];
     [view addSubview:line5];
 
-    UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(KScreenWidth-15-40, line4.bottom, 40, 40)];
+    UIButton *more = [[UIButton alloc] initWithFrame:CGRectMake(KScreenWidth-15-50, line4.bottom, 50, 40)];
     more.titleLabel.font = [UIFont systemFontOfSize:13];
     [more setTitleColor:[UIColor lightGrayColor] forState:0];
     [more setTitle:@"更多" forState:0];
-    [more setImage:[UIImage imageNamed:@"genduo"] forState:0];
+    //[more setImage:[UIImage imageNamed:@"genduo"] forState:0];
     [more addTapBlock:^(UIButton *btn) {
         MoreActivityViewController *vc = [[MoreActivityViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }];
     [view addSubview:more];
+    UIImageView *moreAct = [[UIImageView alloc] initWithFrame:CGRectMake(42, 0, 12, 40)];
+    moreAct.contentMode = UIViewContentModeScaleAspectFit;
+    moreAct.image = [UIImage imageNamed:@"genduo"];
+    [more addSubview:moreAct];
     return view;
 }
 
@@ -295,7 +328,7 @@
                     [userManager loginWithActivityDetailCompletion:^(BOOL success, NSString *des) {
                         if (success) {
                             UserModel *user = [[UserConfig shareInstace] getAllInformation];
-                            NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+                            NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app&html=index", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
                             RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
                             
                             [self presentViewController:loginNavi animated:YES completion:nil];
@@ -306,7 +339,7 @@
         }
     }else {
         UserModel *user = [[UserConfig shareInstace] getAllInformation];
-        NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
+        NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app&html=index", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
         RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
         
         [self presentViewController:loginNavi animated:YES completion:nil];

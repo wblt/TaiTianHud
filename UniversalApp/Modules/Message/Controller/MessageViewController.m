@@ -96,7 +96,7 @@
                 }
                 NSArray *sortedArray = [_dataArray sortedArrayUsingComparator:^NSComparisonResult(MessageModel *mA, MessageModel *mB) {
                     
-                    return [mA.suetime compare:mB.suetime];
+                    return [mB.suetime compare:mA.suetime];
                 }];
                 
                 [arr addObjectsFromArray:sortedArray];
@@ -181,7 +181,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     MessageModel *model = _dataArray[indexPath.row];
     [cell.img sd_setImageWithURL:[NSURL URLWithString:model.icon]  placeholderImage:[UIImage imageNamed:@"placeholder"]];
-    cell.time.text = model.time_switch;
+    cell.time.text = [NSString timeWithTimeIntervalString:[NSString stringWithFormat:@"%ld",[model.suetime integerValue]*1000]];
     cell.text.text = model.title;
     cell.title.text = model.mc_id;
     if ([model.isread integerValue] == 1) {

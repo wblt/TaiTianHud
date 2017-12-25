@@ -13,4 +13,6 @@
 @property (nonatomic, strong) NSString *solevar;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *img;
+@property (nonatomic, strong) NSString *url;
+@property (nonatomic, strong) NSString *pl_id;
 @end
