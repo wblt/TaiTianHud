@@ -8,7 +8,7 @@
 
 #import "RootWebViewController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
-@interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate, WKScriptMessageHandler>
+@interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate, WKScriptMessageHandler,WKUIDelegate>
 
 @property (strong, nonatomic) UIProgressView *progressView;//这个是加载页面的进度条
 
@@ -64,7 +64,7 @@
     _wkwebView.UIDelegate = self;
     _wkwebView.navigationDelegate = self;
     [_wkwebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];//注册observer 拿到加载进度
-    
+    _wkwebView.UIDelegate = self;
     if (self.url != nil && [self.url length]>0) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:_url]];
         [_wkwebView loadRequest:request];
@@ -184,8 +184,33 @@
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
     if ([message.name isEqualToString:@"PresentGiftClick"]) {
-        [SVProgressHUD showInfoWithStatus:@"点击了赠送，app下一步操作"];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"点击了赠送，app下一步操作" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            //NSString *str = @"{name:\"冷婷\", amount:\"9999999\", phone:\"18600012345\"}";
+            [self.wkwebView evaluateJavaScript:[NSString stringWithFormat:@"callJS('%@')", @"success"] completionHandler:^(id _Nullable item, NSError * _Nullable error) {
+                
+            }];
+            
+        }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
     }
+    
+   
+}
+
+#pragma mark WKUIDelegate
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+        completionHandler();//此处的completionHandler()就是调用JS方法时，`evaluateJavaScript`方法中的completionHandler
+        
+    }];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
