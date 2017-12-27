@@ -183,19 +183,26 @@
 
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
 {
+    NSDictionary *parm = message.body;
+    UserModel *user = [[UserConfig shareInstace] getAllInformation];
     if ([message.name isEqualToString:@"PresentGiftClick"]) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"点击了赠送，app下一步操作" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            //NSString *str = @"{name:\"冷婷\", amount:\"9999999\", phone:\"18600012345\"}";
-            [self.wkwebView evaluateJavaScript:[NSString stringWithFormat:@"callJS('%@')", @"success"] completionHandler:^(id _Nullable item, NSError * _Nullable error) {
+        if ([parm[@"type"] isEqualToString:@"user"]) {
+            [self.wkwebView evaluateJavaScript:[NSString stringWithFormat:@"calluser('{\"nickname\":\"%@\",\"headimgurl\":\"%@\",\"openid\":\"%@\",\"sex\":\"%@\",\"deviceid\":\"%@\",\"ub_id\":\"%@\"}')",  user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id] completionHandler:^(id _Nullable item, NSError * _Nullable error) {
+                //window.webkit.messageHandlers.calluser.postMessage({type : 'user'})
+            }];
+        }else {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"点击了赠送，app下一步操作" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                //NSString *str = @"{name:\"冷婷\", amount:\"9999999\", phone:\"18600012345\"}";
+                [self.wkwebView evaluateJavaScript:[NSString stringWithFormat:@"callJS('%@')", @"success"] completionHandler:^(id _Nullable item, NSError * _Nullable error) {
+                    
+                }];
                 
             }];
-            
-        }];
-        [alert addAction:action];
-        [self presentViewController:alert animated:YES completion:nil];
+            [alert addAction:action];
+            [self presentViewController:alert animated:YES completion:nil];
+        }
     }
-    
    
 }
 
