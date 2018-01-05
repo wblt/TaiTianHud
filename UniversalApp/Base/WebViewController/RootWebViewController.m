@@ -190,6 +190,9 @@
             [self.wkwebView evaluateJavaScript:[NSString stringWithFormat:@"calluser('{\"nickname\":\"%@\",\"headimgurl\":\"%@\",\"openid\":\"%@\",\"sex\":\"%@\",\"deviceid\":\"%@\",\"ub_id\":\"%@\"}')",  user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id] completionHandler:^(id _Nullable item, NSError * _Nullable error) {
                 //window.webkit.messageHandlers.calluser.postMessage({type : 'user'})
             }];
+        }else if ([parm[@"type"] isEqualToString:@"pay"]) {
+            [SVProgressHUD showInfoWithStatus:@"app调起支付"];
+            
         }else {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"点击了赠送，app下一步操作" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
