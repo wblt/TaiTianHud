@@ -27,7 +27,7 @@
 // 网络接口主域名
 #if 1
 
-#define BaseUrl @"https://res.hnltou.com/api.php/"
+#define BaseUrl @"https://api.tthud.cn/api.php/"
 
 #else
 

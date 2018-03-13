@@ -33,7 +33,7 @@
     
     //初始化IM
     [[IMManager sharedIMManager] initIM];
-    
+    [WXApi registerApp:kAppKey_Wechat];
     //初始化用户系统
     [self initUserManager];
     

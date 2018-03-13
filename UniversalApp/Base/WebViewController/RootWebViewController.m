@@ -8,6 +8,7 @@
 
 #import "RootWebViewController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
+#import "WXApiManager.h"
 @interface RootWebViewController ()<WKNavigationDelegate,WKUIDelegate, WKScriptMessageHandler,WKUIDelegate>
 
 @property (strong, nonatomic) UIProgressView *progressView;//这个是加载页面的进度条
@@ -72,6 +73,7 @@
         [_wkwebView loadHTMLString:self.html baseURL:nil];
     }
      [self.wkwebView.configuration.userContentController addScriptMessageHandler:self name:@"PresentGiftClick"];
+    [self.wkwebView.configuration.userContentController addScriptMessageHandler:self name:@"wechatPay"];
 }
 
 #pragma mark --这个就是设置的上面的那个加载的进度
@@ -191,8 +193,25 @@
                 //window.webkit.messageHandlers.calluser.postMessage({type : 'user'})
             }];
         }else if ([parm[@"type"] isEqualToString:@"pay"]) {
-            [SVProgressHUD showInfoWithStatus:@"app调起支付"];
-            
+           //调起微信支付
+            NSDictionary *data = parm[@"data"];
+            NSDictionary *dataM = data[@"data"];
+            NSDictionary *paydata = dataM[@"paydata"];
+            PayReq* req             = [[PayReq alloc] init];
+            req.partnerId           = paydata[@"partnerid"];
+            req.prepayId            = paydata[@"prepayid"];
+            req.nonceStr            = paydata[@"noncestr"];
+            req.timeStamp           = [paydata[@"timestamp"] intValue];
+            req.package             = paydata[@"package"];
+            req.sign                = paydata[@"sign"];
+            [WXApi sendReq:req];
+            __block RootWebViewController *sweakSelf = self;
+            [WXApiManager sharedManager].payResultBlock = ^(NSString *result) {
+                
+                [sweakSelf.wkwebView evaluateJavaScript:[NSString stringWithFormat:@"callpay('%@')", result] completionHandler:^(id _Nullable item, NSError * _Nullable error) {
+                    
+                }];
+            };
         }else {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Warning" message:@"点击了赠送，app下一步操作" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *action = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

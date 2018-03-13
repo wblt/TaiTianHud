@@ -12,4 +12,5 @@ pod 'MJRefresh'
 pod 'MJExtension', '~> 3.0.13'
 pod 'IQKeyboardManager'
 pod 'SocketRocket'
+pod 'WeChat_SDK'
 end

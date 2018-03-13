@@ -185,6 +185,7 @@
 		8DEF67FF1FDE2A3E00B016DA /* UITabBar+badge.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DEF67FE1FDE2A3E00B016DA /* UITabBar+badge.m */; };
 		EE4166B21FD4349F0077E29C /* MoreActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */; };
 		EE67F2781FDC46E300D7A320 /* SocketRocketUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = EE67F2771FDC46E300D7A320 /* SocketRocketUtility.m */; };
+		EEACEB32202C8EBC0074772A /* WXApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EEACEB2D202C8EBC0074772A /* WXApiManager.m */; };
 		EEFA8CB21FD284D100340A1B /* TaskClassifyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */; };
 		EEFA8CB51FD2856400340A1B /* TaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB41FD2856400340A1B /* TaskModel.m */; };
 		EEFA8CB81FD2998200340A1B /* MyPacketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFA8CB71FD2998200340A1B /* MyPacketViewController.m */; };
@@ -509,6 +510,8 @@
 		EE4166B11FD4349F0077E29C /* MoreActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreActivityViewController.m; sourceTree = "<group>"; };
 		EE67F2761FDC46E300D7A320 /* SocketRocketUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketRocketUtility.h; sourceTree = "<group>"; };
 		EE67F2771FDC46E300D7A320 /* SocketRocketUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SocketRocketUtility.m; sourceTree = "<group>"; };
+		EEACEB2B202C8EBC0074772A /* WXApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiManager.h; sourceTree = "<group>"; };
+		EEACEB2D202C8EBC0074772A /* WXApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXApiManager.m; sourceTree = "<group>"; };
 		EEFA8CB01FD284D100340A1B /* TaskClassifyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskClassifyModel.h; sourceTree = "<group>"; };
 		EEFA8CB11FD284D100340A1B /* TaskClassifyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskClassifyModel.m; sourceTree = "<group>"; };
 		EEFA8CB31FD2856400340A1B /* TaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskModel.h; sourceTree = "<group>"; };
@@ -756,6 +759,7 @@
 		293D45AC1ECD6926007C64A9 /* ThridParty */ = {
 			isa = PBXGroup;
 			children = (
+				EEACEB2A202C8EBC0074772A /* WechatPay */,
 				EE67F2751FDC46E300D7A320 /* WebSocket */,
 				8D33BEDF1FA9C123003F377B /* UMSocial */,
 			);
@@ -1465,6 +1469,15 @@
 			path = WebSocket;
 			sourceTree = "<group>";
 		};
+		EEACEB2A202C8EBC0074772A /* WechatPay */ = {
+			isa = PBXGroup;
+			children = (
+				EEACEB2B202C8EBC0074772A /* WXApiManager.h */,
+				EEACEB2D202C8EBC0074772A /* WXApiManager.m */,
+			);
+			path = WechatPay;
+			sourceTree = "<group>";
+		};
 		EEFA8CCC1FD3A7EC00340A1B /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1715,7 +1728,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		FCE002867A10AABD9CA626C2 /* [CP] Embed Pods Frameworks */ = {
@@ -1755,6 +1768,7 @@
 				8D274B611FA713A600227056 /* UIColor+CustomColor.m in Sources */,
 				8D4DCBAC1FCFC07700D5251B /* EditPhoneViewController.m in Sources */,
 				8D936D3E1FAAF97200B303F9 /* HomeCompanyModel.m in Sources */,
+				EEACEB32202C8EBC0074772A /* WXApiManager.m in Sources */,
 				296DEA701F5D50D100C6FD00 /* TAAnimatedDotView.m in Sources */,
 				8D274B0E1FA7109400227056 /* InformationEditCell.m in Sources */,
 				8D4DCBB21FD00AB700D5251B /* MyTaskViewController.m in Sources */,
@@ -2008,10 +2022,11 @@
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/UMSocialSDKPlugin",
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/SocialLibraries/Sina",
+					"$(PROJECT_DIR)/UniversalApp/ThridParty/WechatPay",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tthud.taitian;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "9160cd08-0289-4b1d-bd1a-eafb26d733ec";
+				PROVISIONING_PROFILE = "2f506e04-8f61-4dad-92d1-442ccf467a5b";
 				PROVISIONING_PROFILE_SPECIFIER = sw_dev;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/UniversalApp/Define";
@@ -2042,6 +2057,7 @@
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/SocialLibraries/WeChat",
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/UMSocialSDKPlugin",
 					"$(PROJECT_DIR)/UniversalApp/ThridParty/UMSocial/SocialLibraries/Sina",
+					"$(PROJECT_DIR)/UniversalApp/ThridParty/WechatPay",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tthud.taitian;
 				PRODUCT_NAME = "$(TARGET_NAME)";

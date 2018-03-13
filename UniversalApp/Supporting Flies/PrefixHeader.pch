@@ -77,5 +77,6 @@
 #import "MJRefresh.h"
 #import "NSString+Regex.h"
 #import "NSString+MD5.h"
+#import "WXApi.h"
 
 #endif /* PrefixHeader_pch */

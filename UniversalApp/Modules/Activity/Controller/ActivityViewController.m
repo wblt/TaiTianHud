@@ -136,12 +136,34 @@
 
 #pragma mark -  初始化页面
 -(void)initUI{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    if (textField == nil) {
+        textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, KScreenWidth-80, 30)];
+        textField.borderStyle = UITextBorderStyleRoundedRect;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.font = [UIFont systemFontOfSize:14];
+        textField.delegate = self;
+        
+    }
+    [view addSubview:textField];
+    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(textField.right, 10, 60, 30)];
+    [btn setTitle:@"搜索" forState:0];
+    [btn setTitleColor:[UIColor blackColor] forState:0];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [btn addTapBlock:^(UIButton *btn) {
+        [textField resignFirstResponder];
+        page = 1;
+        [self requestDataType:type keyword:textField.text];
+    }];
+    [view addSubview:btn];
+    [self.view addSubview:view];
     self.tableView.mj_header.hidden = NO;
     self.tableView.mj_footer.hidden = NO;
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeCompanyTableCell" bundle:nil] forCellReuseIdentifier:@"HomeCompanyTableCell"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.frame = CGRectMake(0, 0, KScreenWidth, KScreenHeight-49-64);
+    self.tableView.frame = CGRectMake(0, 50, KScreenWidth, KScreenHeight-49-64-50);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     [self showNoDataImage];
@@ -164,33 +186,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 50;
+    return 0.01;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 50)];
-    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    if (textField == nil) {
-        textField = [[UITextField alloc] initWithFrame:CGRectMake(20, 10, KScreenWidth-80, 30)];
-        textField.borderStyle = UITextBorderStyleRoundedRect;
-        textField.backgroundColor = [UIColor whiteColor];
-        textField.font = [UIFont systemFontOfSize:14];
-        textField.delegate = self;
-        
-    }
-    [view addSubview:textField];
-    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(textField.right, 10, 60, 30)];
-    [btn setTitle:@"搜索" forState:0];
-    [btn setTitleColor:[UIColor blackColor] forState:0];
-    btn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [btn addTapBlock:^(UIButton *btn) {
-        [textField resignFirstResponder];
-        page = 1;
-        [self requestDataType:type keyword:textField.text];
-    }];
-    [view addSubview:btn];
-    return view;
+    
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -230,7 +232,7 @@
                     if (success) {
                         UserModel *user = [[UserConfig shareInstace] getAllInformation];
                         NSString *urlStr = [NSString stringWithFormat:@"%@?nickname=%@&headimgurl=%@&openid=%@&sex=%@&deviceid=%@&ub_id=%@&source=app&html=index", model.url, user.nickname,user.headpic,user.wx_openid,user.sex,[[NSUUID UUID] UUIDString],user.ub_id];
-                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] orHtml:nil]];
+                        RootNavigationController *loginNavi =[[RootNavigationController alloc] initWithRootViewController:[[RootWebViewController alloc] initWithUrl:model.url orHtml:nil]];
                         
                         [self presentViewController:loginNavi animated:YES completion:nil];
                     }
